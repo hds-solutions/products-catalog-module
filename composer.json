@@ -28,7 +28,7 @@
                 "HDSSolutions\\Finpar\\ProductsCatalogModuleServiceProvider"
             ],
             "aliases": {
-                "Backend": "HDSSolutions\\Finpar\\ProductsCatalog\\Facade"
+                "ProductsCatalog": "HDSSolutions\\Finpar\\ProductsCatalog\\Facade"
             }
         }
     }
