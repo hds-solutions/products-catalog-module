@@ -11,18 +11,18 @@ Route::group([
     // name prefix
     $name_prefix = [ 'as' => 'backend' ];
 
-    // Route::resource('companies',    CompanyController::class,   $name_prefix)
-    //     ->parameters([ 'companies' => 'resource' ])
-    //     ->name('index', 'backend.companies');
-
-    Route::resource('brands',           BrandController::class, $name_prefix)
+    Route::resource('brands',           BrandController::class,     $name_prefix)
         ->parameters([ 'brands' => 'resource' ])
         ->name('index', 'backend.brands');
-    Route::resource('models',           ModelController::class, $name_prefix)
+
+    Route::resource('models',           ModelController::class,     $name_prefix)
         ->parameters([ 'models' => 'resource' ])
         ->name('index', 'backend.models');
-    // Route::resource('families',
-    //     'FamiliesController',   $name_prefix)->name('index', 'admin.families');
+
+    // Route::resource('families',         FamilyController::class,    $name_prefix)
+    //     ->parameters([ 'families' => 'resource' ])
+    //     ->name('index', 'backend.families');
+
     // Route::resource('subfamilies',
     //     'SubFamiliesController',$name_prefix)->name('index', 'admin.subfamilies');
     // Route::resource('lines',
