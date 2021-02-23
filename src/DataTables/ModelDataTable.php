@@ -2,14 +2,14 @@
 
 namespace HDSSolutions\Finpar\DataTables;
 
-use HDSSolutions\Finpar\Models\Brand as Resource;
+use HDSSolutions\Finpar\Models\Model as Resource;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class BrandDataTable extends DataTable {
+class ModelDataTable extends DataTable {
     /**
      * Build DataTable class.
      *
@@ -29,7 +29,8 @@ class BrandDataTable extends DataTable {
      */
     public function query(Resource $model) {
         // return new query for current eloquent model
-        return $model->newQuery();
+        return $model->newQuery()
+            ->with([ 'brand' ]);
     }
 
     /**
@@ -61,8 +62,9 @@ class BrandDataTable extends DataTable {
      */
     protected function getColumns() {
         return [
-            Column::make('id')->title( __('products-catalog/brand.id.0') )->hidden(),
-            Column::make('name')->title( __('products-catalog/brand.name.0') ),
+            Column::make('id')->title( __('products-catalog/model.id.0') )->hidden(),
+            Column::make('brand')->data('brand.name')->title( __('products-catalog/model.brand_id.0') ),
+            Column::make('name')->title( __('products-catalog/model.name.0') ),
             Column::make('actions'),
         ];
     }

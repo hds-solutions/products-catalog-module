@@ -1,6 +1,7 @@
 <?php
 
 use HDSSolutions\Finpar\Http\Controllers\BrandController;
+use HDSSolutions\Finpar\Http\Controllers\ModelController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -17,8 +18,9 @@ Route::group([
     Route::resource('brands',           BrandController::class, $name_prefix)
         ->parameters([ 'brands' => 'resource' ])
         ->name('index', 'backend.brands');
-    // Route::resource('models',
-    //     'ModelsController',     $name_prefix)->name('index', 'admin.models');
+    Route::resource('models',           ModelController::class, $name_prefix)
+        ->parameters([ 'models' => 'resource' ])
+        ->name('index', 'backend.models');
     // Route::resource('families',
     //     'FamiliesController',   $name_prefix)->name('index', 'admin.families');
     // Route::resource('subfamilies',

@@ -6,7 +6,7 @@ use App\Models\Base\Model;
 use HDSSolutions\Finpar\Models\File;
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 
-class X_Brand extends Model {
+abstract class X_Brand extends Model {
     use BelongsToCompany;
 
     protected $orderBy = [

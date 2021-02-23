@@ -3,12 +3,12 @@
 namespace HDSSolutions\Finpar\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\BrandDataTable as DataTable;
+use HDSSolutions\Finpar\DataTables\ModelDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Brand as Resource;
-use HDSSolutions\Finpar\Models\File;
+use HDSSolutions\Finpar\Models\Brand;
+use HDSSolutions\Finpar\Models\Model as Resource;
 
-class BrandController extends Controller {
+class ModelController extends Controller {
     /**
      * Display a listing of the resource.
      *
@@ -18,12 +18,12 @@ class BrandController extends Controller {
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
-        return $dataTable->render('products-catalog::brands.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('products-catalog::models.index', [ 'count' => Resource::count() ]);
 
         // fetch all objects
-        $resources = Brand::with([ 'logo' ])->ordered()->get();
+        $models = Model::with([ 'brand' ])->ordered()->get();
         // show a list of objects
-        return view('brands.index', compact('brands'));
+        return view('models.index', compact('models'));
     }
 
     /**
@@ -32,10 +32,10 @@ class BrandController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        // load images
-        $images = File::images()->get();
+        // load brands
+        $brands = Brand::ordered()->get();
         // show create form
-        return view('products-catalog::brands.create', compact('images'));
+        return view('products-catalog::models.create', compact('brands'));
     }
 
     /**
@@ -45,25 +45,8 @@ class BrandController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        // cast show_home to boolean
-        $request->merge([ 'show_home' => $request->show_home == 'on' ]);
-
         // create resource
         $resource = new Resource( $request->input() );
-
-        // check new uploaded image
-        if ($request->hasFile('image')) {
-            // upload image
-            $image = File::upload($request, $request->file('image'), $this);
-            // save resource
-            if (!$image->save())
-                // redirect with errors
-                return back()
-                    ->withErrors($image->errors())
-                    ->withInput();
-            // set uploaded image into resource
-            $resource->logo_id = $image->id;
-        }
 
         // save resource
         if (!$resource->save())
@@ -73,7 +56,7 @@ class BrandController extends Controller {
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.brands');
+        return redirect()->route('backend.models');
     }
 
     /**
@@ -84,7 +67,7 @@ class BrandController extends Controller {
      */
     public function show(Resource $resource) {
         // redirect to list
-        return redirect()->route('backend.brands');
+        return redirect()->route('backend.models');
     }
 
     /**
@@ -94,10 +77,10 @@ class BrandController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Resource $resource) {
-        // load images
-        $images = File::images()->get();
+        // load brands
+        $brands = Brand::ordered()->get();
         // show edit form
-        return view('products-catalog::brands.edit', compact('resource', 'images'));
+        return view('models.edit', compact('resource', 'brands'));
     }
 
     /**
@@ -108,25 +91,8 @@ class BrandController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        // cast show_home to boolean
-        $request->merge([ 'show_home' => $request->show_home == 'on' ]);
-
         // find resource
         $resource = Resource::findOrFail($id);
-
-        // check new uploaded image
-        if ($request->hasFile('image')) {
-            // upload image
-            $image = File::upload($request, $request->file('image'), $this);
-            // save resource
-            if (!$image->save())
-                // redirect with errors
-                return back()
-                    ->withErrors($image->errors())
-                    ->withInput();
-            // set uploaded image into request
-            $request->merge([ 'logo_id' => $image->id ]);
-        }
 
         // save resource
         if (!$resource->update( $request->input() ))
@@ -136,7 +102,7 @@ class BrandController extends Controller {
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.brands');
+        return redirect()->route('backend.models');
     }
 
     /**
@@ -153,7 +119,7 @@ class BrandController extends Controller {
             // redirect with errors
             return redirect()->back();
         // redirect to list
-        return redirect()->route('backend.brands');
+        return redirect()->route('backend.models');
     }
 
 }
