@@ -3,12 +3,12 @@
 namespace HDSSolutions\Finpar\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\ModelDataTable as DataTable;
+use HDSSolutions\Finpar\DataTables\GamaDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Brand;
-use HDSSolutions\Finpar\Models\Model as Resource;
+use HDSSolutions\Finpar\Models\Line;
+use HDSSolutions\Finpar\Models\Gama as Resource;
 
-class ModelController extends Controller {
+class GamaController extends Controller {
     /**
      * Display a listing of the resource.
      *
@@ -18,12 +18,12 @@ class ModelController extends Controller {
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
-        return $dataTable->render('products-catalog::models.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('products-catalog::gamas.index', [ 'count' => Resource::count() ]);
 
         // fetch all objects
-        $models = Model::with([ 'brand' ])->ordered()->get();
+        $gamas = Gama::with([ 'line' ])->ordered()->get();
         // show a list of objects
-        return view('models.index', compact('models'));
+        return view('gamas.index', compact('gamas'));
     }
 
     /**
@@ -32,10 +32,10 @@ class ModelController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        // load brands
-        $brands = Brand::ordered()->get();
+        // load lines
+        $lines = Line::ordered()->get();
         // show create form
-        return view('products-catalog::models.create', compact('brands'));
+        return view('products-catalog::gamas.create', compact('lines'));
     }
 
     /**
@@ -56,7 +56,7 @@ class ModelController extends Controller {
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.gamas');
     }
 
     /**
@@ -67,7 +67,7 @@ class ModelController extends Controller {
      */
     public function show(Resource $resource) {
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.gamas');
     }
 
     /**
@@ -77,10 +77,10 @@ class ModelController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Resource $resource) {
-        // load brands
-        $brands = Brand::ordered()->get();
+        // load lines
+        $lines = Line::ordered()->get();
         // show edit form
-        return view('products-catalog::models.edit', compact('resource', 'brands'));
+        return view('products-catalog::gamas.edit', compact('resource', 'lines'));
     }
 
     /**
@@ -102,7 +102,7 @@ class ModelController extends Controller {
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.gamas');
     }
 
     /**
@@ -119,7 +119,7 @@ class ModelController extends Controller {
             // redirect with errors
             return back();
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.gamas');
     }
 
 }

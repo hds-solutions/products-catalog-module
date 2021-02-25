@@ -57,12 +57,14 @@
     {{-- <label class="col-12 control-label small">@lang('products-catalog/option.value_type.?')</label> --}}
 </div>
 
-<div class="form-row form-group d-flex align-items-center">
+<div class="form-row form-group align-items-center">
     <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog/option.show.0')</label>
-    <div class="col-11 col-md-8 col-lg-6 col-xl-4">
+    <div class="col-3">
         <div class="form-check">
-            <input name="show" type="checkbox" id="show"
-                @if ((isset($resource) && !old('show') ? $resource->show : old('show')) || !isset($resource)) checked @endif
+            <input type="hidden" name="show" value="{{ (isset($resource) && !old('show') ? $resource->show : old('show')) ? 'true' : 'false' }}">
+            <input type="checkbox" id="show"
+                onchange="this.previousElementSibling.value = this.checked ? 'true' : 'false'"
+                @if (isset($resource) && !old('show') ? $resource->show : old('show')) checked @endif
                 class="form-check-input {{ $errors->has('show') ? 'is-danger' : '' }}" placeholder="@lang('products-catalog/option.show._')">
             <label for="show" class="form-check-label">@lang('products-catalog/option.show._')</label>
         </div>

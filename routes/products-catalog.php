@@ -1,8 +1,15 @@
 <?php
 
 use HDSSolutions\Finpar\Http\Controllers\BrandController;
+use HDSSolutions\Finpar\Http\Controllers\CategoryController;
+use HDSSolutions\Finpar\Http\Controllers\FamilyController;
+use HDSSolutions\Finpar\Http\Controllers\GamaController;
+use HDSSolutions\Finpar\Http\Controllers\LineController;
 use HDSSolutions\Finpar\Http\Controllers\ModelController;
 use HDSSolutions\Finpar\Http\Controllers\OptionController;
+use HDSSolutions\Finpar\Http\Controllers\SubFamilyController;
+use HDSSolutions\Finpar\Http\Controllers\TagController;
+use HDSSolutions\Finpar\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -11,6 +18,10 @@ Route::group([
 ], function() {
     // name prefix
     $name_prefix = [ 'as' => 'backend' ];
+
+    Route::resource('types',            TypeController::class,      $name_prefix)
+        ->parameters([ 'types' => 'resource' ])
+        ->name('index', 'backend.types');
 
     Route::resource('options',          OptionController::class,    $name_prefix)
         ->parameters([ 'options' => 'resource' ])
@@ -24,26 +35,33 @@ Route::group([
         ->parameters([ 'models' => 'resource' ])
         ->name('index', 'backend.models');
 
-    // Route::resource('families',         FamilyController::class,    $name_prefix)
-    //     ->parameters([ 'families' => 'resource' ])
-    //     ->name('index', 'backend.families');
+    Route::resource('lines',            LineController::class,      $name_prefix)
+        ->parameters([ 'lines' => 'resource' ])
+        ->name('index', 'backend.lines');
 
-    // Route::resource('subfamilies',
-    //     'SubFamiliesController',$name_prefix)->name('index', 'admin.subfamilies');
-    // Route::resource('lines',
-    //     'LinesController',      $name_prefix)->name('index', 'admin.lines');
-    // Route::resource('gamas',
-    //     'GamasController',      $name_prefix)->name('index', 'admin.gamas');
-    // Route::resource('categories',
-    //     'CategoriesController', $name_prefix)->name('index', 'admin.categories');
-    // Route::resource('tags',
-    //     'TagsController',       $name_prefix)->name('index', 'admin.tags');
-    // Route::resource('types',
-    //     'TypesController',      $name_prefix)->name('index', 'admin.types');
+    Route::resource('gamas',            GamaController::class,      $name_prefix)
+        ->parameters([ 'gamas' => 'resource' ])
+        ->name('index', 'backend.gamas');
+
+    Route::resource('families',         FamilyController::class,    $name_prefix)
+        ->parameters([ 'families' => 'resource' ])
+        ->name('index', 'backend.families');
+
+    Route::resource('subfamilies',      SubFamilyController::class, $name_prefix)
+        ->parameters([ 'subfamilies' => 'resource' ])
+        ->name('index', 'backend.subfamilies');
+
+    Route::resource('categories',       CategoryController::class,  $name_prefix)
+        ->parameters([ 'categories' => 'resource' ])
+        ->name('index', 'backend.categories');
+
+    Route::resource('tags',             TagController::class,       $name_prefix)
+        ->parameters([ 'tags' => 'resource' ])
+        ->name('index', 'backend.tags');
 
     // Route::resource('products',
-    //     'ProductsController',   $name_prefix)->name('index', 'admin.products');
+    //     'ProductsController',   $name_prefix)->name('index', 'backend.products');
     // Route::resource('variants',
-    //     'VariantsController',   $name_prefix)->name('index', 'admin.variants');
+    //     'VariantsController',   $name_prefix)->name('index', 'backend.variants');
 
 });

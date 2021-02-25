@@ -3,12 +3,12 @@
 namespace HDSSolutions\Finpar\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\ModelDataTable as DataTable;
+use HDSSolutions\Finpar\DataTables\SubFamilyDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Brand;
-use HDSSolutions\Finpar\Models\Model as Resource;
+use HDSSolutions\Finpar\Models\Family;
+use HDSSolutions\Finpar\Models\SubFamily as Resource;
 
-class ModelController extends Controller {
+class SubFamilyController extends Controller {
     /**
      * Display a listing of the resource.
      *
@@ -18,12 +18,12 @@ class ModelController extends Controller {
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
-        return $dataTable->render('products-catalog::models.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('products-catalog::subfamilies.index', [ 'count' => Resource::count() ]);
 
         // fetch all objects
-        $models = Model::with([ 'brand' ])->ordered()->get();
+        $subfamilies = SubFamily::with([ 'line' ])->ordered()->get();
         // show a list of objects
-        return view('models.index', compact('models'));
+        return view('subfamilies.index', compact('subfamilies'));
     }
 
     /**
@@ -32,10 +32,10 @@ class ModelController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        // load brands
-        $brands = Brand::ordered()->get();
+        // load lines
+        $lines = Family::ordered()->get();
         // show create form
-        return view('products-catalog::models.create', compact('brands'));
+        return view('products-catalog::subfamilies.create', compact('lines'));
     }
 
     /**
@@ -56,7 +56,7 @@ class ModelController extends Controller {
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.subfamilies');
     }
 
     /**
@@ -67,7 +67,7 @@ class ModelController extends Controller {
      */
     public function show(Resource $resource) {
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.subfamilies');
     }
 
     /**
@@ -77,10 +77,10 @@ class ModelController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Resource $resource) {
-        // load brands
-        $brands = Brand::ordered()->get();
+        // load lines
+        $lines = Family::ordered()->get();
         // show edit form
-        return view('products-catalog::models.edit', compact('resource', 'brands'));
+        return view('products-catalog::subfamilies.edit', compact('resource', 'lines'));
     }
 
     /**
@@ -102,7 +102,7 @@ class ModelController extends Controller {
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.subfamilies');
     }
 
     /**
@@ -119,7 +119,7 @@ class ModelController extends Controller {
             // redirect with errors
             return back();
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.subfamilies');
     }
 
 }

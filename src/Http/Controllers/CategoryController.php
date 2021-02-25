@@ -3,12 +3,11 @@
 namespace HDSSolutions\Finpar\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\ModelDataTable as DataTable;
+use HDSSolutions\Finpar\DataTables\CategoryDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Brand;
-use HDSSolutions\Finpar\Models\Model as Resource;
+use HDSSolutions\Finpar\Models\Category as Resource;
 
-class ModelController extends Controller {
+class CategoryController extends Controller {
     /**
      * Display a listing of the resource.
      *
@@ -18,12 +17,12 @@ class ModelController extends Controller {
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
-        return $dataTable->render('products-catalog::models.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('products-catalog::categories.index', [ 'count' => Resource::count() ]);
 
         // fetch all objects
-        $models = Model::with([ 'brand' ])->ordered()->get();
+        $categories = Category::ordered()->get();
         // show a list of objects
-        return view('models.index', compact('models'));
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -32,10 +31,8 @@ class ModelController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        // load brands
-        $brands = Brand::ordered()->get();
         // show create form
-        return view('products-catalog::models.create', compact('brands'));
+        return view('products-catalog::categories.create');
     }
 
     /**
@@ -56,7 +53,7 @@ class ModelController extends Controller {
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.categories');
     }
 
     /**
@@ -67,7 +64,7 @@ class ModelController extends Controller {
      */
     public function show(Resource $resource) {
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.categories');
     }
 
     /**
@@ -77,10 +74,8 @@ class ModelController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Resource $resource) {
-        // load brands
-        $brands = Brand::ordered()->get();
         // show edit form
-        return view('products-catalog::models.edit', compact('resource', 'brands'));
+        return view('products-catalog::categories.edit', compact('resource'));
     }
 
     /**
@@ -102,7 +97,7 @@ class ModelController extends Controller {
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.categories');
     }
 
     /**
@@ -119,7 +114,7 @@ class ModelController extends Controller {
             // redirect with errors
             return back();
         // redirect to list
-        return redirect()->route('backend.models');
+        return redirect()->route('backend.categories');
     }
 
 }

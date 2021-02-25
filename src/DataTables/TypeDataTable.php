@@ -2,14 +2,14 @@
 
 namespace HDSSolutions\Finpar\DataTables;
 
-use HDSSolutions\Finpar\Models\Option as Resource;
+use HDSSolutions\Finpar\Models\Type as Resource;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class OptionDataTable extends DataTable {
+class TypeDataTable extends DataTable {
     /**
      * Build DataTable class.
      *
@@ -61,8 +61,8 @@ class OptionDataTable extends DataTable {
      */
     protected function getColumns() {
         return [
-            Column::make('id')->title( __('products-catalog/option.id.0') )->hidden(),
-            Column::make('name')->title( __('products-catalog/option.name.0') ),
+            Column::make('id')->title( __('products-catalog/type.id.0') )->hidden(),
+            Column::make('name')->title( __('products-catalog/type.name.0') ),
             Column::make('actions'),
         ];
     }

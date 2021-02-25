@@ -24,12 +24,12 @@ class ModelDataTable extends DataTable {
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Resource $model
+     * @param \App\Models\Resource $resource
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Resource $model) {
+    public function query(Resource $resource) {
         // return new query for current eloquent model
-        return $model->newQuery()
+        return $resource->newQuery()
             ->with([ 'brand' ]);
     }
 

@@ -2,14 +2,14 @@
 
 namespace HDSSolutions\Finpar\DataTables;
 
-use HDSSolutions\Finpar\Models\Option as Resource;
+use HDSSolutions\Finpar\Models\Gama as Resource;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class OptionDataTable extends DataTable {
+class GamaDataTable extends DataTable {
     /**
      * Build DataTable class.
      *
@@ -29,7 +29,8 @@ class OptionDataTable extends DataTable {
      */
     public function query(Resource $resource) {
         // return new query for current eloquent model
-        return $resource->newQuery();
+        return $resource->newQuery()
+            ->with([ 'line' ]);
     }
 
     /**
@@ -61,8 +62,9 @@ class OptionDataTable extends DataTable {
      */
     protected function getColumns() {
         return [
-            Column::make('id')->title( __('products-catalog/option.id.0') )->hidden(),
-            Column::make('name')->title( __('products-catalog/option.name.0') ),
+            Column::make('id')->title( __('products-catalog/gama.id.0') )->hidden(),
+            Column::make('line')->data('line.name')->title( __('products-catalog/gama.line_id.0') ),
+            Column::make('name')->title( __('products-catalog/gama.name.0') ),
             Column::make('actions'),
         ];
     }

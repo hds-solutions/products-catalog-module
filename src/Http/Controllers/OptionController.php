@@ -45,7 +45,7 @@ class OptionController extends Controller {
      */
     public function store(Request $request) {
         // cast show to boolean
-        $request->merge([ 'show' => $request->show == 'on' ]);
+        if ($request->has('show'))  $request->merge([ 'show' => $request->show == 'true' ]);
 
         // start a transaction
         DB::beginTransaction();
@@ -101,7 +101,7 @@ class OptionController extends Controller {
      */
     public function update(Request $request, $id) {
         // cast show to boolean
-        $request->merge([ 'show' => $request->show == 'on' ]);
+        if ($request->has('show'))  $request->merge([ 'show' => $request->show == 'true' ]);
 
         // start a transaction
         DB::beginTransaction();
@@ -138,7 +138,7 @@ class OptionController extends Controller {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return redirect()->back();
+            return back();
         // redirect to list
         return redirect()->route('backend.options');
     }
