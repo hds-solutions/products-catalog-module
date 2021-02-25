@@ -80,7 +80,7 @@ class ModelController extends Controller {
         // load brands
         $brands = Brand::ordered()->get();
         // show edit form
-        return view('models.edit', compact('resource', 'brands'));
+        return view('products-catalog::models.edit', compact('resource', 'brands'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use HDSSolutions\Finpar\Http\Controllers\BrandController;
 use HDSSolutions\Finpar\Http\Controllers\ModelController;
+use HDSSolutions\Finpar\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -10,6 +11,10 @@ Route::group([
 ], function() {
     // name prefix
     $name_prefix = [ 'as' => 'backend' ];
+
+    Route::resource('options',          OptionController::class,    $name_prefix)
+        ->parameters([ 'options' => 'resource' ])
+        ->name('index', 'backend.options');
 
     Route::resource('brands',           BrandController::class,     $name_prefix)
         ->parameters([ 'brands' => 'resource' ])
@@ -33,9 +38,6 @@ Route::group([
     //     'CategoriesController', $name_prefix)->name('index', 'admin.categories');
     // Route::resource('tags',
     //     'TagsController',       $name_prefix)->name('index', 'admin.tags');
-
-    // Route::resource('options',
-    //     'OptionsController',    $name_prefix)->name('index', 'admin.options');
     // Route::resource('types',
     //     'TypesController',      $name_prefix)->name('index', 'admin.types');
 
