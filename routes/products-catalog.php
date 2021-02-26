@@ -7,6 +7,7 @@ use HDSSolutions\Finpar\Http\Controllers\GamaController;
 use HDSSolutions\Finpar\Http\Controllers\LineController;
 use HDSSolutions\Finpar\Http\Controllers\ModelController;
 use HDSSolutions\Finpar\Http\Controllers\OptionController;
+use HDSSolutions\Finpar\Http\Controllers\ProductController;
 use HDSSolutions\Finpar\Http\Controllers\SubFamilyController;
 use HDSSolutions\Finpar\Http\Controllers\TagController;
 use HDSSolutions\Finpar\Http\Controllers\TypeController;
@@ -59,8 +60,10 @@ Route::group([
         ->parameters([ 'tags' => 'resource' ])
         ->name('index', 'backend.tags');
 
-    // Route::resource('products',
-    //     'ProductsController',   $name_prefix)->name('index', 'backend.products');
+    Route::resource('products',         ProductController::class,   $name_prefix)
+        ->parameters([ 'products' => 'resource' ])
+        ->name('index', 'backend.products');
+
     // Route::resource('variants',
     //     'VariantsController',   $name_prefix)->name('index', 'backend.variants');
 

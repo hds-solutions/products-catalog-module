@@ -1,0 +1,116 @@
+@extends('layouts.master')
+
+@section('page-name', Lang::get('Products'))
+@section('description', 'Texto descripcion para esta seccion')
+
+@section('content')
+
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <i class="fas fa-table"></i>
+                Lista de @lang('Products')
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <a href="{{ route('admin.products.create') }}" class="btn btn-sm btn-primary">Añadir @lang('Products')</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        @if ($products->count())
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"
+                    data-order='[[ 2, "asc" ]]'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Line</th>
+                            <th>Stock</th>
+                            {{-- <th>Priority</th> --}}
+                            <th class="text-center">Precio</th>
+                            <th class="w-100px">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($products as $product)
+                        <tr>
+                            <td>{{ $product->getKey() }}</td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <div class="position-relative ml-2">
+                                        <img src="{{ asset($product->images->first()->url ?? 'assets/images/default.jpg') }}" class="mh-100px">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>{{ $product->name }}</div>
+                                <div class="small">
+                                    @foreach($product->variants as $variant)
+                                        <div class="row">
+                                            <a href="{{ route('admin.variants.edit', $variant) }}"
+                                                class="col-4 text-primary text-decoration-none">{{ $variant->sku }}</a>
+                                            <div class="col">@if (count($variant->values))[
+                                            @foreach($variant->values as $value)
+                                                @if ($value->option_value === null) @continue @endif
+                                                {{ $value->option->name }}: <b>{{ $value->option_value->value }}</b>
+                                            @endforeach
+                                            ]@endif</div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </td>
+                            <td>{{ $product->line->name ?? '--' }}</td>
+                            <td class="text-right">
+                                <div>{{ ($product->stock ?? '--').' / '.($product->stock_alert ?? '--') }}</div>
+                                <div class="small">
+                                    @foreach($product->variants as $variant)
+                                        <div class="row">
+                                            <div class="col-12">{{ $variant->stock }} / {{ $variant->stock_alert ?? '--' }}</div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </td>
+                            {{-- <td>{{ $product->priority ?? '--' }}</td> --}}
+                            <td class="text-right">
+                                <div>{{ amount($product->priceRaw ?? 0) }}@if ($product->price_reseller !== null) / <small>{{ amount($product->price_reseller) }}</small> @endif</div>
+                                <div class="small">
+                                    @foreach($product->variants as $variant)
+                                        <div class="row">
+                                            <div class="col-12">{{ $variant->priceRaw !== null ? amount($variant->priceRaw) : config('settings.currency-symbol', 'USD').' --' }}@if ($variant->price_reseller !== null) / <small>{{ amount($variant->price_reseller) }}</small> @endif</div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                            </td>
+                            <td class="align-middle">
+                                @include('components.actions', [
+                                    'resource'  => 'products',
+                                    'title'     => $product->name,
+                                    'record'    => $product,
+                                    'actions'   => [ 'visible', 'update', 'delete' ]
+                                ])
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <div class="text-center m-t-30 m-b-30 p-b-10">
+                <h2><i class="fas fa-table text-custom"></i></h2>
+                <h3>No se encontraron resultados</h3>
+                <p class="text-muted">
+                    Puedes agregar items haciendo click en el botón
+                    <a href="{{ route('admin.products.create') }}" class="text-custom">
+                        <ins>Añadir</ins>
+                    </a>
+                </p>
+            </div>
+        @endif
+    </div>
+</div>
+
+@endsection
