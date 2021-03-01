@@ -1,6 +1,6 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('products-catalog/subfamily.title'))
+@section('page-name', __('products-catalog::subfamilies.title'))
 
 @section('content')
 
@@ -9,11 +9,11 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-subfamily-plus"></i>
-                @lang('products-catalog/subfamily.edit')
+                @lang('products-catalog::subfamilies.edit')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.subfamilies.create') }}"
-                    class="btn btn-sm btn-primary">@lang('products-catalog/subfamily.add')</a>
+                    class="btn btn-sm btn-primary">@lang('products-catalog::subfamilies.add')</a>
             </div>
         </div>
     </div>

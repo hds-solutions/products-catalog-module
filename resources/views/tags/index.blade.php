@@ -1,7 +1,7 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('products-catalog/tag.title'))
-@section('description', __('products-catalog/tag.description'))
+@section('page-name', __('products-catalog::tags.title'))
+@section('description', __('products-catalog::tags.description'))
 
 @section('content')
 
@@ -10,27 +10,21 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-table"></i>
-                @lang('products-catalog/tag.index')
+                @lang('products-catalog::tags.index')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.tags.create') }}"
-                    class="btn btn-sm btn-primary">@lang('products-catalog/tag.add')</a>
+                    class="btn btn-sm btn-primary">@lang('products-catalog::tags.add')</a>
             </div>
         </div>
     </div>
     <div class="card-body">
         @if ($count)
             <div class="table-responsive">
-                {{
-                    $dataTable->table([
-                        'class'         => 'table table-bordered',
-                        'data-route'    => route('backend.tags'),
-                        'data-columns'  => $dataTable->getColumns()->map(fn($item) => [ 'data' => $item->data])->toJson(),
-                    ])
-                }}
-
+                {{ $dataTable->table() }}
                 @include('backend::components.datatable-actions', [
-                    'actions'   => [ 'update', 'delete' ]
+                    'actions'   => [ 'update', 'delete' ],
+                    'label'     => '{resource.name}',
                 ])
             </div>
         @else
@@ -40,7 +34,7 @@
                 <p class="text-muted">
                     @lang('backend.empty.description')
                     <a href="{{ route('backend.tags.create') }}" class="text-custom">
-                        <ins>@lang('products-catalog/tag.add')</ins>
+                        <ins>@lang('products-catalog::tags.add')</ins>
                     </a>
                 </p>
             </div>
@@ -49,3 +43,7 @@
 </div>
 
 @endsection
+
+@push('config-scripts')
+{{ $dataTable->scripts() }}
+@endpush

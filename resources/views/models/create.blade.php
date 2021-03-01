@@ -1,6 +1,6 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('products-catalog/model.title'))
+@section('page-name', __('products-catalog::models.title'))
 
 @section('content')
 
@@ -9,11 +9,11 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-model-plus"></i>
-                @lang('products-catalog/model.create')
+                @lang('products-catalog::models.create')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 {{-- <a href="{{ route('backend.models.create') }}"
-                    class="btn btn-sm btn-primary">@lang('products-catalog/model.add')</a> --}}
+                    class="btn btn-sm btn-primary">@lang('products-catalog::models.add')</a> --}}
             </div>
         </div>
     </div>

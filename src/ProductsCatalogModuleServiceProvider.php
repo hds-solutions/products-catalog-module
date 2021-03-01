@@ -21,6 +21,8 @@ class ProductsCatalogModuleServiceProvider extends ModuleServiceProvider {
         $this->loadRoutesFrom( module_path('routes/products-catalog.php') );
         // load views
         $this->loadViewsFrom( module_path('resources/views'), 'products-catalog' );
+        // load translations
+        $this->loadTranslationsFrom( module_path('resources/lang'), 'products-catalog' );
         // load migrations
         $this->loadMigrationsFrom( module_path('database/migrations') );
         // load seeders

@@ -1,7 +1,7 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('products-catalog/line.title'))
-@section('description', __('products-catalog/line.description'))
+@section('page-name', __('products-catalog::lines.title'))
+@section('description', __('products-catalog::lines.description'))
 
 @section('content')
 
@@ -10,27 +10,21 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-table"></i>
-                @lang('products-catalog/line.index')
+                @lang('products-catalog::lines.index')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.lines.create') }}"
-                    class="btn btn-sm btn-primary">@lang('products-catalog/line.add')</a>
+                    class="btn btn-sm btn-primary">@lang('products-catalog::lines.add')</a>
             </div>
         </div>
     </div>
     <div class="card-body">
         @if ($count)
             <div class="table-responsive">
-                {{
-                    $dataTable->table([
-                        'class'         => 'table table-bordered',
-                        'data-route'    => route('backend.lines'),
-                        'data-columns'  => $dataTable->getColumns()->map(fn($item) => [ 'data' => $item->data])->toJson(),
-                    ])
-                }}
-
+                {{ $dataTable->table() }}
                 @include('backend::components.datatable-actions', [
-                    'actions'   => [ 'update', 'delete' ]
+                    'actions'   => [ 'update', 'delete' ],
+                    'label'     => '{resource.name}',
                 ])
             </div>
         @else
@@ -40,7 +34,7 @@
                 <p class="text-muted">
                     @lang('backend.empty.description')
                     <a href="{{ route('backend.lines.create') }}" class="text-custom">
-                        <ins>@lang('products-catalog/line.add')</ins>
+                        <ins>@lang('products-catalog::lines.add')</ins>
                     </a>
                 </p>
             </div>
@@ -49,3 +43,7 @@
 </div>
 
 @endsection
+
+@push('config-scripts')
+{{ $dataTable->scripts() }}
+@endpush

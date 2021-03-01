@@ -260,8 +260,7 @@ class ProductController extends Controller {
                 // save resource
                 if (!$image->save())
                     // redirect with errors
-                    return redirect()
-                        ->back()
+                    return back()
                         ->withErrors($image->errors())
                         ->withInput();
                 // append to images
