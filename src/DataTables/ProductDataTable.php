@@ -45,7 +45,6 @@ class ProductDataTable extends Base\DataTable {
 
             Column::make('line.name')
                 ->title( __('products-catalog::product.line_id.0') )
-                ->data('line.name')
                 // ->sortable(false)
                 ,
 

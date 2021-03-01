@@ -2,8 +2,8 @@
     <div class="col-6">
         <select name="warehouses[]" @if (isset($selected)) id="f{{ $id = Str::random(16) }}" @endif
             value="{{ isset($selected) ? $selected->warehouse_id : '' }}"
-            class="form-control selectpicker" placeholder="@lang('products-catalog/warehouse.name._')">
-            <option value="" selected disabled hidden>@lang('products-catalog/warehouse.name.0')</option>
+            class="form-control selectpicker" placeholder="@lang('products-catalog::warehouse.name._')">
+            <option value="" selected disabled hidden>@lang('products-catalog::warehouse.name.0')</option>
             @foreach($warehouses as $warehouse)
             <option value="{{ $warehouse->id }}"
                 @if (isset($selected) && $selected->warehouse_id == $warehouse->id) selected @endif>{{ $warehouse->name }}</option>
@@ -13,8 +13,8 @@
     <div class="col-4">
         <select name="locators[]"
             data-filtered-by='{{ isset($selected) ? "#f$id" : '[name="warehouses[]"]' }}' data-filtered-using="warehouse"
-            class="form-control custom-select" placeholder="@lang('products-catalog/locator.name._')">
-            <option value="" selected disabled hidden>@lang('products-catalog/locator.name.0')</option>
+            class="form-control custom-select" placeholder="@lang('products-catalog::locator.name._')">
+            <option value="" selected disabled hidden>@lang('products-catalog::locator.name.0')</option>
             @foreach($warehouses->pluck('locators')->flatten() as $locator)
             <option value="{{ $locator->id }}" data-warehouse="{{ $locator->warehouse_id }}"
                 @if (isset($selected) && $selected->id == $locator->id &&

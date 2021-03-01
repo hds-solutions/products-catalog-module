@@ -1,8 +1,8 @@
 <div class="row category-container mb-3" @if ( ($selected ?? null) === null) id="new" @else data-used="true" @endif>
     <div class="col-10">
         <select name="categories[]"
-            class="form-control selectpicker" placeholder="@lang('products-catalog/category.name._')">
-            <option value="" selected disabled hidden>@lang('products-catalog/category.name.0')</option>
+            class="form-control selectpicker" placeholder="@lang('products-catalog::category.name._')">
+            <option value="" selected disabled hidden>@lang('products-catalog::category.name.0')</option>
             @foreach($categories as $category)
             <option value="{{ $category->id }}"
                 @if (isset($selected) && !$old && $category->id == $selected->id ||
