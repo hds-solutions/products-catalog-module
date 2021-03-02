@@ -338,6 +338,7 @@
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 control-label mt-2 mb-3">@lang('products-catalog::product.locators.0')</label>
     <div class="col-12 col-md-9 col-xl-6" data-multiple=".locator-container" data-template="#new">
+        {{-- TODO: Locators --}}
         @if (false && isset($resource))
         @foreach($resource->locators as $selected)
             @include('products-catalog::products.locator', compact('warehouses', 'selected'))

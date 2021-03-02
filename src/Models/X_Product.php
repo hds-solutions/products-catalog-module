@@ -9,7 +9,7 @@ class X_Product extends Model {
     use BelongsToCompany;
 
     protected $orderBy = [
-        'name'
+        'name'  => 'ASC',
     ];
 
     protected $fillable = [

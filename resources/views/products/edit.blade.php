@@ -1,6 +1,6 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('products-catalog::product.title'))
+@section('page-name', __('products-catalog::products.title'))
 
 @section('content')
 
@@ -8,12 +8,12 @@
     <div class="card-header">
         <div class="row">
             <div class="col-6">
-                <i class="fas fa-product-plus"></i>
-                @lang('products-catalog::product.edit')
+                <i class="fas fa-products-plus"></i>
+                @lang('products-catalog::products.edit')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.products.create') }}"
-                    class="btn btn-sm btn-primary">@lang('products-catalog::product.add')</a>
+                    class="btn btn-sm btn-primary">@lang('products-catalog::products.add')</a>
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ use HDSSolutions\Finpar\Http\Controllers\ProductController;
 use HDSSolutions\Finpar\Http\Controllers\SubFamilyController;
 use HDSSolutions\Finpar\Http\Controllers\TagController;
 use HDSSolutions\Finpar\Http\Controllers\TypeController;
+use HDSSolutions\Finpar\Http\Controllers\VariantController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -64,7 +65,8 @@ Route::group([
         ->parameters([ 'products' => 'resource' ])
         ->name('index', 'backend.products');
 
-    // Route::resource('variants',
-    //     'VariantsController',   $name_prefix)->name('index', 'backend.variants');
+    Route::resource('variants',         VariantController::class,   $name_prefix)
+        ->parameters([ 'variants' => 'resource' ])
+        ->name('index', 'backend.variants');
 
 });
