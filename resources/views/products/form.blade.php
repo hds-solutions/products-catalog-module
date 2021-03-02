@@ -1,35 +1,16 @@
 @include('backend::components.errors')
 
-<div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.name.0')</label>
-    <div class="col-11 col-md-8 col-lg-6 col-xl-4">
-        <input name="name" type="text" required
-            value="{{ isset($resource) && !old('name') ? $resource->name : old('name') }}"
-            class="form-control {{ $errors->has('name') ? 'is-danger' : '' }}"
-            placeholder="@lang('products-catalog::product.name._')">
-    </div>
-</div>
+<x-backend-form-text :resource="$resource ?? null"
+    name="name" required
+    label="{{ __('products-catalog::product.name.0') }}"
+    placeholder="{{ __('products-catalog::product.name._') }}" />
 
-<div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.type_id.0')</label>
-    <div class="col-11 col-md-8 col-lg-6 col-xl-4">
-        <select name="type_id" data-live-search="true" required
-            value="{{ isset($resource) && !old('type_id') ? $resource->type_id : old('type_id') }}"
-            class="form-control selectpicker {{ $errors->has('type_id') ? 'is-danger' : '' }}"
-            placeholder="@lang('products-catalog::product.type_id._')">
-            <option value="" selected disabled hidden>@lang('products-catalog::product.type_id.0')</option>
-            @foreach($types as $type)
-            <option value="{{ $type->id }}"
-                @if (isset($resource) && !old('type_id') && $resource->type_id == $type->id ||
-                    old('type_id') == $type->id) selected @endif>{{ $type->name }}</option>
-            @endforeach
-        </select>
-    </div>
-    {{-- <div class="col-1">
-        <i class="fas fa-info-circle ml-2 cursor-help" data-toggle="tooltip" data-placement="right"
-            title="@lang('products-catalog::product.type_id.?')"></i>
-    </div> --}}
-</div>
+<x-backend-form-foreign :resource="$resource ?? null" :values="$types"
+    name="type_id"
+    label="{{ __('products-catalog::product.type_id.0') }}"
+    placeholder="{{ __('products-catalog::product.type_id._') }}"
+    {{-- helper="{{ __('products-catalog::product.type_id.?') }}" --}}
+    />
 
 <div class="form-row form-group align-items-center">
     <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.brand_id.0') / @lang('products-catalog::product.model_id.0')</label>
@@ -162,23 +143,15 @@
     </div>
 </div>
 
-<div class="form-row form-group">
-    <label class="col-12 col-md-3 control-label mt-2 mb-0">@lang('products-catalog::product.brief.0')</label>
-    <div class="col-6">
-        <textarea name="brief"
-            class="form-control resize-none wysiwyg {{ $errors->has('brief') ? 'is-danger' : '' }}"
-            placeholder="(@lang('optional')) @lang('products-catalog::product.brief._')">{{ isset($resource) && !old('brief') ? $resource->brief : old('brief') }}</textarea>
-    </div>
-</div>
+<x-backend-form-textarea :resource="$resource ?? null"
+    name="brief"
+    label="{{ __('products-catalog::product.brief.0') }}"
+    placeholder="({{ __('optional') }}) {{ __('products-catalog::product.brief._') }}" />
 
-<div class="form-row form-group">
-    <label class="col-12 col-md-3 control-label mt-2 mb-0">@lang('products-catalog::product.description.0')</label>
-    <div class="col-6">
-        <textarea name="description"
-            class="form-control resize-none wysiwyg {{ $errors->has('description') ? 'is-danger' : '' }}"
-            placeholder="(@lang('optional')) @lang('products-catalog::product.description._')">{{ isset($resource) && !old('description') ? $resource->description : old('description') }}</textarea>
-    </div>
-</div>
+<x-backend-form-textarea :resource="$resource ?? null"
+    name="description"
+    label="{{ __('products-catalog::product.description.0') }}"
+    placeholder="({{ __('optional') }}) {{ __('products-catalog::product.description._') }}" />
 
 <div class="form-row form-group align-items-center">
     <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.price.0') / @lang('products-catalog::product.price_reseller.0')</label>
@@ -204,29 +177,22 @@
         title="@lang('products-catalog::product.price.?')"></i>
 </div>
 
-<div class="form-row form-group d-flex align-items-center">
-    <label class="col-12 col-md-3 control-label m-0">@lang('products-catalog::product.tax.0')</label>
-
-    <div class="col-12 col-md-9 col-xl-3">
-        <select name="tax" required
-            value="{{ isset($resource) && !old('tax') ? $resource->taxRaw : old('tax') }}"
-            class="form-control selectpicker {{ $errors->has('tax') ? 'is-danger' : '' }}"
-            placeholder="@lang('products-catalog::product.tax._')">
-            <option value="" selected disabled hidden>@lang('products-catalog::product.tax.0')</option>
-            @foreach([
-                'ex'    => 'Sin I.V.A.',
-                '05'    => '5% extra',
-                '05i'   => '5% incluido',
-                '10'    => '10% extra',
-                '10i'   => '10% incluido',
-            ] as $tax => $name)
-            <option value="{{ $tax }}"
-                @if (isset($resource) && !old('tax') && $resource->taxRaw == $tax ||
-                    old('tax') == $tax || (!isset($resource) && !old('tax') && $tax == '10i')) selected @endif>{{ $name }}</option>
-            @endforeach
-        </select>
-    </div>
-</div>
+@php
+    $taxes = [
+        'ex'    => 'Sin I.V.A.',
+        '05'    => '5% extra',
+        '05i'   => '5% incluido',
+        '10'    => '10% extra',
+        '10i'   => '10% incluido',
+    ];
+@endphp
+<x-backend-form-select :resource="$resource ?? null" :values="$taxes"
+    name="tax" required
+    default="10i"
+    label="{{ __('products-catalog::product.tax.0') }}"
+    placeholder="{{ __('products-catalog::product.tax._') }}"
+    {{-- helper="{{ __('products-catalog::product.tax.?') }}" --}}
+    />
 
 <div class="form-row form-group align-items-center">
     <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.weight.0')</label>
@@ -264,20 +230,10 @@
     </div>
 </div>
 
-<div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.giftcard.0')</label>
-    <div class="col-3">
-        <div class="form-check">
-            <input type="hidden" name="giftcard" value="{{ (isset($resource) && !old('giftcard') ? $resource->giftcard : old('giftcard')) ? 'true' : 'false' }}">
-            <input type="checkbox" id="giftcard"
-                onchange="this.previousElementSibling.value = this.checked ? 'true' : 'false'"
-                @if (isset($resource) && !old('giftcard') ? $resource->giftcard : old('giftcard')) checked @endif
-                class="form-check-input {{ $errors->has('giftcard') ? 'is-danger' : '' }}"
-                placeholder="@lang('products-catalog::product.giftcard._')">
-            <label for="giftcard" class="form-check-label">@lang('products-catalog::product.giftcard._')</label>
-        </div>
-    </div>
-</div>
+<x-backend-form-boolean :resource="$resource ?? null"
+    name="giftcard"
+    label="{{ __('products-catalog::product.giftcard.0') }}"
+    placeholder="{{ __('products-catalog::product.giftcard._') }}" />
 
 <div class="form-row form-group align-items-center">
     <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.images.0')</label>
@@ -307,20 +263,11 @@
     </div>
 </div>
 
-<div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.url.0')</label>
-    <div class="col-6">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">{{ url('/') }}/</div>
-            </div>
-            <input name="url" type="text"
-                value="{{ isset($resource) && !old('url') ? $resource->url_raw : old('url') }}"
-                class="form-control {{ $errors->has('url') ? 'is-danger' : '' }}"
-                placeholder="(@lang('optional')) @lang('products-catalog::product.url._')">
-        </div>
-    </div>
-</div>
+<x-backend-form-text :resource="$resource ?? null"
+    name="url"
+    label="{{ __('products-catalog::product.url.0') }}"
+    prepend="{{ url('/') }}/"
+    placeholder="({{ __('optional') }}) {{ __('products-catalog::product.url._') }}" />
 
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 control-label mt-2 mb-3">@lang('products-catalog::product.tags.0')</label>
@@ -349,32 +296,15 @@
     </div>
 </div>
 
-<div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.visible.0')</label>
-    <div class="col-3">
-        <div class="form-check">
-            <input type="hidden" name="visible" value="{{ (isset($resource) && !old('visible') ? $resource->visible : old('visible')) ? 'true' : 'false' }}">
-            <input type="checkbox" id="visible"
-                onchange="this.previousElementSibling.value = this.checked ? 'true' : 'false'"
-                @if (isset($resource) && !old('visible') ? $resource->visible : old('visible')) checked @endif
-                class="form-check-input {{ $errors->has('visible') ? 'is-danger' : '' }}"
-                placeholder="@lang('products-catalog::product.visible._')">
-            <label for="visible" class="form-check-label">@lang('products-catalog::product.visible._')</label>
-        </div>
-    </div>
-</div>
+<x-backend-form-boolean :resource="$resource ?? null"
+    name="visible"
+    label="{{ __('products-catalog::product.visible.0') }}"
+    placeholder="{{ __('products-catalog::product.visible._') }}" />
 
-<div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.priority.0')</label>
-    <div class="col-11 col-md-8 col-lg-6 col-xl-4">
-        <input name="priority" type="number"
-            value="{{ isset($resource) && !old('priority') ? $resource->priority : old('priority') }}"
-            class="form-control {{ $errors->has('priority') ? 'is-danger' : '' }}"
-            placeholder="@lang('products-catalog::product.priority._')">
-    </div>
-    {{-- <i class="fas fa-info-circle ml-2 cursor-help" data-toggle="tooltip" data-placement="right"
-        title="@lang('products-catalog::product.priority.?')"></i> --}}
-</div>
+<x-backend-form-number :resource="$resource ?? null"
+    name="priority"
+    label="{{ __('products-catalog::product.priority.0') }}"
+    placeholder="({{ __('optional') }}) {{ __('products-catalog::product.priority._') }}" />
 
 <div class="form-row">
     <div class="offset-0 offset-md-3 col-12 col-md-9">
