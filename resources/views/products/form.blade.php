@@ -188,6 +188,7 @@
 @endphp
 <x-backend-form-select :resource="$resource ?? null" :values="$taxes"
     name="tax" required
+    field="taxRaw"
     default="10i"
     label="{{ __('products-catalog::product.tax.0') }}"
     placeholder="{{ __('products-catalog::product.tax._') }}"
