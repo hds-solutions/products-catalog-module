@@ -7,6 +7,7 @@ use HDSSolutions\Finpar\DataTables\VariantDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
 use HDSSolutions\Finpar\Models\Product;
 use HDSSolutions\Finpar\Models\Variant as Resource;
+use HDSSolutions\Finpar\Models\VariantValue;
 use Illuminate\Support\Facades\DB;
 
 class VariantController extends Controller {
