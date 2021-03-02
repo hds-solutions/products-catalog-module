@@ -10,6 +10,9 @@
             <option value="" selected disabled hidden>@lang('products-catalog::variant.product_id.0')</option>
             @foreach($products as $product)
             <option value="{{ $product->id }}"
+                data-type="{{ $product->type_id }}"
+                data-family="{{ $product->family_id }}"
+                data-line="{{ $product->line_id }}"
                 @if (isset($resource) && !old('product_id') && $resource->product_id == $product->id ||
                     old('product_id') == $product->id ||
                     request('product') == $product->id) selected @endif>{{ $product->name }}</option>
