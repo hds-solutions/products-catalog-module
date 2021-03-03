@@ -2,13 +2,16 @@
 
 namespace HDSSolutions\Finpar;
 
-// use HDSSolutions\Finpar\Commands\Mix;
 use HDSSolutions\Laravel\Modules\ModuleServiceProvider;
 
 class ProductsCatalogModuleServiceProvider extends ModuleServiceProvider {
 
-    private $commands = [
-        // Mix::class,
+    protected array $middlewares = [
+        \HDSSolutions\Finpar\Http\Middleware\ProductsCatalogMenu::class,
+    ];
+
+    private array $commands = [
+        // \HDSSolutions\Finpar\Commands\Mix::class,
     ];
 
     public function bootEnv():void {
@@ -37,7 +40,7 @@ class ProductsCatalogModuleServiceProvider extends ModuleServiceProvider {
         // register singleton
         app()->singleton('products-catalog', fn() => new ProductsCatalog);
         // register commands
-        // $this->commands( $this->commands );
+        $this->commands( $this->commands );
         // merge configuration
         $this->mergeConfigFrom( module_path('config/products-catalog.php'), 'products-catalog' );
     }
