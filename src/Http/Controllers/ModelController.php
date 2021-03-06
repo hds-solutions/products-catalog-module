@@ -55,8 +55,12 @@ class ModelController extends Controller {
                 ->withErrors( $resource->errors() )
                 ->withInput();
 
-        // redirect to list
-        return redirect()->route('backend.models');
+        // check return type
+        return $request->has('only-form') ?
+            // redirect to popup callback
+            view('backend::components.popup-callback', compact('resource')) :
+            // redirect to resources list
+            redirect()->route('backend.models');
     }
 
     /**

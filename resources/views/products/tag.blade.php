@@ -1,16 +1,16 @@
-<div class="row tag-container mb-3" @if ($selected === null) id="new" @else data-used="true" @endif>
-    <div class="col-10">
+<div class="row tag-container mb-3" @if ( ($selected ?? null) === null) id="new" @else data-used="true" @endif>
+    <div class="col-12 d-flex">
         <select name="tags[]"
-            class="form-control selectpicker" placeholder="@lang('Tag')">
-            <option value="" selected disabled hidden>@lang('Tag')</option>
+            class="form-control selectpicker" placeholder="@lang('products-catalog::tag.name._')">
+            <option value="" selected disabled hidden>@lang('products-catalog::category.name.0')</option>
             @foreach($tags as $tag)
             <option value="{{ $tag->id }}"
-                @if(isset($selected) && $selected->id == $tag->id) selected @endif>{{ $tag->name }}</option>
+                @if (isset($selected) && !$old && $tag->id == $selected->id ||
+                    isset($old) && $tag->id == $old)) selected @endif>{{ $tag->name }}</option>
             @endforeach
         </select>
-    </div>
-    <div class="col-2 d-flex justify-content-end">
-        <button type="button" class="btn btn-danger"
+
+        <button type="button" class="btn btn-danger ml-2"
             data-action="delete"
             @if ($selected !== null)
             data-confirm="Eliminar @lang('Tag')?"

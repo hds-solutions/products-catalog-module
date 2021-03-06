@@ -6,10 +6,9 @@
     'description'   => 'Options description',
 
     'index'         => 'Options list',
-    'create'        => 'Create Option',
+    'create'        => 'Create new Option',
+    'add'           => 'Add new Option',
     'show'          => 'Option Details',
-
-    'add'           => 'Create new Option',
     'edit'          => 'Edit Option',
 
     'save'          => 'Save',

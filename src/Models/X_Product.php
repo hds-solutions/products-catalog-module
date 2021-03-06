@@ -8,6 +8,14 @@ use HDSSolutions\Finpar\Traits\BelongsToCompany;
 class X_Product extends Model {
     use BelongsToCompany;
 
+    const TAXES = [
+        'ex'    => 'Sin I.V.A.',
+        '05'    => '5% extra',
+        '05i'   => '5% incluido',
+        '10'    => '10% extra',
+        '10i'   => '10% incluido',
+    ];
+
     protected $orderBy = [
         'name'  => 'ASC',
     ];

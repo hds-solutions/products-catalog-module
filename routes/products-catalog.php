@@ -49,9 +49,9 @@ Route::group([
         ->parameters([ 'families' => 'resource' ])
         ->name('index', 'backend.families');
 
-    Route::resource('subfamilies',      SubFamilyController::class, $name_prefix)
-        ->parameters([ 'subfamilies' => 'resource' ])
-        ->name('index', 'backend.subfamilies');
+    Route::resource('sub_families',     SubFamilyController::class, $name_prefix)
+        ->parameters([ 'sub_families' => 'resource' ])
+        ->name('index', 'backend.sub_families');
 
     Route::resource('categories',       CategoryController::class,  $name_prefix)
         ->parameters([ 'categories' => 'resource' ])

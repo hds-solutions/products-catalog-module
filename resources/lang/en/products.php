@@ -6,10 +6,9 @@
     'description'   => 'Products description',
 
     'index'         => 'Products list',
-    'create'        => 'Create Product',
+    'create'        => 'Create new Product',
+    'add'           => 'Add new Product',
     'show'          => 'Product Details',
-
-    'add'           => 'Create new Product',
     'edit'          => 'Edit Product',
 
     'save'          => 'Save',

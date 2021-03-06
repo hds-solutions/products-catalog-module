@@ -6,10 +6,9 @@
     'description'   => 'Families description',
 
     'index'         => 'Families list',
-    'create'        => 'Create Family',
+    'create'        => 'Create new Family',
+    'add'           => 'Add new Family',
     'show'          => 'Family Details',
-
-    'add'           => 'Create new Family',
     'edit'          => 'Edit Family',
 
     'save'          => 'Save',

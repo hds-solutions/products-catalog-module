@@ -11,7 +11,7 @@
             @foreach($brands as $brand)
             <option value="{{ $brand->id }}"
                 @if (isset($resource) && !old('brand_id') && $resource->brand_id == $brand->id ||
-                    old('brand_id') == $brand->id) selected @endif>{{ $brand->name }}</option>
+                    old('brand_id') == $brand->id || request('brand') == $brand->id) selected @endif>{{ $brand->name }}</option>
             @endforeach
         </select>
     </div>

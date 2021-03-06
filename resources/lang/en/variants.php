@@ -6,10 +6,9 @@
     'description'   => 'Variants description',
 
     'index'         => 'Variants list',
-    'create'        => 'Create Variant',
+    'create'        => 'Create new Variant',
+    'add'           => 'Add new Variant',
     'show'          => 'Variant Details',
-
-    'add'           => 'Create new Variant',
     'edit'          => 'Edit Variant',
 
     'save'          => 'Save',

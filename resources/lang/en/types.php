@@ -6,10 +6,9 @@
     'description'   => 'Types description',
 
     'index'         => 'Types list',
-    'create'        => 'Create Type',
+    'create'        => 'Create new Type',
+    'add'           => 'Add new Type',
     'show'          => 'Type Details',
-
-    'add'           => 'Create new Type',
     'edit'          => 'Edit Type',
 
     'save'          => 'Save',

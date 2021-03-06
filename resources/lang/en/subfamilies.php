@@ -6,10 +6,9 @@
     'description'   => 'SubFamilies description',
 
     'index'         => 'SubFamilies list',
-    'create'        => 'Create SubFamily',
+    'create'        => 'Create new SubFamily',
+    'add'           => 'Add new SubFamily',
     'show'          => 'SubFamily Details',
-
-    'add'           => 'Create new SubFamily',
     'edit'          => 'Edit SubFamily',
 
     'save'          => 'Save',

@@ -20,6 +20,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route('backend.lines.store') }}" enctype="multipart/form-data">
             @csrf
+            @onlyform
             @include('products-catalog::lines.form')
         </form>
     </div>

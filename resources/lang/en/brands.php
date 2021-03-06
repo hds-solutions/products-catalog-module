@@ -6,10 +6,9 @@
     'description'   => 'Brands description',
 
     'index'         => 'Brands list',
-    'create'        => 'Create Brand',
+    'create'        => 'Create new Brand',
+    'add'           => 'Add new Brand ...',
     'show'          => 'Brand Details',
-
-    'add'           => 'Create new Brand',
     'edit'          => 'Edit Brand',
 
     'save'          => 'Save',

@@ -6,10 +6,9 @@
     'description'   => 'Tags description',
 
     'index'         => 'Tags list',
-    'create'        => 'Create Tag',
+    'create'        => 'Create new Tag',
+    'add'           => 'Add new Tag',
     'show'          => 'Tag Details',
-
-    'add'           => 'Create new Tag',
     'edit'          => 'Edit Tag',
 
     'save'          => 'Save',

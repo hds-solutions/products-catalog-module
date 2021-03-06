@@ -31,7 +31,7 @@ class TypeController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create(Request $request) {
         // get options
         $options = Option::ordered()->get();
         // show create form
@@ -61,8 +61,12 @@ class TypeController extends Controller {
         // sync options
         $resource->options()->sync($request->options);
 
-        // redirect to list
-        return redirect()->route('backend.types');
+        // check return type
+        return $request->has('only-form') ?
+            // redirect to popup callback
+            view('backend::components.popup-callback', compact('resource')) :
+            // redirect to resources list
+            redirect()->route('backend.types');
     }
 
     /**

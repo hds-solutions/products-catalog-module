@@ -1,5 +1,5 @@
 <div class="row category-container mb-3" @if ( ($selected ?? null) === null) id="new" @else data-used="true" @endif>
-    <div class="col-10">
+    <div class="col-12 d-flex">
         <select name="categories[]"
             class="form-control selectpicker" placeholder="@lang('products-catalog::category.name._')">
             <option value="" selected disabled hidden>@lang('products-catalog::category.name.0')</option>
@@ -9,9 +9,8 @@
                     isset($old) && $category->id == $old)) selected @endif>{{ $category->name }}</option>
             @endforeach
         </select>
-    </div>
-    <div class="col-2 d-flex justify-content-end">
-        <button type="button" class="btn btn-danger"
+
+        <button type="button" class="btn btn-danger ml-2"
             data-action="delete"
             @if ( ($selected ?? null) !== null && $selected !== 0)
             data-confirm="Eliminar @lang('Category')?"

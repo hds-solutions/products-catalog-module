@@ -6,10 +6,9 @@
     'description'   => 'Gamas description',
 
     'index'         => 'Gamas list',
-    'create'        => 'Create Gama',
+    'create'        => 'Create new Gama',
+    'add'           => 'Add new Gama',
     'show'          => 'Gama Details',
-
-    'add'           => 'Create new Gama',
     'edit'          => 'Edit Gama',
 
     'save'          => 'Save',

@@ -6,10 +6,9 @@
     'description'   => 'Models description',
 
     'index'         => 'Models list',
-    'create'        => 'Create Model',
+    'create'        => 'Create new Model',
+    'add'           => 'Add new Model',
     'show'          => 'Model Details',
-
-    'add'           => 'Create new Model',
     'edit'          => 'Edit Model',
 
     'save'          => 'Save',

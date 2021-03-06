@@ -14,7 +14,7 @@
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.models.create') }}"
-                    class="btn btn-sm btn-primary">@lang('products-catalog::models.add')</a>
+                    class="btn btn-sm btn-primary">@lang('products-catalog::models.create')</a>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
                 <p class="text-muted">
                     @lang('backend.empty.description')
                     <a href="{{ route('backend.models.create') }}" class="text-custom">
-                        <ins>@lang('products-catalog::models.add')</ins>
+                        <ins>@lang('products-catalog::models.create')</ins>
                     </a>
                 </p>
             </div>

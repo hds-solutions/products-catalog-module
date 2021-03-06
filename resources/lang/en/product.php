@@ -16,36 +16,42 @@
         'Brand',
         '_' => 'Brand',
         '?' => 'Brand',
+        'optional'  => 'Without Brand',
     ],
 
     'model_id'      => [
         'Model',
         '_' => 'Model',
         '?' => 'Model',
+        'optional'  => 'Without Model',
     ],
 
     'line_id'       => [
         'Line',
         '_' => 'Line',
         '?' => 'Line',
+        'optional'  => 'Without Line',
     ],
 
     'gama_id'       => [
         'Gama',
         '_' => 'Gama',
         '?' => 'Gama',
+        'optional'  => 'Without Gama',
     ],
 
     'family_id'     => [
         'Family',
         '_' => 'Family',
         '?' => 'Family',
+        'optional'  => 'Without Family',
     ],
 
     'sub_family_id' => [
         'SubFamily',
         '_' => 'SubFamily',
         '?' => 'SubFamily',
+        'optional'  => 'Without SubFamily',
     ],
 
     'categories'    => [

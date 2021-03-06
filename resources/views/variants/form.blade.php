@@ -37,7 +37,7 @@
 
 <div class="form-row form-group align-items-center">
     <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::variant.price.0') / @lang('products-catalog::variant.price_reseller.0')</label>
-    <div class="col-3">
+    <div class="col-11 col-md-8 col-lg-6 col-xl-4">
         <div class="form-row">
 
             <div class="col-6">
@@ -61,7 +61,7 @@
 
 <div class="form-row form-group align-items-center">
     <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::variant.images.0')</label>
-    <div class="col-6">
+    <div class="col-11 col-md-8 col-lg-6 col-xl-4">
         <div class="input-group">
 
             <select name="images[]" multiple data-live-search="true"

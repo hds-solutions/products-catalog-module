@@ -6,10 +6,9 @@
     'description'   => 'Categories description',
 
     'index'         => 'Categories list',
-    'create'        => 'Create Category',
+    'create'        => 'Create new Category',
+    'add'           => 'Add new Category',
     'show'          => 'Category Details',
-
-    'add'           => 'Create new Category',
     'edit'          => 'Edit Category',
 
     'save'          => 'Save',
