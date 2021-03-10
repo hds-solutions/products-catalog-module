@@ -6,7 +6,7 @@
 
     label="{{ __('products-catalog::variant.product_id.0') }}"
     placeholder="{{ __('products-catalog::variant.product_id._') }}"
-    {{-- help="{{ __('products-catalog::variant.product_id.?') }}" --}} />
+    {{-- helper="{{ __('products-catalog::variant.product_id.?') }}" --}} />
 
 <x-backend-form-text :resource="$resource ?? null" name="sku" required
     label="{{ __('products-catalog::variant.sku.0') }}"

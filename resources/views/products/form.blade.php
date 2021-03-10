@@ -9,14 +9,14 @@
 
     label="{{ __('products-catalog::product.type_id.0') }}"
     placeholder="{{ __('products-catalog::product.type_id._') }}"
-    {{-- help="{{ __('products-catalog::product.type_id.?') }}" --}} />
+    {{-- helper="{{ __('products-catalog::product.type_id.?') }}" --}} />
 
 <x-backend-form-foreign :resource="$resource ?? null" name="brand_id"
     foreign="brands" :values="$brands" foreign-add-label="{{ __('products-catalog::brands.add') }}"
 
     label="{{ __('products-catalog::product.brand_id.0') }} / {{ __('products-catalog::product.model_id.0') }}"
     placeholder="{{ __('products-catalog::product.brand_id.optional') }}"
-    {{-- help="{{ __('products-catalog::product.brand_id.?') }}" --}}>
+    {{-- helper="{{ __('products-catalog::product.brand_id.?') }}" --}}>
 
     <x-backend-form-foreign :resource="$resource ?? null" name="model_id" secondary
         filtered-by="[name=brand_id]" filtered-using="brand"
@@ -24,7 +24,7 @@
 
         label="{{ __('products-catalog::product.model_id.0') }}"
         placeholder="{{ __('products-catalog::product.model_id.optional') }}"
-        {{-- help="{{ __('products-catalog::product.model_id.?') }}" --}} />
+        {{-- helper="{{ __('products-catalog::product.model_id.?') }}" --}} />
 
 </x-backend-form-foreign>
 
@@ -33,7 +33,7 @@
 
     label="{{ __('products-catalog::product.line_id.0') }} / {{ __('products-catalog::product.gama_id.0') }}"
     placeholder="{{ __('products-catalog::product.line_id.optional') }}"
-    {{-- help="{{ __('products-catalog::product.line_id.?') }}" --}}>
+    {{-- helper="{{ __('products-catalog::product.line_id.?') }}" --}}>
 
     <x-backend-form-foreign :resource="$resource ?? null" name="gama_id" secondary
         filtered-by="[name=line_id]" filtered-using="line"
@@ -41,7 +41,7 @@
 
         label="{{ __('products-catalog::product.gama_id.0') }}"
         placeholder="{{ __('products-catalog::product.gama_id.optional') }}"
-        {{-- help="{{ __('products-catalog::product.gama_id.?') }}" --}} />
+        {{-- helper="{{ __('products-catalog::product.gama_id.?') }}" --}} />
 
 </x-backend-form-foreign>
 
@@ -50,7 +50,7 @@
 
     label="{{ __('products-catalog::product.family_id.0') }} / {{ __('products-catalog::product.sub_family_id.0') }}"
     placeholder="{{ __('products-catalog::product.family_id.optional') }}"
-    {{-- help="{{ __('products-catalog::product.family_id.?') }}" --}}>
+    {{-- helper="{{ __('products-catalog::product.family_id.?') }}" --}}>
 
     <x-backend-form-foreign :resource="$resource ?? null" name="sub_family_id" secondary
         filtered-by="[name=family_id]" filtered-using="family"
@@ -58,7 +58,7 @@
 
         label="{{ __('products-catalog::product.sub_family_id.0') }}"
         placeholder="{{ __('products-catalog::product.sub_family_id.optional') }}"
-        {{-- help="{{ __('products-catalog::product.sub_family_id.?') }}" --}} />
+        {{-- helper="{{ __('products-catalog::product.sub_family_id.?') }}" --}} />
 
 </x-backend-form-foreign>
 
