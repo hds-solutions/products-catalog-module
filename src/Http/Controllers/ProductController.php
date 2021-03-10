@@ -7,6 +7,7 @@ use HDSSolutions\Finpar\DataTables\ProductDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
 use HDSSolutions\Finpar\Models\Brand;
 use HDSSolutions\Finpar\Models\Category;
+use HDSSolutions\Finpar\Models\Currency;
 use HDSSolutions\Finpar\Models\Family;
 use HDSSolutions\Finpar\Models\File;
 use HDSSolutions\Finpar\Models\Line;
@@ -53,11 +54,13 @@ class ProductController extends Controller {
         // load warehouses
         $warehouses = Warehouse::with([ 'locators' ])
             ->ordered()->get();
+        // load currencies
+        $currencies = Currency::ordered()->get();
         // show create form
         return view('products-catalog::products.create', compact(
             'brands', 'families', 'lines',
             'types', 'categories',
-            'tags', 'images', 'warehouses',
+            'tags', 'images', 'warehouses', 'currencies'
         ));
     }
 
@@ -96,6 +99,16 @@ class ProductController extends Controller {
 
         // sync product locators
         $resource->locators()->sync( $request->get('locators') ?? [] );
+
+        // sync product prices
+        if ($request->has('prices')) $resource->prices()->sync(
+            // get prices as collection
+            $prices = collect(array_group($request->get('prices')))
+                // filter price without currency set
+                ->filter(fn($price) => array_key_exists('currency_id', $price))
+                // use currency_id as collection key
+                ->keyBy('currency_id')
+            );
 
         // confirm transaction
         DB::commit();
@@ -141,19 +154,22 @@ class ProductController extends Controller {
         // load warehouses
         $warehouses = Warehouse::with([ 'locators' ])
             ->ordered()->get();
+        // load currencies
+        $currencies = Currency::ordered()->get();
         // load product images and offers
         $resource->load([
             'categories',
             'tags',
             'images',
             'locators',
+            'prices',
         ]);
         // show edit form
         return view('products-catalog::products.edit', compact(
             'resource',
             'brands', 'families', 'lines',
             'types', 'categories',
-            'tags', 'images', 'warehouses',
+            'tags', 'images', 'warehouses', 'currencies'
         ));
     }
 
@@ -197,6 +213,16 @@ class ProductController extends Controller {
 
         // sync product locators
         if ($resource->has('locators')) $resource->locators()->sync( $request->get('locators') ?? [] );
+
+        // sync product prices
+        if ($request->has('prices')) $resource->prices()->sync(
+            // get prices as collection
+            $prices = collect(array_group($request->get('prices')))
+                // filter price without currency set
+                ->filter(fn($price) => array_key_exists('currency_id', $price))
+                // use currency_id as collection key
+                ->keyBy('currency_id')
+            );
 
         // confirm transaction
         DB::commit();

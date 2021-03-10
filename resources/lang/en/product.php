@@ -8,7 +8,7 @@
 
     'type_id'       => [
         'Type',
-        '_' => 'Type',
+        '_' => 'Select Type',
         '?' => 'Type',
     ],
 
@@ -58,6 +58,13 @@
         'Categories',
         '_' => 'Categories',
         '?' => 'Categories',
+
+        'category_id'   => [
+            'Category',
+            '_' => 'Select Category',
+            '?' => 'Category',
+            'optional'  => '(optional) Select Category',
+        ],
     ],
 
     'brief'         => [
@@ -72,16 +79,34 @@
         '?' => 'Description',
     ],
 
-    'price'         => [
-        'Price',
-        '_' => 'Price',
-        '?' => 'If Reseller price is not set, default price will we used for Resellers',
-    ],
+    'prices'        => [
+        'Prices',
+        '_' => 'Prices',
+        '?' => 'Prices',
 
-    'price_reseller'=> [
-        'Price Reseller',
-        '_' => 'Price Reseller',
-        '?' => 'Price Reseller',
+        'currency_id'   => [
+            'Currency',
+            '_' => 'Currency',
+            '?' => 'Currency',
+        ],
+
+        'cost'          => [
+            'Cost',
+            '_' => 'Cost',
+            '?' => 'Cost',
+        ],
+
+        'price'         => [
+            'Price',
+            '_' => 'Price',
+            '?' => 'Price',
+        ],
+
+        'limit'         => [
+            'Limit',
+            '_' => 'Limit',
+            '?' => 'Limit',
+        ],
     ],
 
     'tax'           => [

@@ -74,6 +74,15 @@ class Product extends X_Product {
             ->withPivot([ 'active' ]);
     }
 
+    public function prices() {
+        return $this->belongsToMany(Currency::class, 'price_product')
+            ->using(ProductPrice::class)
+            ->withTimestamps()
+            // only locators where product is set without variant
+            ->whereNull('price_product.variant_id')
+            ->withPivot([ 'cost', 'price', 'limit', 'reseller' ]);
+    }
+
     public function getStockAttribute():int {
         // acumulator
         $qtyAvailable = 0;
