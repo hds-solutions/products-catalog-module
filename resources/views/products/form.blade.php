@@ -18,7 +18,7 @@
     placeholder="{{ __('products-catalog::product.brand_id.optional') }}"
     {{-- help="{{ __('products-catalog::product.brand_id.?') }}" --}}>
 
-    <x-backend-form-foreign :resource="$resource ?? null" name="model_id"
+    <x-backend-form-foreign :resource="$resource ?? null" name="model_id" secondary
         filtered-by="[name=brand_id]" filtered-using="brand"
         foreign="models" :values="$brands->pluck('models')->flatten()" foreign-add-label="{{ __('products-catalog::models.add') }}"
 
@@ -35,7 +35,7 @@
     placeholder="{{ __('products-catalog::product.line_id.optional') }}"
     {{-- help="{{ __('products-catalog::product.line_id.?') }}" --}}>
 
-    <x-backend-form-foreign :resource="$resource ?? null" name="gama_id"
+    <x-backend-form-foreign :resource="$resource ?? null" name="gama_id" secondary
         filtered-by="[name=line_id]" filtered-using="line"
         foreign="gamas" :values="$lines->pluck('gamas')->flatten()" foreign-add-label="{{ __('products-catalog::gamas.add') }}"
 
@@ -52,7 +52,7 @@
     placeholder="{{ __('products-catalog::product.family_id.optional') }}"
     {{-- help="{{ __('products-catalog::product.family_id.?') }}" --}}>
 
-    <x-backend-form-foreign :resource="$resource ?? null" name="sub_family_id"
+    <x-backend-form-foreign :resource="$resource ?? null" name="sub_family_id" secondary
         filtered-by="[name=family_id]" filtered-using="family"
         foreign="sub_families" :values="$families->pluck('sub_families')->flatten()" foreign-add-label="{{ __('products-catalog::sub_families.add') }}"
 
@@ -209,7 +209,9 @@
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 control-label mt-2 mb-3">@lang('products-catalog::product.locators.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".locator-container" data-template="#new">
-        @php $old = old('locators') ?? []; @endphp
+        @php
+            $old = old('locators') ?? [];
+        @endphp
         {{-- add product current locators --}}
         @if (isset($resource)) @foreach($resource->locators as $idx => $selected)
             @include('products-catalog::products.locator', [

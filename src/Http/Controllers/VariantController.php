@@ -5,9 +5,11 @@ namespace HDSSolutions\Finpar\Http\Controllers;
 use App\Http\Controllers\Controller;
 use HDSSolutions\Finpar\DataTables\VariantDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
+use HDSSolutions\Finpar\Models\File;
 use HDSSolutions\Finpar\Models\Product;
 use HDSSolutions\Finpar\Models\Variant as Resource;
 use HDSSolutions\Finpar\Models\VariantValue;
+use HDSSolutions\Finpar\Models\Warehouse;
 use Illuminate\Support\Facades\DB;
 
 class VariantController extends Controller {
@@ -21,20 +23,6 @@ class VariantController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
         return $dataTable->render('products-catalog::variants.index', [ 'count' => Resource::count() ]);
-
-        // fetch all objects
-        $resources = Variant::with([
-            'product.offers',
-            'offers',
-            'images',
-            'values.option',
-            'values.option_value',
-            'storages',
-        ])->ordered()->get();
-        // filter by product
-        if ($request->has('product_id')) $resources = $resources->where('product_id', $request->get('product_id'));
-        // show a list of objects
-        return view('variants.index', compact('variants'));
     }
 
     /**
@@ -56,10 +44,9 @@ class VariantController extends Controller {
         // get available options
         $options = $this->getAvailableOptions( $products );
 
-        // TODO: warehouses
-        $warehouses = collect();
-        // $warehouses = Warehouse::with([ 'locators' ])
-        //     ->ordered()->get();
+        // warehouses
+        $warehouses = Warehouse::with([ 'locators' ])
+            ->ordered()->get();
 
         // show create form
         return view('products-catalog::variants.create', compact(
@@ -100,16 +87,16 @@ class VariantController extends Controller {
         // save Variant option values
         if (($res = $this->saveOptionValues($request, $resource)) !== true) return $res;
 
-        // sync variant images
-        if ($request->has('images')) $resource->images()->sync( $request->get('images') ?? [] );
+        // save product images
+        if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
 
-        // // TODO: sync product locators
-        // if ($resource->has('locators')) $resource->locators()
-        //     ->sync( array_map(function() use ($resource) {
-        //         // append product_id
-        //         return [ 'product_id' => $resource->product_id ];
-        //     // use locator_id's as keys
-        //     }, array_flip( $request->get('locators') ?? [] )) );
+        //  sync product locators
+        if ($resource->has('locators')) $resource->locators()
+            ->sync( array_map(function() use ($resource) {
+                // append product_id
+                return [ 'product_id' => $resource->product_id ];
+            // use locator_id's as keys
+            }, array_flip( $request->get('locators') ?? [] )) );
 
         // confirm transaction
         DB::commit();
@@ -153,9 +140,8 @@ class VariantController extends Controller {
         $options = $this->getAvailableOptions( $products );
 
         // warehouses
-        $warehouses = collect();
-        // $warehouses = Warehouse::with([ 'locators' ])
-        //     ->ordered()->get();
+        $warehouses = Warehouse::with([ 'locators' ])
+            ->ordered()->get();
 
         // show edit form
         return view('products-catalog::variants.edit', compact(
@@ -190,16 +176,16 @@ class VariantController extends Controller {
         // save Variant option values
         if (($res = $this->saveOptionValues($request, $resource)) !== true) return $res;
 
-        // sync product images
-        if ($resource->has('images')) $resource->images()->sync( $request->get('images') );
+        // save product images
+        if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
 
-        // // TODO: sync product locators
-        // if ($resource->has('locators')) $resource->locators()
-        //     ->sync( array_map(function() use ($resource) {
-        //         // append product_id
-        //         return [ 'product_id' => $resource->product_id ];
-        //     // use locator_id's as keys
-        //     }, array_flip( $request->get('locators') ?? [] )) );
+        // sync product locators
+        if ($resource->has('locators')) $resource->locators()
+            ->sync( array_map(function() use ($resource) {
+                // append product_id
+                return [ 'product_id' => $resource->product_id ];
+            // use locator_id's as keys
+            }, array_flip( $request->get('locators') ?? [] )) );
 
         // confirm transaction
         DB::commit();
@@ -332,6 +318,37 @@ class VariantController extends Controller {
         }
 
         // return true
+        return true;
+    }
+
+    private function saveResourceImages(Resource $resource, Request $request) {
+        // check new uploaded image
+        if ($request->hasFile('images')) {
+            // foreach uploaded files
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                // upload image
+                $image = File::upload($request, $image, $this);
+                // save resource
+                if (!$image->save())
+                    // redirect with errors
+                    return back()
+                        ->withErrors($image->errors())
+                        ->withInput();
+                // append to images
+                $images[] = $image->id;
+            }
+            // append to request
+            $request->merge([ 'images' => array_merge($request->get('images') ?? [], $images) ]);
+        }
+
+        // attach images to parent product
+        if ($request->has('images')) $resource->product->images()->attach( $request->get('images') ?? [] );
+
+        // sync images
+        if ($request->has('images')) $resource->images()->sync( $request->get('images') ?? [] );
+
+        //
         return true;
     }
 

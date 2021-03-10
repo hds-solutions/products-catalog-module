@@ -48,7 +48,7 @@ class Variant extends X_Variant {
 
     public function locators() {
         return $this->belongsToMany(Locator::class, 'locator_product')
-            ->using(VariantLocator::class)
+            ->using(ProductLocator::class)
             ->withTimestamps()
             ->withPivot([ 'active' ]);
     }
