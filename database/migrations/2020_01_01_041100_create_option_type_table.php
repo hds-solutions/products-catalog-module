@@ -19,6 +19,7 @@ class CreateOptionTypeTable extends Migration {
 
         // create table
         $schema->create('option_type', function(Blueprint $table) {
+            $table->asPivot();
             $table->foreignTo('Company');
             $table->foreignTo('Type');
             $table->foreignTo('Option');

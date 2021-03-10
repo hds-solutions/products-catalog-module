@@ -19,6 +19,7 @@ class CreateVariantValueTable extends Migration {
 
         // create table
         $schema->create('variant_value', function(Blueprint $table) {
+            $table->asPivot();
             $table->foreignTo('Company');
             $table->foreignTo('Variant');
             $table->foreignTo('Option');

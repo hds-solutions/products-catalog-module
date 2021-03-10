@@ -13,6 +13,7 @@ use HDSSolutions\Finpar\Models\Line;
 use HDSSolutions\Finpar\Models\Product as Resource;
 use HDSSolutions\Finpar\Models\Tag;
 use HDSSolutions\Finpar\Models\Type;
+use HDSSolutions\Finpar\Models\Warehouse;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller {
@@ -26,28 +27,6 @@ class ProductController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
         // return view with dataTable
         return $dataTable->render('products-catalog::products.index', [ 'count' => Resource::count() ]);
-
-        // fetch all objects
-        $products = Product::with([
-            'brand', 'model',
-            'family', 'sub_family',
-            'line', 'gama',
-            //
-            'offers',
-            'categories',
-            'tags',
-            'images',
-            //
-            'variants.values' => function($q) { return $q->with([ 'option', 'option_value' ]); },
-            //
-            'storages',
-            'variants.storages',
-        ])
-        // ordered
-        ->ordered()->get();
-
-        // show a list of objects
-        return view('products.index', compact('products'));
     }
 
     /**
@@ -67,14 +46,13 @@ class ProductController extends Controller {
         $types = Type::ordered()->get();
         // categories
         $categories = Category::ordered()->get();
-        // tags
+        // load tags
         $tags = Tag::ordered()->get();
         // load images
         $images = File::images()->get();
-        // TODO: warehouses
-        $warehouses = collect();
-        // $warehouses = Warehouse::with([ 'locators' ])
-        //     ->ordered()->get();
+        // load warehouses
+        $warehouses = Warehouse::with([ 'locators' ])
+            ->ordered()->get();
         // show create form
         return view('products-catalog::products.create', compact(
             'brands', 'families', 'lines',
@@ -116,8 +94,8 @@ class ProductController extends Controller {
         // sync product tags
         $resource->tags()->sync( $request->get('tags') ?? [] );
 
-        // TODO: sync product locators
-        // $resource->locators()->sync( $request->get('locators') ?? [] );
+        // sync product locators
+        $resource->locators()->sync( $request->get('locators') ?? [] );
 
         // confirm transaction
         DB::commit();
@@ -160,16 +138,15 @@ class ProductController extends Controller {
         $tags = Tag::ordered()->get();
         // load images
         $images = File::images()->get();
-        // TODO: warehouses
-        $warehouses = collect();
-        // $warehouses = Warehouse::with([ 'locators' ])
-        //     ->ordered()->get();
+        // load warehouses
+        $warehouses = Warehouse::with([ 'locators' ])
+            ->ordered()->get();
         // load product images and offers
         $resource->load([
             'categories',
             'tags',
             'images',
-            // TODO:'locators',
+            'locators',
         ]);
         // show edit form
         return view('products-catalog::products.edit', compact(
@@ -213,13 +190,13 @@ class ProductController extends Controller {
         if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
 
         // sync product categories
-        if ($request->has('categories')) $resource->categories()->sync( $request->get('categories') );
+        if ($request->has('categories')) $resource->categories()->sync( $request->get('categories') ?? [] );
 
         // sync product tags
-        if ($resource->has('tags')) $resource->tags()->sync( $request->get('tags') );
+        if ($resource->has('tags')) $resource->tags()->sync( $request->get('tags') ?? [] );
 
-        // TODO: sync product locators
-        // if ($resource->has('locators')) $resource->locators()->sync( $request->get('locators') ?? [] );
+        // sync product locators
+        if ($resource->has('locators')) $resource->locators()->sync( $request->get('locators') ?? [] );
 
         // confirm transaction
         DB::commit();
@@ -271,7 +248,7 @@ class ProductController extends Controller {
         }
 
         // sync images
-        if ($request->has('images')) $resource->images()->sync( $request->get('images') );
+        if ($request->has('images')) $resource->images()->sync( $request->get('images') ?? [] );
 
         //
         return true;

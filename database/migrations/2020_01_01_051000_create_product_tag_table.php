@@ -19,6 +19,7 @@ class CreateProductTagTable extends Migration {
 
         // create table
         $schema->create('product_tag', function(Blueprint $table) {
+            $table->asPivot();
             $table->foreignTo('Company');
             $table->foreignTo('Product');
             $table->foreignTo('Tag');

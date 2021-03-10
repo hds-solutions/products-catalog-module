@@ -19,6 +19,7 @@ class CreateFileVariantTable extends Migration {
 
         // create table
         $schema->create('file_variant', function(Blueprint $table) {
+            $table->asPivot();
             $table->foreignTo('Company');
             $table->foreignTo('Variant');
             $table->foreignTo('File');

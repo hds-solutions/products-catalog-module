@@ -19,6 +19,7 @@ class CreateLineOptionTable extends Migration {
 
         // create table
         $schema->create('line_option', function(Blueprint $table) {
+            $table->asPivot();
             $table->foreignTo('Company');
             $table->foreignTo('Line');
             $table->foreignTo('Option');

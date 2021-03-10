@@ -4,7 +4,7 @@ use HDSSolutions\Finpar\Blueprints\BaseBlueprint as Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductImagesTable extends Migration {
+class CreateCategoryProductTable extends Migration {
     /**
      * Run the migrations.
      *
@@ -18,11 +18,12 @@ class CreateProductImagesTable extends Migration {
         $schema->blueprintResolver(fn($table, $callback) => new Blueprint($table, $callback));
 
         // create table
-        $schema->create('file_product', function(Blueprint $table) {
+        $schema->create('category_product', function(Blueprint $table) {
+            $table->asPivot();
             $table->foreignTo('Company');
             $table->foreignTo('Product');
-            $table->foreignTo('File');
-            $table->primary([ 'product_id', 'file_id' ]);
+            $table->foreignTo('Category');
+            $table->primary([ 'product_id', 'category_id' ]);
         });
     }
 
@@ -32,7 +33,7 @@ class CreateProductImagesTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('file_product');
+        Schema::dropIfExists('category_product');
     }
 
 }
