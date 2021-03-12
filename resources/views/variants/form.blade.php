@@ -12,7 +12,39 @@
     label="{{ __('products-catalog::variant.sku.0') }}"
     placeholder="{{ __('products-catalog::variant.sku._') }}" />
 
-<x-backend-form-amount :resource="$resource ?? null"
+<div class="form-row form-group mb-0">
+    <label class="col-12 col-md-3 control-label mt-2 mb-3">@lang('products-catalog::variant.prices.0')</label>
+    <div class="col-11 col-md-8 col-lg-6" data-multiple=".price-container" data-template="#new">
+        @php $old = old('prices') ?? []; @endphp
+        {{-- add product current prices --}}
+        @if (isset($resource)) @foreach($resource->prices as $idx => $selected)
+            @include('products-catalog::variants.price', [
+                'currencies'    => $currencies,
+                'selected'      => $selected,
+                'old'           => $old[$idx] ?? null,
+            ])
+            @php unset($old[$idx]); @endphp
+        @endforeach @endif
+
+        {{-- add new added --}}
+        @foreach($old as $selected)
+            @include('products-catalog::variants.price', [
+                'currencies'    => $currencies,
+                'selected'      => 0,
+                'old'           => $selected,
+            ])
+        @endforeach
+
+        {{-- add empty for adding new prices --}}
+        @include('products-catalog::variants.price', [
+            'currencies'    => $currencies,
+            'selected'      => null,
+            'old'           => null,
+        ])
+    </div>
+</div>
+
+{{-- <x-backend-form-amount :resource="$resource ?? null"
     name="price" field="priceRaw" prepend="{{ config('settings.currency-symbol', 'USD') }}"
     label="{{ __('products-catalog::variant.price.0') }} / {{ __('products-catalog::variant.price_reseller.0') }}"
     placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.price._') }}"
@@ -25,7 +57,7 @@
         helper="{{ __('products-catalog::variant.price_reseller.?') }}">
     </x-backend-form-amount>
 
-</x-backend-form-amount>
+</x-backend-form-amount> --}}
 
 <x-backend-form-image :resource="$resource ?? null" :images="$images"
     name="images" multiple

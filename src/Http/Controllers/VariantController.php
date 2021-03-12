@@ -5,6 +5,7 @@ namespace HDSSolutions\Finpar\Http\Controllers;
 use App\Http\Controllers\Controller;
 use HDSSolutions\Finpar\DataTables\VariantDataTable as DataTable;
 use HDSSolutions\Finpar\Http\Request;
+use HDSSolutions\Finpar\Models\Currency;
 use HDSSolutions\Finpar\Models\File;
 use HDSSolutions\Finpar\Models\Product;
 use HDSSolutions\Finpar\Models\Variant as Resource;
@@ -40,6 +41,8 @@ class VariantController extends Controller {
         ])->ordered()->get();
         // get images from products
         $images = $products->pluck('images')->flatten();
+        // load currencies
+        $currencies = Currency::ordered()->get();
 
         // get available options
         $options = $this->getAvailableOptions( $products );
@@ -52,7 +55,7 @@ class VariantController extends Controller {
         return view('products-catalog::variants.create', compact(
             'products', 'images',
             'options',
-            'warehouses',
+            'warehouses', 'currencies'
         ));
     }
 
@@ -98,6 +101,18 @@ class VariantController extends Controller {
             // use locator_id's as keys
             }, array_flip( $request->get('locators') ?? [] )) );
 
+        // sync product prices
+        if ($request->has('prices')) $resource->prices()->sync(
+            // get prices as collection
+            $prices = collect(array_group($request->get('prices')))
+                // filter price without currency set
+                ->filter(fn($price) => array_key_exists('currency_id', $price))
+                // append product_id
+                ->map(fn($price) => $price + [ 'product_id' => $resource->product_id ])
+                // use currency_id as collection key
+                ->keyBy('currency_id')
+            );
+
         // confirm transaction
         DB::commit();
 
@@ -142,13 +157,15 @@ class VariantController extends Controller {
         // warehouses
         $warehouses = Warehouse::with([ 'locators' ])
             ->ordered()->get();
+        // load currencies
+        $currencies = Currency::ordered()->get();
 
         // show edit form
         return view('products-catalog::variants.edit', compact(
             'resource',
             'products', 'images',
             'options',
-            'warehouses',
+            'warehouses', 'currencies'
         ));
     }
 
@@ -186,6 +203,18 @@ class VariantController extends Controller {
                 return [ 'product_id' => $resource->product_id ];
             // use locator_id's as keys
             }, array_flip( $request->get('locators') ?? [] )) );
+
+        // sync product prices
+        if ($request->has('prices')) $resource->prices()->sync(
+            // get prices as collection
+            $prices = collect(array_group($request->get('prices')))
+                // filter price without currency set
+                ->filter(fn($price) => array_key_exists('currency_id', $price))
+                // append product_id
+                ->map(fn($price) => $price + [ 'product_id' => $resource->product_id ])
+                // use currency_id as collection key
+                ->keyBy('currency_id')
+            );
 
         // confirm transaction
         DB::commit();

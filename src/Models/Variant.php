@@ -53,6 +53,13 @@ class Variant extends X_Variant {
             ->withPivot([ 'active' ]);
     }
 
+    public function prices() {
+        return $this->belongsToMany(Currency::class, 'price_product')
+            ->using(ProductPrice::class)
+            ->withTimestamps()
+            ->withPivot([ 'cost', 'price', 'limit', 'reseller' ]);
+    }
+
     public function getStockAttribute():int {
         // acumulator
         $qtyAvailable = 0;
