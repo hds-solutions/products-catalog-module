@@ -70,7 +70,7 @@ class Product extends X_Product {
             ->using(ProductLocator::class)
             ->withTimestamps()
             // only locators where product is set without variant
-            ->whereNull('locator_product.variant_id')
+            ->wherePivotNull('variant_id')
             ->withPivot([ 'active' ]);
     }
 
@@ -78,8 +78,8 @@ class Product extends X_Product {
         return $this->belongsToMany(Currency::class, 'price_product')
             ->using(ProductPrice::class)
             ->withTimestamps()
-            // only locators where product is set without variant
-            ->whereNull('price_product.variant_id')
+            // only prices where product is set without variant
+            ->wherePivotNull('variant_id')
             ->withPivot([ 'cost', 'price', 'limit', 'reseller' ]);
     }
 
