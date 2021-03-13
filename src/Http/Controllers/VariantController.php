@@ -139,7 +139,7 @@ class VariantController extends Controller {
      */
     public function edit(Resource $resource) {
         // load variant images
-        $resource->load([ 'product', 'images', 'values' ]);
+        $resource->load([ 'product', 'images', 'values', 'prices' ]);
 
         // get products
         $products = Product::with([
