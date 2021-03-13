@@ -367,12 +367,12 @@ class VariantController extends Controller {
                 // append to images
                 $images[] = $image->id;
             }
+            // attach new images to parent product
+            if (count($images)) $resource->product->images()->attach( $images );
+
             // append to request
             $request->merge([ 'images' => array_merge($request->get('images') ?? [], $images) ]);
         }
-
-        // attach images to parent product
-        if ($request->has('images')) $resource->product->images()->attach( $request->get('images') ?? [] );
 
         // sync images
         if ($request->has('images')) $resource->images()->sync( $request->get('images') ?? [] );
