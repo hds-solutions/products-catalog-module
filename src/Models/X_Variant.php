@@ -17,41 +17,25 @@ class X_Variant extends Model {
         'product_id',
         'sku',
         'stock_alert',
-        'price',
-        'price_reseller',
         'priority',
     ];
 
     protected $casts = [
         'stock_alert'   => 'integer',
-        'price'         => 'decimal:2',
-        'price_reseller'=> 'decimal:2',
         'priority'      => 'integer',
     ];
 
     protected static $createRules = [
         'sku'           => [ 'required', 'min:2', 'unique:variants,sku,0,id,deleted_at,NULL' ],
         'stock_alert'   => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'price'         => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'price_reseller'=> [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
         'priority'      => [ 'sometimes', 'nullable', 'min:0' ],
     ];
 
     protected static $updateRules = [
         'sku'           => [ 'required', 'min:2', 'unique:variants,sku,{id},id,deleted_at,NULL' ],
         'stock_alert'   => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'price'         => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'price_reseller'=> [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
         'priority'      => [ 'sometimes', 'nullable', 'min:0' ],
     ];
-
-    public function getPriceRawAttribute() {
-        return $this->attributes['price'];
-    }
-
-    public function getPriceAttribute() {
-        return $this->hasOffer ? $this->offer->price : ($this->attributes['price'] ?? $this->product->price);
-    }
 
     public function getTaxAttribute() {
         // return tax price without discounts

@@ -24,8 +24,6 @@ class CreateVariantsTable extends Migration {
             $table->foreignTo('Product');
             $table->string('sku');
             $table->unsignedInteger('stock_alert')->nullable();
-            $table->amount('price')->nullable();
-            $table->amount('price_reseller')->nullable();
             $table->priority()->nullable();
         });
     }

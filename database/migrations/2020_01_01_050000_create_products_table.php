@@ -38,8 +38,6 @@ class CreateProductsTable extends Migration {
             //
             $table->boolean('giftcard')->default(false);
             $table->unsignedInteger('stock_alert')->nullable();
-            $table->amount('price')->nullable();
-            $table->amount('price_reseller')->nullable();
             $table->enum('tax', [ 'ex', '05', '10', '05i', '10i' ])->default('10i');
             //
             $table->amount('weight', 6)->nullable();

@@ -38,8 +38,6 @@ class X_Product extends Model {
 
         'giftcard',
         'stock_alert',
-        'price',
-        'price_reseller',
         'tax',
 
         'weight',
@@ -54,8 +52,6 @@ class X_Product extends Model {
     protected $casts = [
         'giftcard'      => 'boolean',
         'stock_alert'   => 'integer',
-        'price'         => 'decimal:2',
-        'price_reseller'=> 'decimal:2',
         'weight'        => 'decimal:2',
         'length'        => 'decimal:2',
         'width'         => 'decimal:2',
@@ -87,8 +83,6 @@ class X_Product extends Model {
 
         'giftcard'  => [ 'required', 'boolean' ],
         'stock_alert'   => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'price'     => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'price_reseller'=> [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
         'tax'       => [ 'required', 'in:ex,05,10,05i,10i' ],
 
         'weight'    => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
@@ -117,8 +111,6 @@ class X_Product extends Model {
 
         'giftcard'  => [ 'required', 'boolean' ],
         'stock_alert'   => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'price'     => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'price_reseller'=> [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
         'tax'       => [ 'required', 'in:ex,05,10,05i,10i' ],
 
         'weight'    => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
@@ -164,21 +156,6 @@ class X_Product extends Model {
     public function getOfferRawAttribute() {
         // find product offers
         return $this->offersRaw->first();
-    }
-
-    public function getPriceRawAttribute() {
-        return $this->attributes['price'];
-    }
-
-    public function getPriceAttribute() {
-        // TODO: price with offers
-        return $this->attributes['price'];
-        // check if current user is reseller
-        if (auth()->check() && auth()->user()->isReseller)
-            // return price for resellers
-            return $this->hasOffer ? ($this->offer->price_reseller ?? $this->offer->price) : ($this->attributes['price_reseller'] ?? $this->attributes['price']);
-        // return price for customers
-        return $this->hasOffer ? $this->offer->price : $this->attributes['price'];
     }
 
     public function getIsGiftCardAttribute() {
