@@ -8,17 +8,17 @@ use Yajra\DataTables\Html\Column;
 class ProductDataTable extends Base\DataTable {
 
     protected array $with = [
-        'brand', 'model',
-        'family', 'sub_family',
-        'line', 'gama',
-        //
+        // 'brand', 'model',
+        // 'family', 'sub_family',
+        'line', //'gama',
         // TODO: 'offers',
-        'categories',
-        'tags',
+        // 'categories',
+        // 'tags',
         'images',
-        //
-        // TODO: 'variants.values' => fn($q) => $q->with([ 'option', 'option_value' ]),
-        //
+        'prices',
+        'variants.prices',
+        'variants.values.option',
+        'variants.values.option_value',
         // TODO: 'storages',
         // TODO: 'variants.storages',
     ];
@@ -41,12 +41,19 @@ class ProductDataTable extends Base\DataTable {
                 ->renderRaw('image:images[0].url'),
 
             Column::make('name')
-                ->title( __('products-catalog::product.name.0') ),
+                ->title( __('products-catalog::product.name.0') )
+                ->renderRaw('view:product')
+                ->data( view('products-catalog::products.datatable.name')->render() ),
 
             Column::make('line.name')
-                ->title( __('products-catalog::product.line_id.0') )
-                // ->sortable(false)
-                ,
+                ->title( __('products-catalog::product.line_id.0') ),
+
+            Column::make('prices')
+                ->title( __('products-catalog::product.prices.0') )
+                ->renderRaw('view:product')
+                ->data( view('products-catalog::products.datatable.prices')->render() )
+                ->addClass('w-300px')
+                ->sortable(false),
 
             Column::make('actions'),
         ];
