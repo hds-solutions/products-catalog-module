@@ -25,9 +25,9 @@ class CreatePriceProductTable extends Migration {
             $table->foreignTo('Product');
             $table->foreignTo('Variant')->nullable();
             $table->unique([ 'currency_id', 'product_id', 'variant_id' ]);
-            $table->amount('cost', 20, 0);
-            $table->amount('price', 20, 0);
-            $table->amount('limit', 20, 0)->nullable();
+            $table->amount('cost');
+            $table->amount('price');
+            $table->amount('limit')->nullable();
             $table->boolean('reseller')->default(false);
         });
     }
