@@ -48,7 +48,7 @@ class ProductDataTable extends Base\DataTable {
             Column::make('line.name')
                 ->title( __('products-catalog::product.line_id.0') ),
 
-            Column::make('prices')
+            Column::computed('prices')
                 ->title( __('products-catalog::product.prices.0') )
                 ->renderRaw('view:product')
                 ->data( view('products-catalog::products.datatable.prices')->render() )
