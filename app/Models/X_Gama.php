@@ -2,10 +2,9 @@
 
 namespace HDSSolutions\Finpar\Models;
 
-use App\Models\Base\Model;
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 
-abstract class X_Gama extends Model {
+abstract class X_Gama extends Base\Model {
     use BelongsToCompany;
 
     protected $orderBy = [

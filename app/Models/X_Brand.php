@@ -2,11 +2,10 @@
 
 namespace HDSSolutions\Finpar\Models;
 
-use App\Models\Base\Model;
 use HDSSolutions\Finpar\Models\File;
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 
-abstract class X_Brand extends Model {
+abstract class X_Brand extends Base\Model {
     use BelongsToCompany;
 
     protected $orderBy = [

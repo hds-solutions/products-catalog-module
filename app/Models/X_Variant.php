@@ -2,10 +2,9 @@
 
 namespace HDSSolutions\Finpar\Models;
 
-use App\Models\Base\Model;
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 
-class X_Variant extends Model {
+class X_Variant extends Base\Model {
     use BelongsToCompany;
     //
 
