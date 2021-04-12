@@ -39,7 +39,7 @@ class ProductController extends Controller {
         // load product catalog
         $brands = Brand::with([ 'models' => fn($query) => $query->ordered() ])
             ->ordered()->get();
-        $families = Family::with([ 'sub_families' => fn($query) => $query->ordered() ])
+        $families = Family::with([ 'subFamilies' => fn($query) => $query->ordered() ])
             ->ordered()->get();
         $lines = Line::with([ 'gamas' => fn($query) => $query->ordered() ])
             ->ordered()->get();
@@ -139,7 +139,7 @@ class ProductController extends Controller {
         // load product catalog
         $brands = Brand::with([ 'models' => function($query) { return $query->ordered(); } ])
             ->ordered()->get();
-        $families = Family::with([ 'sub_families' => function($query) { return $query->ordered(); } ])
+        $families = Family::with([ 'subFamilies' => function($query) { return $query->ordered(); } ])
             ->ordered()->get();
         $lines = Line::with([ 'gamas' => function($query) { return $query->ordered(); } ])
             ->ordered()->get();

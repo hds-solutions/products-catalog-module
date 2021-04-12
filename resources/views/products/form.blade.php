@@ -54,7 +54,7 @@
 
     <x-backend-form-foreign :resource="$resource ?? null" name="sub_family_id" secondary
         filtered-by="[name=family_id]" filtered-using="family"
-        foreign="sub_families" :values="$families->pluck('sub_families')->flatten()" foreign-add-label="{{ __('products-catalog::sub_families.add') }}"
+        foreign="subFamilies" :values="$families->pluck('subFamilies')->flatten()" foreign-add-label="{{ __('products-catalog::sub_families.add') }}"
 
         label="{{ __('products-catalog::product.sub_family_id.0') }}"
         placeholder="{{ __('products-catalog::product.sub_family_id.optional') }}"

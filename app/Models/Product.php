@@ -31,7 +31,7 @@ class Product extends X_Product {
         return $this->belongsTo(Family::class);
     }
 
-    public function sub_family() {
+    public function subFamily() {
         return $this->belongsTo(SubFamily::class);
     }
 

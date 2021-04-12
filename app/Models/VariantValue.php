@@ -8,7 +8,7 @@ class VariantValue extends X_VariantValue {
         return $this->belongsTo(Option::class);
     }
 
-    public function option_value() {
+    public function optionValue() {
         return $this->belongsTo(OptionValue::class);
     }
 

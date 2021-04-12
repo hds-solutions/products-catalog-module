@@ -4,7 +4,7 @@ namespace HDSSolutions\Finpar\Models;
 
 class Family extends X_Family {
 
-    public function sub_families() {
+    public function subFamilies() {
         return $this->hasMany(SubFamily::class);
     }
 
