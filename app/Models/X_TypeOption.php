@@ -2,10 +2,9 @@
 
 namespace HDSSolutions\Finpar\Models;
 
-use App\Models\Base\Pivot;
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 
-abstract class X_TypeOption extends Pivot {
+abstract class X_TypeOption extends Base\Pivot {
     use BelongsToCompany;
 
 }

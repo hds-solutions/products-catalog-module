@@ -2,11 +2,10 @@
 
 namespace HDSSolutions\Finpar\Models;
 
-use App\Models\Base\Pivot;
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 use Illuminate\Database\Eloquent\Builder;
 
-class X_VariantValue extends Pivot {
+class X_VariantValue extends Base\Pivot {
     use BelongsToCompany;
 
     // protected $foreignKey = 'variant_id';
