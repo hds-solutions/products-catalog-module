@@ -17,12 +17,7 @@ abstract class X_Model extends Base_Model {
         'brand_id',
     ];
 
-    protected static $createRules = [
-        'name'      => [ 'required', 'min:2' ],
-        'brand_id'  => [ 'required' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'name'      => [ 'required', 'min:2' ],
         'brand_id'  => [ 'required' ],
     ];

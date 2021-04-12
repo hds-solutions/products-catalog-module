@@ -24,13 +24,7 @@ class X_Variant extends Base\Model {
         'priority'      => 'integer',
     ];
 
-    protected static $createRules = [
-        'sku'           => [ 'required', 'min:2', 'unique:variants,sku,0,id,deleted_at,NULL' ],
-        'stock_alert'   => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'priority'      => [ 'sometimes', 'nullable', 'min:0' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'sku'           => [ 'required', 'min:2', 'unique:variants,sku,{id},id,deleted_at,NULL' ],
         'stock_alert'   => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
         'priority'      => [ 'sometimes', 'nullable', 'min:0' ],

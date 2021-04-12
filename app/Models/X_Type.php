@@ -16,12 +16,7 @@ abstract class X_Type extends Base\Model {
         'sold',
     ];
 
-    protected static $createRules = [
-        'name'  => [ 'required', 'min:4' ],
-        'sold'  => [ 'required', 'boolean' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'name'  => [ 'required', 'min:4' ],
         'sold'  => [ 'required', 'boolean' ],
     ];

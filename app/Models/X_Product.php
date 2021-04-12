@@ -65,39 +65,11 @@ class X_Product extends Base\Model {
         'tax'           => '10i',
     ];
 
-    protected static $createRules = [
-        'name'      => [ 'required', 'min:2' ],
-        'code'      => [ 'sometimes', 'nullable', 'min:2' ],
-        'url'       => [ 'sometimes', 'nullable', 'unique:products,url,0,id,deleted_at,NULL' ],
-        'type_id'   => [ 'required' ],
-        'brief'     => [ 'sometimes', 'nullable', 'min:5' ],
-        'description'   => [ 'sometimes', 'nullable', 'min:5' ],
-
-        'brand_id'  => [ 'sometimes', 'nullable' ],
-        'model_id'  => [ 'sometimes', 'nullable' ],
-        'family_id' => [ 'sometimes', 'nullable' ],
-        'sub_family_id' => [ 'sometimes', 'nullable' ],
-        'line_id'   => [ 'sometimes', 'nullable' ],
-        'gama_id'   => [ 'sometimes', 'nullable' ],
-
-        'giftcard'  => [ 'required', 'boolean' ],
-        'stock_alert'   => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'tax'       => [ 'required', 'in:ex,05,10,05i,10i' ],
-
-        'weight'    => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'length'    => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'width'     => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'height'    => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-
-        'visible'   => [ 'sometimes', 'boolean' ],
-        'priority'  => [ 'sometimes', 'nullable', 'min:0' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'name'      => [ 'required', 'min:2' ],
         'code'      => [ 'sometimes', 'nullable', 'min:2' ],
         'url'       => [ 'sometimes', 'nullable', 'unique:products,url,{id},id,deleted_at,NULL' ],
-        'type_id'   => [ 'sometimes' ],
+        'type_id'   => [ 'required' ],
         'brief'     => [ 'sometimes', 'nullable', 'min:5' ],
         'description'   => [ 'sometimes', 'nullable', 'min:5' ],
 

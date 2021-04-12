@@ -16,12 +16,7 @@ abstract class X_SubFamily extends Base\Model {
         'family_id',
     ];
 
-    protected static $createRules = [
-        'name'      => [ 'required', 'min:4' ],
-        'family_id' => [ 'required' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'name'      => [ 'required', 'min:4' ],
         'family_id' => [ 'required' ],
     ];

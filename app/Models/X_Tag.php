@@ -15,11 +15,7 @@ abstract class X_Tag extends Base\Model {
         'name',
     ];
 
-    protected static $createRules = [
-        'name'      => [ 'required', 'min:4' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'name'      => [ 'required', 'min:4' ],
     ];
 

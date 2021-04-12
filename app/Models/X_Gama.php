@@ -16,12 +16,7 @@ abstract class X_Gama extends Base\Model {
         'line_id',
     ];
 
-    protected static $createRules = [
-        'name'      => [ 'required', 'min:4' ],
-        'line_id'   => [ 'required' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'name'      => [ 'required', 'min:4' ],
         'line_id'   => [ 'required' ],
     ];

@@ -19,15 +19,7 @@ class X_Offer extends Base\Model {
         'price',
     ];
 
-    protected static $createRules = [
-        'product_id'    => [ 'required' ],
-        'variant_id'    => [ 'sometimes', 'nullable' ],
-        'from'          => [ 'required', 'date' ],
-        'until'         => [ 'required', 'date' ],
-        'price'         => [ 'required', 'numeric' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'product_id'    => [ 'required' ],
         'variant_id'    => [ 'sometimes', 'nullable' ],
         'from'          => [ 'required', 'date' ],

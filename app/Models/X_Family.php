@@ -17,12 +17,7 @@ abstract class X_Family extends Base\Model {
         'priority',
     ];
 
-    protected static $createRules = [
-        'name'  => [ 'required', 'min:4' ],
-        'priority'  => [ 'sometimes', 'nullable', 'numeric', 'min:1' ],
-    ];
-
-    protected static $updateRules = [
+    protected static $rules = [
         'name'  => [ 'required', 'min:4' ],
         'priority'  => [ 'sometimes', 'nullable', 'numeric', 'min:1' ],
     ];
