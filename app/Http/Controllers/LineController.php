@@ -15,15 +15,16 @@ class LineController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, DataTable $dataTable) {
+        // check only-form flag
+        if ($request->has('only-form'))
+            // redirect to popup callback
+            return view('backend::components.popup-callback', [ 'resource' => new Resource ]);
+
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
+
         // return view with dataTable
         return $dataTable->render('products-catalog::lines.index', [ 'count' => Resource::count() ]);
-
-        // fetch all objects
-        $lines = Line::ordered()->get();
-        // show a list of objects
-        return view('lines.index', compact('lines'));
     }
 
     /**
@@ -58,8 +59,12 @@ class LineController extends Controller {
         // sync options
         $resource->options()->sync($request->options);
 
-        // redirect to list
-        return redirect()->route('backend.lines');
+        // check return type
+        return $request->has('only-form') ?
+            // redirect to popup callback
+            view('backend::components.popup-callback', compact('resource')) :
+            // redirect to resources list
+            redirect()->route('backend.lines');
     }
 
     /**

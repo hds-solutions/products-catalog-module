@@ -29,7 +29,7 @@ class ProductsCatalogMenu {
             ->lines($sub)
             ->gamas($sub)
             ->families($sub)
-            ->subfamilies($sub)
+            ->sub_families($sub)
             ->categories($sub)
             ->tags($sub)
             ->products($sub)
@@ -109,11 +109,11 @@ class ProductsCatalogMenu {
         return $this;
     }
 
-    private function subfamilies(&$menu) {
-        if (Route::has('backend.subfamilies'))
-            $menu->add(__('products-catalog::subfamilies.nav'), [
-                'route'     => 'backend.subfamilies',
-                'icon'      => 'subfamilies'
+    private function sub_families(&$menu) {
+        if (Route::has('backend.sub_families'))
+            $menu->add(__('products-catalog::sub_families.nav'), [
+                'route'     => 'backend.sub_families',
+                'icon'      => 'sub_families'
             ]);
 
         return $this;

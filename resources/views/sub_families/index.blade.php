@@ -1,7 +1,7 @@
 @extends('backend::layouts.master')
 
-@section('page-name', __('products-catalog::subfamilies.title'))
-@section('description', __('products-catalog::subfamilies.description'))
+@section('page-name', __('products-catalog::sub_families.title'))
+@section('description', __('products-catalog::sub_families.description'))
 
 @section('content')
 
@@ -10,11 +10,11 @@
         <div class="row">
             <div class="col-6">
                 <i class="fas fa-table"></i>
-                @lang('products-catalog::subfamilies.index')
+                @lang('products-catalog::sub_families.index')
             </div>
             <div class="col-6 d-flex justify-content-end">
-                <a href="{{ route('backend.subfamilies.create') }}"
-                    class="btn btn-sm btn-primary">@lang('products-catalog::subfamilies.create')</a>
+                <a href="{{ route('backend.sub_families.create') }}"
+                    class="btn btn-sm btn-primary">@lang('products-catalog::sub_families.create')</a>
             </div>
         </div>
     </div>
@@ -33,8 +33,8 @@
                 <h3>@lang('backend.empty.title')</h3>
                 <p class="text-muted">
                     @lang('backend.empty.description')
-                    <a href="{{ route('backend.subfamilies.create') }}" class="text-custom">
-                        <ins>@lang('products-catalog::subfamilies.create')</ins>
+                    <a href="{{ route('backend.sub_families.create') }}" class="text-custom">
+                        <ins>@lang('products-catalog::sub_families.create')</ins>
                     </a>
                 </p>
             </div>

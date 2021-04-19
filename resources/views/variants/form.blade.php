@@ -174,9 +174,6 @@
     </div>
 </div>
 
-<div class="form-row">
-    <div class="offset-0 offset-md-3 col-12 col-md-9">
-        <button type="submit" class="btn btn-success">@lang('products-catalog::variants.save')</button>
-        <a href="{{ route('backend.variants') }}" class="btn btn-danger">@lang('products-catalog::variants.cancel')</a>
-    </div>
-</div>
+<x-backend-form-controls
+    submit="products-catalog::variants.save"
+    cancel="products-catalog::variants.cancel" cancel-route="backend.variants" />

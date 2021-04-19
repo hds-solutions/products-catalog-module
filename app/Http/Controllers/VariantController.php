@@ -20,8 +20,14 @@ class VariantController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, DataTable $dataTable) {
+        // check only-form flag
+        if ($request->has('only-form'))
+            // redirect to popup callback
+            return view('backend::components.popup-callback', [ 'resource' => new Resource ]);
+
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
+
         // return view with dataTable
         return $dataTable->render('products-catalog::variants.index', [ 'count' => Resource::count() ]);
     }
@@ -116,8 +122,12 @@ class VariantController extends Controller {
         // confirm transaction
         DB::commit();
 
-        // redirect to list
-        return redirect()->route('backend.variants');
+        // check return type
+        return $request->has('only-form') ?
+            // redirect to popup callback
+            view('backend::components.popup-callback', compact('resource')) :
+            // redirect to resources list
+            redirect()->route('backend.variants');
     }
 
     /**

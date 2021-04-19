@@ -15,15 +15,16 @@ class SubFamilyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, DataTable $dataTable) {
+        // check only-form flag
+        if ($request->has('only-form'))
+            // redirect to popup callback
+            return view('backend::components.popup-callback', [ 'resource' => new Resource ]);
+
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
-        // return view with dataTable
-        return $dataTable->render('products-catalog::subfamilies.index', [ 'count' => Resource::count() ]);
 
-        // fetch all objects
-        $subfamilies = SubFamily::with([ 'line' ])->ordered()->get();
-        // show a list of objects
-        return view('subfamilies.index', compact('subfamilies'));
+        // return view with dataTable
+        return $dataTable->render('products-catalog::sub_families.index', [ 'count' => Resource::count() ]);
     }
 
     /**
@@ -32,10 +33,10 @@ class SubFamilyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        // load lines
-        $lines = Family::ordered()->get();
+        // load families
+        $families = Family::ordered()->get();
         // show create form
-        return view('products-catalog::subfamilies.create', compact('lines'));
+        return view('products-catalog::sub_families.create', compact('families'));
     }
 
     /**
@@ -55,8 +56,12 @@ class SubFamilyController extends Controller {
                 ->withErrors( $resource->errors() )
                 ->withInput();
 
-        // redirect to list
-        return redirect()->route('backend.subfamilies');
+        // check return type
+        return $request->has('only-form') ?
+            // redirect to popup callback
+            view('backend::components.popup-callback', compact('resource')) :
+            // redirect to resources list
+            redirect()->route('backend.sub_families');
     }
 
     /**
@@ -67,7 +72,7 @@ class SubFamilyController extends Controller {
      */
     public function show(Resource $resource) {
         // redirect to list
-        return redirect()->route('backend.subfamilies');
+        return redirect()->route('backend.sub_families');
     }
 
     /**
@@ -80,7 +85,7 @@ class SubFamilyController extends Controller {
         // load lines
         $lines = Family::ordered()->get();
         // show edit form
-        return view('products-catalog::subfamilies.edit', compact('resource', 'lines'));
+        return view('products-catalog::sub_families.edit', compact('resource', 'lines'));
     }
 
     /**
@@ -102,7 +107,7 @@ class SubFamilyController extends Controller {
                 ->withInput();
 
         // redirect to list
-        return redirect()->route('backend.subfamilies');
+        return redirect()->route('backend.sub_families');
     }
 
     /**
@@ -119,7 +124,7 @@ class SubFamilyController extends Controller {
             // redirect with errors
             return back();
         // redirect to list
-        return redirect()->route('backend.subfamilies');
+        return redirect()->route('backend.sub_families');
     }
 
 }

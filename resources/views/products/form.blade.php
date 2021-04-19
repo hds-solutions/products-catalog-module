@@ -151,8 +151,8 @@
 
 </x-backend-form-amount> --}}
 
-<x-backend-form-select :resource="$resource ?? null" :values="\HDSSolutions\Finpar\Models\Product::TAXES"
-    name="tax" required
+<x-backend-form-select :resource="$resource ?? null" name="tax" required
+    :values="\HDSSolutions\Finpar\Models\Product::TAXES"
     field="taxRaw"
     default="10i"
     label="{{ __('products-catalog::product.tax.0') }}"
@@ -282,9 +282,6 @@
     label="{{ __('products-catalog::product.priority.0') }}"
     placeholder="({{ __('optional') }}) {{ __('products-catalog::product.priority._') }}" />
 
-<div class="form-row">
-    <div class="offset-0 offset-md-3 col-12 col-md-9">
-        <button type="submit" class="btn btn-success">@lang('products-catalog::products.save')</button>
-        <a href="{{ route('backend.products') }}" class="btn btn-danger">@lang('products-catalog::products.cancel')</a>
-    </div>
-</div>
+<x-backend-form-controls
+    submit="products-catalog::products.save"
+    cancel="products-catalog::products.cancel" cancel-route="backend.products" />
