@@ -2,7 +2,7 @@
 
 <x-backend-form-foreign :resource="$resource ?? null" name="product_id" required
     foreign="products" :values="$products" foreign-add-label="{{ __('products-catalog::products.add') }}"
-    append="type,family,line" request="product"
+    append="type:type_id,family:family_id,line:line_id" request="product"
 
     label="{{ __('products-catalog::variant.product_id.0') }}"
     placeholder="{{ __('products-catalog::variant.product_id._') }}"
