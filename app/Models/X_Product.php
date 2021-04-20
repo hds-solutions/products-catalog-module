@@ -7,12 +7,17 @@ use HDSSolutions\Finpar\Traits\BelongsToCompany;
 class X_Product extends Base\Model {
     use BelongsToCompany;
 
+    CONST TAX_ex    = 'ex';
+    CONST TAX_05    = '05';
+    CONST TAX_05i   = '05i';
+    CONST TAX_10    = '10';
+    CONST TAX_10i   = '10i';
     const TAXES = [
-        'ex'    => 'Sin I.V.A.',
-        '05'    => '5% extra',
-        '05i'   => '5% incluido',
-        '10'    => '10% extra',
-        '10i'   => '10% incluido',
+        self::TAX_ex    => 'Sin I.V.A.',
+        self::TAX_05    => '5% extra',
+        self::TAX_05i   => '5% incluido',
+        self::TAX_10    => '10% extra',
+        self::TAX_10i   => '10% incluido',
     ];
 
     protected $orderBy = [
@@ -62,7 +67,7 @@ class X_Product extends Base\Model {
     protected $attributes = [
         'giftcard'      => false,
         'visible'       => true,
-        'tax'           => '10i',
+        'tax'           => self::TAX_10i,
     ];
 
     protected static $rules = [
@@ -82,7 +87,7 @@ class X_Product extends Base\Model {
 
         'giftcard'  => [ 'required', 'boolean' ],
         'stock_alert'   => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
-        'tax'       => [ 'required', 'in:ex,05,10,05i,10i' ],
+        'tax'       => [ 'required' ],
 
         'weight'    => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
         'length'    => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],

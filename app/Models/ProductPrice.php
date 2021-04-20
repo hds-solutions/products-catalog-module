@@ -10,6 +10,10 @@ class ProductPrice extends X_ProductPrice {
         return $this->belongsTo(Product::class);
     }
 
+    public function variant() {
+        return $this->belongsTo(Variant::class);
+    }
+
     public function currency() {
         return $this->belongsTo(Currency::class);
     }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Product extends X_Product {
 
+    // TODO: Implement with Currency
     public function tax(float $discount = 0) {
         // check if tax is 0 (zero)
         if (in_array($this->taxRaw, [ 'ex', '05i', '10i' ])) return 0;
@@ -81,6 +82,11 @@ class Product extends X_Product {
             // only prices where product is set without variant
             ->wherePivotNull('variant_id')
             ->withPivot([ 'cost', 'price', 'limit', 'reseller' ]);
+    }
+
+    public function price(Currency|int $currency = null):?Currency {
+        // return price for specified currency
+        return $this->prices()->firstWhere('currency_id', $currency instanceof currency ? $currency->id : $currency);
     }
 
     public function getStockAttribute():int {

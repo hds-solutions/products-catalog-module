@@ -16,17 +16,17 @@
     <div class="col-10 d-flex">
         <input name="prices[cost][]" type="number" thousand @if (isset($selected)) required @endif
             min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}" data-currency-by="{{ isset($selected) ? "#f$id" : '[name="prices[currency_id][]"]' }}"
-            value="{{ isset($selected) ? $selected->pivot->cost : '' }}"
+            value="{{ isset($selected) ? number($selected->pivot->cost, $selected->pivot->currency->decimals) : '' }}"
             class="form-control" placeholder="@lang('products-catalog::product.prices.cost._')">
 
         <input name="prices[price][]" type="number" thousand @if (isset($selected)) required @endif
             min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}" data-currency-by="{{ isset($selected) ? "#f$id" : '[name="prices[currency_id][]"]' }}"
-            value="{{ isset($selected) ? $selected->pivot->price : '' }}"
+            value="{{ isset($selected) ? number($selected->pivot->price, $selected->pivot->currency->decimals) : '' }}"
             class="form-control ml-2" placeholder="@lang('products-catalog::product.prices.price._')">
 
         <input name="prices[limit][]" type="number" thousand
             min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}" data-currency-by="{{ isset($selected) ? "#f$id" : '[name="prices[currency_id][]"]' }}"
-            value="{{ isset($selected) ? $selected->pivot->limit : '' }}"
+            value="{{ isset($selected) ? number($selected->pivot->price, $selected->pivot->currency->decimals) : '' }}"
             class="form-control ml-2" placeholder="(@lang('optional')) @lang('products-catalog::product.prices.limit._')">
 
         <button type="button" class="btn btn-danger ml-2"

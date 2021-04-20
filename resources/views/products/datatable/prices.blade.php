@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col">
                 {variant.prices}
-                    {price.code} <b>{currency:null,price.pivot.price,price.decimals}</b>
+                    {price.code} <b>{currency:null,price.pivot.price,price.decimals,false}</b>
                 {/variant.prices}
             </div>
         </div>

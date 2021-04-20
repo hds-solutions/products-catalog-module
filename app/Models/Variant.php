@@ -4,6 +4,7 @@ namespace HDSSolutions\Finpar\Models;
 
 class Variant extends X_Variant {
 
+    // TODO: Implement Currency on tax()
     public function tax(float $discount = 0) {
         // check if tax is 0 (zero)
         if (in_array($this->product->taxRaw, [ 'ex', '05i', '10i' ])) return 0;
@@ -58,6 +59,11 @@ class Variant extends X_Variant {
             ->using(ProductPrice::class)
             ->withTimestamps()
             ->withPivot([ 'cost', 'price', 'limit', 'reseller' ]);
+    }
+
+    public function price(Currency|int $currency = null):?Currency {
+        // return price for specified currency
+        return $this->prices()->firstWhere('currency_id', $currency instanceof Currency ? $currency->id : $currency);
     }
 
     public function getStockAttribute():int {
