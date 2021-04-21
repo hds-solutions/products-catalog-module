@@ -63,7 +63,7 @@
 </x-backend-form-foreign>
 
 <div class="form-row form-group mb-0">
-    <label class="col-12 col-md-3 control-label mt-2 mb-3">@lang('products-catalog::product.categories.0')</label>
+    <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::product.categories.0')</label>
     <div class="col-11 col-md-8 col-lg-6 col-xl-4" data-multiple=".category-container" data-template="#new">
         @php $old = old('categories') ?? []; @endphp
         {{-- add product current categories --}}
@@ -105,7 +105,7 @@
     placeholder="({{ __('optional') }}) {{ __('products-catalog::product.description._') }}" />
 
 <div class="form-row form-group mb-0">
-    <label class="col-12 col-md-3 control-label mt-2 mb-3">@lang('products-catalog::product.prices.0')</label>
+    <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::product.prices.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".price-container" data-template="#new">
         @php $old = old('prices') ?? []; @endphp
         {{-- add product current prices --}}
@@ -165,8 +165,8 @@
     placeholder="({{ __('optional') }}) {{ __('products-catalog::product.weight._') }}" />
 
 <div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::product.sizes.0')</label>
-    <div class="col-3">
+    <label class="col-12 col-md-3 col-lg-2 control-label mb-0">@lang('products-catalog::product.sizes.0')</label>
+    <div class="col-3 col-lg-4">
         <div class="form-row">
             <div class="col-4">
                 <input name="length" type="number" min="0" step="0.01"
@@ -207,7 +207,7 @@
     placeholder="({{ __('optional') }}) {{ __('products-catalog::product.url._') }}" />
 
 <div class="form-row form-group mb-0">
-    <label class="col-12 col-md-3 control-label mt-2 mb-3">@lang('products-catalog::product.tags.0')</label>
+    <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::product.tags.0')</label>
     <div class="col-11 col-md-8 col-lg-6 col-xl-4" data-multiple=".tag-container" data-template="#new">
         @php $old = old('tags') ?? []; @endphp
         {{-- add product current tags --}}
@@ -239,7 +239,7 @@
 </div>
 
 <div class="form-row form-group mb-0">
-    <label class="col-12 col-md-3 control-label mt-2 mb-3">@lang('products-catalog::product.locators.0')</label>
+    <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::product.locators.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".locator-container" data-template="#new">
         @php
             $old = old('locators') ?? [];
