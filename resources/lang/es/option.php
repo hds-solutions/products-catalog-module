@@ -1,9 +1,9 @@
 <?php return [
 
     'name'          => [
-        'Nombre opción',
-        '_' => 'Nombre opción',
-        '?' => 'Nombre opción',
+        'Nombre campo',
+        '_' => 'Nombre campo',
+        '?' => 'Nombre campo',
     ],
 
     'label'          => [

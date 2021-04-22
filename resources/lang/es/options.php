@@ -1,15 +1,15 @@
 <?php return [
 
-    'nav'           => 'Opciones',
+    'nav'           => 'Campos Personalizados',
 
-    'title'         => 'Opciones',
-    // 'description'   => 'Descripción Opciones',
+    'title'         => 'Campos Personalizados',
+    // 'description'   => 'Descripción Campos Personalizados',
 
-    'index'         => 'Lista de Opciones',
-    'create'        => 'Crear nueva Opción',
-    'add'           => 'Añadir nueva Opción',
-    'show'          => 'Detalles de la Opción',
-    'edit'          => 'Editar Opción',
+    'index'         => 'Lista de Campos Personalizados',
+    'create'        => 'Crear nuevo Campo Personalizado',
+    'add'           => 'Añadir nuevo Campo Personalizado',
+    'show'          => 'Detalles del Campo Personalizado',
+    'edit'          => 'Editar Campo Personalizado',
 
     'save'          => 'Guardar',
     'save-create'   => 'Guardar & Importar Líneas',

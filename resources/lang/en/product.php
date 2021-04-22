@@ -6,6 +6,12 @@
         '?' => 'Product name',
     ],
 
+    'sku'           => [
+        'SKU',
+        '_' => 'SKU',
+        '?' => 'Storage Keeping Unit',
+    ],
+
     'type_id'       => [
         'Type',
         '_' => 'Select Type',

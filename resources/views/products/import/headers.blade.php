@@ -23,7 +23,7 @@
 
         <div class="row">
             <div class="col">
-                <h2>@lang('Import Excel')</h2>
+                <h2>@lang('products-catalog::products.import.headers')</h2>
             </div>
         </div>
 

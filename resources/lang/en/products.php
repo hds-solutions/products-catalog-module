@@ -12,10 +12,27 @@
     'edit'          => 'Edit Product',
 
     'save'          => 'Save',
-    'save-create'   => 'Save & Import Lines',
     'cancel'        => 'Cancel',
 
     'import'        => [
+        'nav'           => 'Import Products',
+
+        'title'         => 'Products Importer',
+        'description'   => 'Products Importer description',
+
+        'index'         => 'Products Importer',
+        'show'          => 'Products Importer',
+
+        'file'          => [
+            'Excel file',
+            '_' => 'Excel file',
+            '?' => 'Excel file help text',
+        ],
+
+        'save-create'   => 'Proceed to Import',
+
+        'headers'       => 'Configure fields',
+
         'sheet'         => [
             'Sheet',
             '_' => 'Sheet',
@@ -23,15 +40,15 @@
         ],
 
         'customs'       => [
-            'Custom fields',
-            '_' => 'Custom fields',
-            '?' => 'Custom fields help text',
+            'Custom Fields',
+            '_' => 'Custom Fields',
+            '?' => 'Custom Fields help text',
         ],
 
         'custom'        => [
-            'Custom field',
-            '_' => 'Custom field',
-            '?' => 'Custom field help text',
+            'Custom Field',
+            '_' => 'Custom Field',
+            '?' => 'Custom Field help text',
         ],
 
         'field'         => [

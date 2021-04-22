@@ -1,18 +1,17 @@
 <?php return [
 
-    'nav'           => 'Options',
+    'nav'           => 'Custom Fields',
 
-    'title'         => 'Options',
-    'description'   => 'Options description',
+    'title'         => 'Custom Fields',
+    'description'   => 'Custom Fields description',
 
-    'index'         => 'Options list',
-    'create'        => 'Create new Option',
-    'add'           => 'Add new Option',
-    'show'          => 'Option Details',
-    'edit'          => 'Edit Option',
+    'index'         => 'Custom Fields list',
+    'create'        => 'Create new Custom Field',
+    'add'           => 'Add new Custom Field',
+    'show'          => 'Custom Field Details',
+    'edit'          => 'Edit Custom Field',
 
     'save'          => 'Save',
-    'save-create'   => 'Save & Import Lines',
     'cancel'        => 'Cancel',
 
 ];

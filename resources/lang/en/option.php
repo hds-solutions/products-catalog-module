@@ -16,6 +16,10 @@
         'Value type',
         '_' => 'Value type',
         '?' => 'Value type',
+
+        'text'  => 'Text',
+        'color' => 'Color',
+        'image' => 'Image',
     ],
 
     'show'          => [
