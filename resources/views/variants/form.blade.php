@@ -13,7 +13,7 @@
     placeholder="{{ __('products-catalog::variant.sku._') }}" />
 
 <div class="form-row form-group mb-0">
-    <label class="col-12 col-md-3 control-label mt-2 mb-3">@lang('products-catalog::variant.prices.0')</label>
+    <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::variant.prices.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".price-container" data-template="#new">
         @php $old = old('prices') ?? []; @endphp
         {{-- add product current prices --}}
@@ -104,9 +104,9 @@
     data-lines="{{ implode(',', optional(optional($option->lines)->pluck('id'))->all() ?? [] ) }}"
     data-linked-with="[name=product_id]" data-linked-using="type:types|family:families|line:lines">
 
-    <label class="col-12 col-md-3 control-label m-0">{{ $option->name }}</label>
+    <label class="col-12 col-md-3 col-lg-2 control-label m-0">{{ $option->label ?? $option->name }}</label>
 
-    <div class="col-12 col-md-9 col-xl-3">
+    <div class="col-12 col-md-9 col-xl-4">
         {{-- get selected value on variant, if exists --}}
         @php
             $key = isset($resource) ? $resource->values->pluck('option_id')->search($option->id) : null;
@@ -131,7 +131,7 @@
 
     @if ($option->label !== null)
     <i class="fas fa-info-circle ml-2 cursor-help d-none d-lg-inline-block" data-toggle="tooltip" data-placement="right"
-        title="{{ $option->label }}"></i>
+        title="{{ $option->name }}"></i>
     @endif
 </div>
 
@@ -143,7 +143,7 @@
     placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.priority._') }}" />
 
 <div class="form-row form-group mb-0">
-    <label class="col-12 col-md-3 control-label mt-2 mb-3">@lang('products-catalog::variant.locators.0')</label>
+    <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::variant.locators.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".locator-container" data-template="#new">
         @php $old = old('locators') ?? []; @endphp
         {{-- add variant current locators --}}

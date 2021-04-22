@@ -2,11 +2,11 @@
 <div class="small">
     {product.variants}
         <div class="row">
-            <span href="{{ route('backend.variants.edit', 'variant.id') }}"
-                class="col-4 text-primary text-decoration-none">{variant.sku}</span>
+            <a href="{{ route('backend.variants.edit', '#variant.id#') }}"
+                class="col-4 text-primary text-decoration-none">{variant.sku}</a>
             <div class="col">
                 {variant.values}
-                    {value.option.name}: <b>{value.option_value.value}</b>
+                    {value.option.label}: <b>{value.option_value.value}</b>
                 {/variant.values}
             </div>
         </div>

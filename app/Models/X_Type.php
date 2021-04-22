@@ -16,6 +16,10 @@ abstract class X_Type extends Base\Model {
         'sold',
     ];
 
+    protected $attributes = [
+        'sold'  => false,
+    ];
+
     protected static $rules = [
         'name'  => [ 'required', 'min:4' ],
         'sold'  => [ 'required', 'boolean' ],

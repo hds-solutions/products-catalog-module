@@ -1,17 +1,21 @@
 <?php
 
-use HDSSolutions\Finpar\Http\Controllers\BrandController;
-use HDSSolutions\Finpar\Http\Controllers\CategoryController;
-use HDSSolutions\Finpar\Http\Controllers\FamilyController;
-use HDSSolutions\Finpar\Http\Controllers\GamaController;
-use HDSSolutions\Finpar\Http\Controllers\LineController;
-use HDSSolutions\Finpar\Http\Controllers\ModelController;
-use HDSSolutions\Finpar\Http\Controllers\OptionController;
-use HDSSolutions\Finpar\Http\Controllers\ProductController;
-use HDSSolutions\Finpar\Http\Controllers\SubFamilyController;
-use HDSSolutions\Finpar\Http\Controllers\TagController;
-use HDSSolutions\Finpar\Http\Controllers\TypeController;
-use HDSSolutions\Finpar\Http\Controllers\VariantController;
+use HDSSolutions\Finpar\Http\Controllers\{
+    BrandController,
+    CategoryController,
+    FamilyController,
+    GamaController,
+    LineController,
+    ModelController,
+    OptionController,
+    ProductController,
+    SubFamilyController,
+    TagController,
+    TypeController,
+    VariantController,
+
+    ProductsImporterController,
+};
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -61,6 +65,14 @@ Route::group([
         ->parameters([ 'tags' => 'resource' ])
         ->name('index', 'backend.tags');
 
+    Route::get('products/import',           [ ProductsImporterController::class, 'index' ])
+        ->name('backend.products.import');
+    Route::post('products/import',          [ ProductsImporterController::class, 'store' ])
+        ->name('backend.products.import');
+    Route::get('products/import/{import}',  [ ProductsImporterController::class, 'headers' ])
+        ->name('backend.products.import.headers');
+    Route::post('products/import/{import}', [ ProductsImporterController::class, 'process' ])
+        ->name('backend.products.import.process');
     Route::resource('products',         ProductController::class,   $name_prefix)
         ->parameters([ 'products' => 'resource' ])
         ->name('index', 'backend.products');

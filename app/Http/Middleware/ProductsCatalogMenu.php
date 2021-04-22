@@ -20,6 +20,9 @@ class ProductsCatalogMenu {
                 'icon'  => 'cogs',
             ])->data('priority', 900);
 
+        // get extras menu group
+        $extras = backend()->menu()->get('extras');
+
         $this
             // append items to submenu
             ->options($sub)
@@ -33,7 +36,9 @@ class ProductsCatalogMenu {
             ->categories($sub)
             ->tags($sub)
             ->products($sub)
-            ->variants($sub);
+            ->variants($sub)
+
+            ->products_importer($extras);
 
         // continue witn next middleware
         return $next($request);
@@ -154,6 +159,16 @@ class ProductsCatalogMenu {
             $menu->add(__('products-catalog::variants.nav'), [
                 'route'     => 'backend.variants',
                 'icon'      => 'variants'
+            ]);
+
+        return $this;
+    }
+
+    private function products_importer(&$menu) {
+        if (Route::has('backend.products.import'))
+            $menu->add(__('products-catalog::products.import.nav'), [
+                'route'     => 'backend.products.import',
+                'icon'      => 'products'
             ]);
 
         return $this;
