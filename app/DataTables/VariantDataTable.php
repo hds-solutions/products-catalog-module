@@ -10,7 +10,7 @@ class VariantDataTable extends Base\DataTable {
     protected array $with = [
         'images',
         'values.option',
-        'values.option_value',
+        'values.optionValue',
     ];
 
     public function __construct() {

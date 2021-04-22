@@ -18,7 +18,7 @@ class ProductDataTable extends Base\DataTable {
         'prices',
         'variants.prices',
         'variants.values.option',
-        'variants.values.option_value',
+        'variants.values.optionValue',
         // TODO: 'storages',
         // TODO: 'variants.storages',
     ];
