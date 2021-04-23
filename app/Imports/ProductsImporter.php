@@ -129,7 +129,11 @@ class ProductsImporter implements ToModel, WithChunkReading, WithHeadingRow, Wit
         if ($product->wasRecentlyCreated) logger(__('Imported Product #:id ":name"', $product->attributesToArray()));
 
         // find variant by SKU or create a new one
-        if (!($variant = $product->variants()->firstOrNew([ 'sku' => $row[$this->matches['sku']] ]))->exists) {
+        if (!($variant = $product->variants()->firstOrNew([ 'sku' => $this->match('sku') ]))->exists) {
+            // check if SKU is already in use
+            $append = 1; while (Variant::where('sku', $this->match('sku').($append > 1 ? " #$append" : ''))->first()) $append++;
+            // replace Variant SKU
+            if ($append > 1) $variant->fill([ 'sku' => $this->match('sku').' #'.$append ]);
             // link variant with product
             $variant->product()->associate( $product );
         }
@@ -182,7 +186,6 @@ class ProductsImporter implements ToModel, WithChunkReading, WithHeadingRow, Wit
                         'option_id'     => $option->id,
                         'option_name'   => $option->name,
                     ]));
-                    //
                 }
 
                 // create new VariantValue
