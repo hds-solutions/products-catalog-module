@@ -13,7 +13,7 @@
             </div>
             <div class="col-6 d-flex justify-content-end">
                 {{-- <a href="{{ route('backend.lines.create') }}"
-                    class="btn btn-sm btn-primary">@lang('products-catalog::lines.add')</a> --}}
+                    class="btn btn-sm btn-primary">@lang('products-catalog::lines.create')</a> --}}
             </div>
         </div>
     </div>

@@ -13,12 +13,12 @@
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.tags.create') }}"
-                    class="btn btn-sm btn-primary">@lang('products-catalog::tags.add')</a>
+                    class="btn btn-sm btn-primary">@lang('products-catalog::tags.create')</a>
             </div>
         </div>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('backend.tags.update', $resource->id) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('backend.tags.update', $resource) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             @include('products-catalog::tags.form')
