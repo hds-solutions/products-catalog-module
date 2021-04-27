@@ -4,7 +4,7 @@ namespace HDSSolutions\Finpar\Models;
 
 use HDSSolutions\Finpar\Traits\BelongsToCompany;
 
-class X_Product extends Base\Model {
+abstract class X_Product extends Base\Model {
     use BelongsToCompany;
 
     CONST TAX_ex    = 'ex';
