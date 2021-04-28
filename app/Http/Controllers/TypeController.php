@@ -46,8 +46,8 @@ class TypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        // cast sold to boolean
-        if ($request->has('sold'))  $request->merge([ 'sold' => $request->sold == 'true' ]);
+        // cast is_sold to boolean
+        if ($request->has('is_sold'))  $request->merge([ 'is_sold' => $request->is_sold == 'true' ]);
 
         // create resource
         $resource = new Resource( $request->input() );
@@ -102,8 +102,8 @@ class TypeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        // cast sold to boolean
-        if ($request->has('sold'))  $request->merge([ 'sold' => $request->sold == 'true' ]);
+        // cast is_sold to boolean
+        if ($request->has('is_sold'))  $request->merge([ 'is_sold' => $request->is_sold == 'true' ]);
 
         // find resource
         $resource = Resource::findOrFail($id);

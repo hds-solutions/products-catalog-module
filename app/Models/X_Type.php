@@ -13,16 +13,16 @@ abstract class X_Type extends Base\Model {
 
     protected $fillable = [
         'name',
-        'sold',
+        'is_sold',
     ];
 
     protected $attributes = [
-        'sold'  => false,
+        'is_sold'   => true,
     ];
 
     protected static $rules = [
-        'name'  => [ 'required', 'min:4' ],
-        'sold'  => [ 'required', 'boolean' ],
+        'name'      => [ 'required', 'min:4' ],
+        'is_sold'   => [ 'required', 'boolean' ],
     ];
 
 }

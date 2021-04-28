@@ -5,9 +5,9 @@
     placeholder="{{ __('products-catalog::type.name._') }}" />
 
 <x-backend-form-boolean :resource="$resource ?? null"
-    name="sold"
-    label="{{ __('products-catalog::type.sold.0') }}"
-    placeholder="{{ __('products-catalog::type.sold._') }}" />
+    name="is_sold"
+    label="{{ __('products-catalog::type.is_sold.0') }}"
+    placeholder="{{ __('products-catalog::type.is_sold._') }}" />
 
 <div class="form-row form-group d-flex">
     <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::type.options.0')</label>

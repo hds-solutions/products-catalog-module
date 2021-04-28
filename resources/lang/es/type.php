@@ -6,7 +6,7 @@
         '?' => 'Nombre tipo',
     ],
 
-    'sold'          => [
+    'is_sold'       => [
         'Vendido?',
         '_' => 'Si, este tipo de producto se vende',
         '?' => 'Este tipo de producto se puede vender',

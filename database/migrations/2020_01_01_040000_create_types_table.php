@@ -22,7 +22,7 @@ class CreateTypesTable extends Migration {
             $table->id();
             $table->foreignTo('Company');
             $table->string('name');
-            $table->boolean('sold')->default(true);
+            $table->boolean('is_sold')->default(true);
         });
     }
 

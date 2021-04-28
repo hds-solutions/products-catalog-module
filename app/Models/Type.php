@@ -12,7 +12,7 @@ class Type extends X_Type {
             ->withTimestamps();
     }
 
-    public function scopeSold(Builder $query, bool $sold = true) {
-        return $query->where('sold', $sold);
+    public function scopeIsSold(Builder $query, bool $sold = true) {
+        return $query->where('is_sold', $sold);
     }
 }

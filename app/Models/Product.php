@@ -131,9 +131,7 @@ class Product extends X_Product {
     /* scopes & filters */
 
     public function scopeBuyable(Builder $query, bool $buyable = true) {
-        return $query->whereHas('type', function($type) use ($buyable) {
-            $type->sold($buyable);
-        });
+        return $query->whereHas('type', fn($type) => $type->isSold($buyable));
     }
 
     public function scopeFilter(Builder $query, array $filters) {
