@@ -201,7 +201,7 @@
     placeholder="({{ __('optional') }}) {{ __('products-catalog::product.images._') }}" />
 
 <x-backend-form-text :resource="$resource ?? null"
-    name="url" full-width
+    name="url"
     label="{{ __('products-catalog::product.url.0') }}"
     prepend="{{ url('/') }}/"
     placeholder="({{ __('optional') }}) {{ __('products-catalog::product.url._') }}" />
