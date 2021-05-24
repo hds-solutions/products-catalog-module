@@ -102,6 +102,10 @@ class Product extends X_Product {
         return $qtyAvailable;
     }
 
+    public function getStockableAttribute():bool {
+        return $this->type->has_stock;
+    }
+
     public function offers() {
         return $this->hasMany(Offer::class)
             // get active offers
@@ -132,6 +136,10 @@ class Product extends X_Product {
 
     public function scopeBuyable(Builder $query, bool $buyable = true) {
         return $query->whereHas('type', fn($type) => $type->isSold($buyable));
+    }
+
+    public function scopeStockable(Builder $query, bool $stockable = true) {
+        return $query->whereHas('type', fn($type) => $type->hasStock($stockable));
     }
 
     public function scopeFilter(Builder $query, array $filters) {

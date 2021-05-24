@@ -23,6 +23,7 @@ class CreateTypesTable extends Migration {
             $table->foreignTo('Company');
             $table->string('name');
             $table->boolean('is_sold')->default(true);
+            $table->boolean('has_stock')->default(true);
         });
     }
 

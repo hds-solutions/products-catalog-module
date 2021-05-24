@@ -15,4 +15,9 @@ class Type extends X_Type {
     public function scopeIsSold(Builder $query, bool $sold = true) {
         return $query->where('is_sold', $sold);
     }
+
+    public function scopeHasStock(Builder $query, bool $stock = true) {
+        return $query->where('has_stock', $stock);
+    }
+
 }
