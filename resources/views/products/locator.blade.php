@@ -10,9 +10,11 @@
             @endforeach
         </select>
 
+        <div class="ml-2"></div>
+
         <select name="locators[]"
             data-filtered-by="{{ isset($selected) ? "#f$id" : '[name="warehouses[]"]' }}" data-filtered-using="warehouse"
-            class="form-control custom-select ml-2" placeholder="@lang('products-catalog::locator.name._')">
+            class="form-control selectpicker" placeholder="@lang('products-catalog::locator.name._')">
             <option value="" selected disabled hidden>@lang('products-catalog::locator.name.0')</option>
             @foreach($warehouses->pluck('locators')->flatten() as $locator)
             <option value="{{ $locator->id }}" data-warehouse="{{ $locator->warehouse_id }}"
