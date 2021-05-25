@@ -1,6 +1,6 @@
 <div class="form-row price-container mb-3" @if ($selected === null) id="new" @else data-used="true" @endif>
     <div class="col-2">
-        <x-form-foreign name="prices[currency_id][]"
+        <x-form-foreign name="prices[currency_id][]" id="f{{ $id = Str::random(16) }}"
             :values="$currencies"
 
             show="code name" title="code"
@@ -31,12 +31,12 @@
 
     <div class="col-10 d-flex">
 
-        <x-form-amount name="prices[cost][]" @if (isset($selected)) required @endif
+        <x-form-amount name="prices[cost][]"
+            :required="isset($selected)"
             min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}"
-            data-currency-by="{{ isset($selected) ? "#f$id" : '[name="prices[currency_id][]"]' }}"
+            :data-currency-by="isset($selected) ? '#f'.$id : '[name=\'prices[currency_id][]\']'"
             value="{{ isset($selected) ? number($selected->pivot->cost, $selected->pivot->currency->decimals) : '' }}"
-            placeholder="products-catalog::product.prices.cost._">
-        </x-form-amount>
+            placeholder="products-catalog::product.prices.cost._" />
 {{--
         <input name="prices[cost][]" type="number" thousand @if (isset($selected)) required @endif
             min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}" data-currency-by="{{ isset($selected) ? "#f$id" : '[name="prices[currency_id][]"]' }}"

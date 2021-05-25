@@ -15,23 +15,30 @@
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::variant.prices.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".price-container" data-template="#new">
-        @php $old = old('prices') ?? []; @endphp
+        @php $old_lines = array_group(old('prices') ?? []); @endphp
         {{-- add product current prices --}}
         @if (isset($resource)) @foreach($resource->prices as $idx => $selected)
             @include('products-catalog::variants.price', [
                 'currencies'    => $currencies,
                 'selected'      => $selected,
-                'old'           => $old[$idx] ?? null,
+                'old'           => $old_lines[$idx] ?? null,
             ])
-            @php unset($old[$idx]); @endphp
+            @php unset($old_lines[$idx]); @endphp
         @endforeach @endif
 
         {{-- add new added --}}
-        @foreach($old as $selected)
+        @foreach($old_lines as $old)
+            {{-- ignore empty --}}
+            @if ( ($old['currency_id'] ?? null) === null &&
+                ($old['cost'] ?? null) === null &&
+                ($old['price'] ?? null) === null &&
+                ($old['limit'] ?? null) === null)
+                @continue
+            @endif
             @include('products-catalog::variants.price', [
                 'currencies'    => $currencies,
-                'selected'      => 0,
-                'old'           => $selected,
+                'selected'      => null,
+                'old'           => $old,
             ])
         @endforeach
 
@@ -145,23 +152,28 @@
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::variant.locators.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".locator-container" data-template="#new">
-        @php $old = old('locators') ?? []; @endphp
+        <?php $old_lines = array_group([ 'warehouse_id' => old('warehouses') ?? [],  'locator_id' => old('locators') ?? []]); ?>
         {{-- add variant current locators --}}
         @if (isset($resource)) @foreach($resource->locators as $idx => $selected)
             @include('products-catalog::variants.locator', [
                 'warehouses'    => $warehouses,
                 'selected'      => $selected,
-                'old'           => $old[$idx] ?? null,
+                'old'           => $old_lines[$idx] ?? null,
             ])
-            @php unset($old[$idx]); @endphp
+            @php unset($old_lines[$idx]); @endphp
         @endforeach @endif
 
         {{-- add new added --}}
-        @foreach($old as $selected)
+        @foreach($old_lines as $old)
+            {{-- ignore empty --}}
+            @if ( ($old['warehouse_id'] ?? null) === null &&
+                ($old['locator_id'] ?? null) === null)
+                @continue
+            @endif
             @include('products-catalog::variants.locator', [
                 'warehouses'    => $warehouses,
-                'selected'      => 0,
-                'old'           => $selected,
+                'selected'      => null,
+                'old'           => $old,
             ])
         @endforeach
 
