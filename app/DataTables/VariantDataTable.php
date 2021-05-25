@@ -8,6 +8,7 @@ use Yajra\DataTables\Html\Column;
 class VariantDataTable extends Base\DataTable {
 
     protected array $with = [
+        'product',
         'images',
         'values.option',
         'values.optionValue',
