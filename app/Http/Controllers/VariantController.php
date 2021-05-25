@@ -219,7 +219,7 @@ class VariantController extends Controller {
             // get prices as collection
             $prices = collect(array_group($request->get('prices')))
                 // filter price without currency set
-                ->filter(fn($price) => array_key_exists('currency_id', $price))
+                ->filter(fn($price) => array_key_exists('currency_id', $price) && $price['currency_id'] !== null)
                 // append product_id
                 ->map(fn($price) => $price + [ 'product_id' => $resource->product_id ])
                 // use currency_id as collection key
