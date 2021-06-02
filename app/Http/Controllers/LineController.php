@@ -9,6 +9,12 @@ use HDSSolutions\Finpar\Models\Line as Resource;
 use HDSSolutions\Finpar\Models\Option;
 
 class LineController extends Controller {
+
+    public function __construct() {
+        // check resource Policy
+        $this->authorizeResource(Resource::class, 'resource');
+    }
+
     /**
      * Display a listing of the resource.
      *

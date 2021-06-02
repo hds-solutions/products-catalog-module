@@ -8,6 +8,12 @@ use HDSSolutions\Finpar\Http\Request;
 use HDSSolutions\Finpar\Models\Category as Resource;
 
 class CategoryController extends Controller {
+
+    public function __construct() {
+        // check resource Policy
+        $this->authorizeResource(Resource::class, 'resource');
+    }
+
     /**
      * Display a listing of the resource.
      *

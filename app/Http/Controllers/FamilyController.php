@@ -9,6 +9,12 @@ use HDSSolutions\Finpar\Models\Family as Resource;
 use HDSSolutions\Finpar\Models\Option;
 
 class FamilyController extends Controller {
+
+    public function __construct() {
+        // check resource Policy
+        $this->authorizeResource(Resource::class, 'resource');
+    }
+
     /**
      * Display a listing of the resource.
      *

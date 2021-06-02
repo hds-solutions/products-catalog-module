@@ -9,6 +9,12 @@ use HDSSolutions\Finpar\Models\Option;
 use HDSSolutions\Finpar\Models\Type as Resource;
 
 class TypeController extends Controller {
+
+    public function __construct() {
+        // check resource Policy
+        $this->authorizeResource(Resource::class, 'resource');
+    }
+
     /**
      * Display a listing of the resource.
      *

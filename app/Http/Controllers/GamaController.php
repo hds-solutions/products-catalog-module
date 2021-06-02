@@ -9,6 +9,12 @@ use HDSSolutions\Finpar\Models\Line;
 use HDSSolutions\Finpar\Models\Gama as Resource;
 
 class GamaController extends Controller {
+
+    public function __construct() {
+        // check resource Policy
+        $this->authorizeResource(Resource::class, 'resource');
+    }
+
     /**
      * Display a listing of the resource.
      *

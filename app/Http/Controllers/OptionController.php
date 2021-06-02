@@ -10,6 +10,12 @@ use HDSSolutions\Finpar\Models\OptionValue as ResourceValue;
 use Illuminate\Support\Facades\DB;
 
 class OptionController extends Controller {
+
+    public function __construct() {
+        // check resource Policy
+        $this->authorizeResource(Resource::class, 'resource');
+    }
+
     /**
      * Display a listing of the resource.
      *

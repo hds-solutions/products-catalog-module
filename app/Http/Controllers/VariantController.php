@@ -14,6 +14,12 @@ use HDSSolutions\Finpar\Models\Warehouse;
 use Illuminate\Support\Facades\DB;
 
 class VariantController extends Controller {
+
+    public function __construct() {
+        // check resource Policy
+        $this->authorizeResource(Resource::class, 'resource');
+    }
+
     /**
      * Display a listing of the resource.
      *
