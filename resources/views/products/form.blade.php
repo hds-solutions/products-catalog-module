@@ -61,38 +61,48 @@
         {{-- helper="{{ __('products-catalog::product.sub_family_id.?') }}" --}} />
 
 </x-backend-form-foreign>
-
+{{--
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::product.categories.0')</label>
     <div class="col-11 col-md-8 col-lg-6 col-xl-4" data-multiple=".category-container" data-template="#new">
-        @php $old = old('categories') ?? []; @endphp
-        {{-- add product current categories --}}
+        <?php $old_lines = old('categories') ?? []; ?>
+        <!-- add product current categories -->
         @if (isset($resource)) @foreach($resource->categories as $idx => $selected)
-            @include('products-catalog::products.category', [
+            @include('products-catalog::products.form.category', [
                 'categories'    => $categories,
                 'selected'      => $selected,
-                'old'           => $old[$idx] ?? null,
+                'old'           => $old_lines[$idx] ?? null,
             ])
-            @php unset($old[$idx]); @endphp
+            <?php unset($old_lines[$idx]); ?>
         @endforeach @endif
 
-        {{-- add new added --}}
-        @foreach($old as $selected)
-            @include('products-catalog::products.category', [
+        <!-- add new added -->
+        @foreach($old_lines as $old)
+            <!-- ignore empty -->
+            @if ( ($old ?? null) === null)
+                @continue
+            @endif
+            @include('products-catalog::products.form.category', [
                 'categories'    => $categories,
-                'selected'      => 0,
-                'old'           => $selected,
+                'selected'      => null,
+                'old'           => $old,
             ])
         @endforeach
 
-        {{-- add empty for adding new categories --}}
-        @include('products-catalog::products.category', [
+        <!-- add empty for adding new categories -->
+        @include('products-catalog::products.form.category', [
             'categories'    => $categories,
             'selected'      => null,
             'old'           => null,
         ])
     </div>
 </div>
+ --}}
+<x-backend-form-multiple name="categories"
+    :values="$categories" :selecteds="isset($resource) ? $resource->categories : []"
+    contents-view="products-catalog::products.form.category"
+
+    label="products-catalog::product.categories.0" />
 
 <x-backend-form-textarea :resource="$resource ?? null"
     name="brief" wysiwyg
@@ -103,38 +113,53 @@
     name="description" wysiwyg
     label="{{ __('products-catalog::product.description.0') }}"
     placeholder="({{ __('optional') }}) {{ __('products-catalog::product.description._') }}" />
-
+{{--
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::product.prices.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".price-container" data-template="#new">
-        @php $old = old('prices') ?? []; @endphp
-        {{-- add product current prices --}}
+        <?php $old_lines = array_group(old('prices') ?? []); ?>
+        <!-- add product current prices -->
         @if (isset($resource)) @foreach($resource->prices as $idx => $selected)
-            @include('products-catalog::products.price', [
+            @include('products-catalog::products.form.price', [
                 'currencies'    => $currencies,
                 'selected'      => $selected,
-                'old'           => $old[$idx] ?? null,
+                'old'           => $old_lines[$idx] ?? null,
             ])
-            @php unset($old[$idx]); @endphp
+            <?php unset($old_lines[$idx]); ?>
         @endforeach @endif
 
-        {{-- add new added --}}
-        @foreach($old as $selected)
-            @include('products-catalog::products.price', [
+        <!-- add new added -->
+        @foreach($old_lines as $old)
+            <!-- ignore empty -->
+            @if ( ($old['currency_id'] ?? null) === null &&
+                ($old['cost'] ?? null) === null &&
+                ($old['price'] ?? null) === null &&
+                ($old['limit'] ?? null) === null)
+                @continue
+            @endif
+            @include('products-catalog::products.form.price', [
                 'currencies'    => $currencies,
-                'selected'      => 0,
-                'old'           => $selected,
+                'selected'      => null,
+                'old'           => $old,
             ])
         @endforeach
 
-        {{-- add empty for adding new prices --}}
-        @include('products-catalog::products.price', [
+        <!-- add empty for adding new prices -->
+        @include('products-catalog::products.form.price', [
             'currencies'    => $currencies,
             'selected'      => null,
             'old'           => null,
         ])
     </div>
 </div>
+ --}}
+<x-backend-form-multiple name="prices" values-as="currencies"
+    :values="$currencies" :selecteds="isset($resource) ? $resource->prices : []"
+    grouped old-filter-fields="currency_id,cost,price,limit"
+    contents-view="products-catalog::products.form.price" contents-size="xl"
+    row-class="mb-0" container-class="mb-3"
+
+    label="products-catalog::product.prices.0" />
 
 {{-- <x-backend-form-amount :resource="$resource ?? null"
     name="price" field="priceRaw" prepend="{{ config('settings.currency-symbol', 'USD') }}"
@@ -205,72 +230,93 @@
     label="{{ __('products-catalog::product.url.0') }}"
     prepend="{{ url('/') }}/"
     placeholder="({{ __('optional') }}) {{ __('products-catalog::product.url._') }}" />
-
+{{--
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::product.tags.0')</label>
     <div class="col-11 col-md-8 col-lg-6 col-xl-4" data-multiple=".tag-container" data-template="#new">
-        @php $old = old('tags') ?? []; @endphp
-        {{-- add product current tags --}}
+        <?php $old_lines = old('tags') ?? []; ?>
+        <!-- add product current tags -->
         @if (isset($resource)) @foreach($resource->tags as $idx => $selected)
-            @include('products-catalog::products.tag', [
+            @include('products-catalog::products.form.tag', [
                 'tags'      => $tags,
                 'selected'  => $selected,
-                'old'       => $old[$idx] ?? null,
+                'old'       => $old_lines[$idx] ?? null,
             ])
-            @php unset($old[$idx]); @endphp
+            <?php unset($old_lines[$idx]); ?>
         @endforeach @endif
 
-        {{-- add new added --}}
-        @foreach($old as $selected)
-            @include('products-catalog::products.tag', [
+        <!-- add new added -->
+        @foreach($old_lines as $old)
+            <!-- ignore empty -->
+            @if ( ($old ?? null) === null)
+                @continue
+            @endif
+            @include('products-catalog::products.form.tag', [
                 'tags'      => $tags,
-                'selected'  => 0,
-                'old'       => $selected,
+                'selected'  => null,
+                'old'       => $old,
             ])
         @endforeach
 
-        {{-- add empty for adding new tags --}}
-        @include('products-catalog::products.tag', [
+        <!-- add empty for adding new tags -->
+        @include('products-catalog::products.form.tag', [
             'tags'      => $tags,
             'selected'  => null,
             'old'       => null,
         ])
     </div>
 </div>
+ --}}
+<x-backend-form-multiple name="tags"
+    :values="$tags" :selecteds="isset($resource) ? $resource->tags : []"
+    contents-view="products-catalog::products.form.tag"
 
+    label="products-catalog::product.tags.0" />
+{{--
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::product.locators.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".locator-container" data-template="#new">
-        @php
-            $old = old('locators') ?? [];
-        @endphp
-        {{-- add product current locators --}}
+        <?php $old_lines = array_group(old('locators') ?? []); ?>
+        <!-- add product current locators -->
         @if (isset($resource)) @foreach($resource->locators as $idx => $selected)
-            @include('products-catalog::products.locator', [
+            @include('products-catalog::products.form.locator', [
                 'warehouses'    => $warehouses,
                 'selected'      => $selected,
-                'old'           => $old[$idx] ?? null,
+                'old'           => $old_lines[$idx] ?? null,
             ])
-            @php unset($old[$idx]); @endphp
+            <?php unset($old_lines[$idx]); ?>
         @endforeach @endif
 
-        {{-- add new added --}}
-        @foreach($old as $selected)
-            @include('products-catalog::products.locator', [
+        <!-- add new added -->
+        @foreach($old_lines as $old)
+            <!-- ignore empty -->
+            @if ( ($old['warehouse_id'] ?? null) === null &&
+                ($old['locator_id'] ?? null) === null)
+                @continue
+            @endif
+            @include('products-catalog::products.form.locator', [
                 'warehouses'    => $warehouses,
-                'selected'      => 0,
-                'old'           => $selected,
+                'selected'      => null,
+                'old'           => $old,
             ])
         @endforeach
 
-        {{-- add empty for adding new locators --}}
-        @include('products-catalog::products.locator', [
+        <!-- add empty for adding new locators -->
+        @include('products-catalog::products.form.locator', [
             'warehouses'    => $warehouses,
             'selected'      => null,
             'old'           => null,
         ])
     </div>
 </div>
+ --}}
+<x-backend-form-multiple name="locators" values-as="warehouses"
+    :values="$warehouses" :selecteds="isset($resource) ? $resource->locators : []"
+    grouped old-filter-fields="warehouse_id,locator_id"
+    contents-view="products-catalog::products.form.locator" contents-size="xl"
+    row-class="mb-0" container-class="mb-3"
+
+    label="products-catalog::product.locators.0" />
 
 <x-backend-form-boolean :resource="$resource ?? null"
     name="visible"

@@ -1,11 +1,12 @@
-<div class="form-row price-container mb-3" @if ($selected === null) id="new" @else data-used="true" @endif>
+{{-- <div class="form-row price-container mb-3" @if ($selected === null && $old === null) id="new" @else data-used="true" @endif> --}}
     <div class="col-2">
+
         <x-form-foreign name="prices[currency_id][]" id="f{{ $id = Str::random(16) }}"
             :values="$currencies"
+            default="{{ $old['currency_id'] ?? $selected?->id }}"
 
             show="code name" title="code"
             append="decimals"
-            default="{{ isset($selected) ? $selected->id : null }}"
 
             {{-- foreign="" --}}
             {{-- foreign-add-label="products-catalog::currencies.add" --}}
@@ -30,28 +31,44 @@
     </div>
 
     <div class="col-10 d-flex">
-
-        <x-form-amount name="prices[cost][]"
-            :required="isset($selected)"
-            min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}"
-            :data-currency-by="isset($selected) ? '#f'.$id : '[name=\'prices[currency_id][]\']'"
-            value="{{ isset($selected) ? number($selected->pivot->cost, $selected->pivot->currency->decimals) : '' }}"
-            placeholder="products-catalog::product.prices.cost._" />
 {{--
         <input name="prices[cost][]" type="number" thousand @if (isset($selected)) required @endif
             min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}" data-currency-by="{{ isset($selected) ? "#f$id" : '[name="prices[currency_id][]"]' }}"
             value="{{ isset($selected) ? number($selected->pivot->cost, $selected->pivot->currency->decimals) : '' }}"
             class="form-control" placeholder="@lang('products-catalog::product.prices.cost._')">
  --}}
+        <x-form-amount name="prices[cost][]"
+            :required="$selected !== null"
+            min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}"
+            :data-currency-by="isset($selected) ? '#f'.$id : '[name=\'prices[currency_id][]\']'"
+            value="{{ $old['cost'] ?? ($selected !== null ? number($selected->pivot->cost, $selected->pivot->currency->decimals) : null) }}"
+            placeholder="products-catalog::product.prices.cost._" />
+{{--
         <input name="prices[price][]" type="number" thousand @if (isset($selected)) required @endif
             min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}" data-currency-by="{{ isset($selected) ? "#f$id" : '[name="prices[currency_id][]"]' }}"
-            value="{{ isset($selected) ? number($selected->pivot->price, $selected->pivot->currency->decimals) : '' }}"
+            value="{{ $old['price'] ?? ($selected !== null ? number($selected->pivot->price, $selected->pivot->currency->decimals) : null) }}"
             class="form-control ml-2" placeholder="@lang('products-catalog::product.prices.price._')">
-
+ --}}
+        <x-form-amount name="prices[price][]"
+            :required="$selected !== null"
+            min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}"
+            :data-currency-by="isset($selected) ? '#f'.$id : '[name=\'prices[currency_id][]\']'"
+            value="{{ $old['price'] ?? ($selected !== null ? number($selected->pivot->price, $selected->pivot->currency->decimals) : null) }}"
+            placeholder="products-catalog::product.prices.price._"
+            class="ml-2" />
+{{--
         <input name="prices[limit][]" type="number" thousand
             min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}" data-currency-by="{{ isset($selected) ? "#f$id" : '[name="prices[currency_id][]"]' }}"
-            value="{{ isset($selected) ? number($selected->pivot->price, $selected->pivot->currency->decimals) : '' }}"
+            value="{{ $old['limit'] ?? ($selected !== null ? number($selected->pivot->price, $selected->pivot->currency->decimals) : null) }}"
             class="form-control ml-2" placeholder="(@lang('optional')) @lang('products-catalog::product.prices.limit._')">
+ --}}
+        <x-form-amount name="prices[limit][]"
+            :required="$selected !== null"
+            min="0" step="{{ 1 / pow(10, $selected->decimals ?? 0) }}"
+            :data-currency-by="isset($selected) ? '#f'.$id : '[name=\'prices[currency_id][]\']'"
+            value="{{ $old['limit'] ?? ($selected !== null ? number($selected->pivot->limit, $selected->pivot->currency->decimals) : null) }}"
+            placeholder="products-catalog::product.prices.limit._"
+            class="ml-2" />
 
         <button type="button" class="btn btn-danger ml-2"
             data-action="delete"
@@ -61,4 +78,4 @@
             data-accept="Si, eliminar"
             @endif>X</button>
     </div>
-</div>
+{{-- </div> --}}

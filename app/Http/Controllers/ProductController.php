@@ -104,20 +104,37 @@ class ProductController extends Controller {
         if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
 
         // sync product categories
-        $resource->categories()->sync( $request->get('categories') ?? [] );
+        if ($request->has('categories')) $resource->categories()->sync(
+            // get categories as collection
+            $categories = collect($request->get('categories'))
+                // filter empty categories
+                ->filter(fn($category) => $category !== null)
+            );
 
         // sync product tags
-        $resource->tags()->sync( $request->get('tags') ?? [] );
+        if ($request->has('tags')) $resource->tags()->sync(
+            // get tags as collection
+            $tags = collect($request->get('tags'))
+                // filter empty tags
+                ->filter(fn($tag) => $tag !== null)
+            );
 
         // sync product locators
-        $resource->locators()->sync( $request->get('locators') ?? [] );
+        if ($request->has('locators')) $resource->locators()->sync(
+            // get locators as collection
+            $locators = collect(array_group($request->get('locators')))
+                // filter locator without currency set
+                ->filter(fn($locator) => array_key_exists('locator_id', $locator) && $locator['locator_id'] !== null)
+                // use locator_id as collection key
+                ->keyBy('locator_id')
+            );
 
         // sync product prices
         if ($request->has('prices')) $resource->prices()->sync(
             // get prices as collection
             $prices = collect(array_group($request->get('prices')))
                 // filter price without currency set
-                ->filter(fn($price) => array_key_exists('currency_id', $price))
+                ->filter(fn($price) => array_key_exists('currency_id', $price) && $price['currency_id'] !== null)
                 // use currency_id as collection key
                 ->keyBy('currency_id')
             );
@@ -195,12 +212,9 @@ class ProductController extends Controller {
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, Resource $resource) {
         // start a transaction
         DB::beginTransaction();
-
-        // find resource
-        $resource = Resource::findOrFail($id);
 
         // cast to boolean
         if ($request->has('giftcard'))  $request->merge([ 'giftcard' => $request->giftcard == 'true' ]);
@@ -217,24 +231,41 @@ class ProductController extends Controller {
                     ->withErrors( $resource->errors() )
                     ->withInput();
 
-        // save product images images
+        // save product images
         if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
 
         // sync product categories
-        if ($request->has('categories')) $resource->categories()->sync( $request->get('categories') ?? [] );
+        if ($request->has('categories')) $resource->categories()->sync(
+            // get categories as collection
+            $categories = collect($request->get('categories'))
+                // filter empty categories
+                ->filter(fn($category) => $category !== null)
+            );
 
         // sync product tags
-        if ($resource->has('tags')) $resource->tags()->sync( $request->get('tags') ?? [] );
+        if ($request->has('tags')) $resource->tags()->sync(
+            // get tags as collection
+            $tags = collect($request->get('tags'))
+                // filter empty tags
+                ->filter(fn($tag) => $tag !== null)
+            );
 
         // sync product locators
-        if ($resource->has('locators')) $resource->locators()->sync( $request->get('locators') ?? [] );
+        if ($request->has('locators')) $resource->locators()->sync(
+            // get locators as collection
+            $locators = collect(array_group($request->get('locators')))
+                // filter locator without currency set
+                ->filter(fn($locator) => array_key_exists('locator_id', $locator) && $locator['locator_id'] !== null)
+                // use locator_id as collection key
+                ->keyBy('locator_id')
+            );
 
         // sync product prices
         if ($request->has('prices')) $resource->prices()->sync(
             // get prices as collection
             $prices = collect(array_group($request->get('prices')))
                 // filter price without currency set
-                ->filter(fn($price) => array_key_exists('currency_id', $price))
+                ->filter(fn($price) => array_key_exists('currency_id', $price) && $price['currency_id'] !== null)
                 // use currency_id as collection key
                 ->keyBy('currency_id')
             );
