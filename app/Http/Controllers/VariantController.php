@@ -102,23 +102,25 @@ class VariantController extends Controller {
         // save Variant option values
         if (($res = $this->saveOptionValues($request, $resource)) !== true) return $res;
 
-        // save product images
+        // save variant images
         if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
 
-        //  sync product locators
-        if ($resource->has('locators')) $resource->locators()
-            ->sync( array_map(function() use ($resource) {
-                // append product_id
-                return [ 'product_id' => $resource->product_id ];
-            // use locator_id's as keys
-            }, array_flip( $request->get('locators') ?? [] )) );
+        //  sync variant locators
+        if ($request->has('locators')) $resource->locators()->sync(
+            // get locators as collection
+            $locators = collect(array_group($request->get('locators')))
+                // filter locator without currency set
+                ->filter(fn($locator) => array_key_exists('locator_id', $locator) && $locator['locator_id'] !== null)
+                // use locator_id as collection key
+                ->keyBy('locator_id')
+            );
 
-        // sync product prices
+        // sync variant prices
         if ($request->has('prices')) $resource->prices()->sync(
             // get prices as collection
             $prices = collect(array_group($request->get('prices')))
                 // filter price without currency set
-                ->filter(fn($price) => array_key_exists('currency_id', $price))
+                ->filter(fn($price) => array_key_exists('currency_id', $price) && $price['currency_id'] !== null)
                 // append product_id
                 ->map(fn($price) => $price + [ 'product_id' => $resource->product_id ])
                 // use currency_id as collection key
@@ -212,15 +214,17 @@ class VariantController extends Controller {
         // save product images
         if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
 
-        // sync product locators
-        if ($resource->has('locators')) $resource->locators()
-            ->sync( array_map(function() use ($resource) {
-                // append product_id
-                return [ 'product_id' => $resource->product_id ];
-            // use locator_id's as keys
-            }, array_flip( $request->get('locators') ?? [] )) );
+        //  sync variant locators
+        if ($request->has('locators')) $resource->locators()->sync(
+            // get locators as collection
+            $locators = collect(array_group($request->get('locators')))
+                // filter locator without currency set
+                ->filter(fn($locator) => array_key_exists('locator_id', $locator) && $locator['locator_id'] !== null)
+                // use locator_id as collection key
+                ->keyBy('locator_id')
+            );
 
-        // sync product prices
+        // sync variant prices
         if ($request->has('prices')) $resource->prices()->sync(
             // get prices as collection
             $prices = collect(array_group($request->get('prices')))
