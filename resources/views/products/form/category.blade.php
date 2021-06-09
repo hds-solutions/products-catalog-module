@@ -1,5 +1,5 @@
 {{-- <div class="row category-container mb-3" @if ($selected === null && $old === null) id="new" @else data-used="true" @endif> --}}
-    <div class="col-12 d-flex mb-3">
+    <div class="col-12 d-flex mb-1">
         <x-form-foreign name="categories[]"
             :values="$categories"
             default="{{ $old ?? $selected?->id }}"

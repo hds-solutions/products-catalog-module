@@ -22,7 +22,7 @@
             placeholder="products-catalog::warehouse.name._"
             {{-- helper="products-catalog::warehouse.name.?" --}} />
 
-        <div class="ml-2"></div>
+        <div class="ml-1"></div>
 {{--
         <select name="locators[]"
             data-filtered-by="{{ isset($selected) ? "#f$id" : '[name="warehouses[]"]' }}" data-filtered-using="warehouse"

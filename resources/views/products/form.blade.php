@@ -156,8 +156,8 @@
 <x-backend-form-multiple name="prices" values-as="currencies"
     :values="$currencies" :selecteds="isset($resource) ? $resource->prices : []"
     grouped old-filter-fields="currency_id,cost,price,limit"
-    contents-view="products-catalog::products.form.price" contents-size="lg"
-    row-class="mb-0" container-class="mb-3"
+    contents-view="products-catalog::products.form.price" {{-- contents-size="lg" --}}
+    {{-- row-class="mb-0" --}} container-class="mb-1"
 
     label="products-catalog::product.prices.0" />
 
@@ -314,7 +314,7 @@
     :values="$warehouses" :selecteds="isset($resource) ? $resource->locators : []"
     grouped old-filter-fields="warehouse_id,locator_id"
     contents-view="products-catalog::products.form.locator" contents-size="lg"
-    row-class="mb-0" container-class="mb-3"
+    {{-- row-class="mb-0" --}} container-class="mb-1"
 
     label="products-catalog::product.locators.0" />
 
