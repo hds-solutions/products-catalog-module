@@ -1,20 +1,5 @@
 {{-- <div class="form-row price-container mb-3" @if ($selected === null && $old === null) id="new" @else data-used="true" @endif> --}}
     <div class="col-2">
-
-        <x-form-foreign name="prices[currency_id][]" id="f{{ $id = Str::random(16) }}"
-            :values="$currencies"
-            default="{{ $old['currency_id'] ?? $selected?->id }}"
-
-            show="code name" title="code"
-            append="decimals"
-
-            {{-- foreign="" --}}
-            {{-- foreign-add-label="products-catalog::currencies.add" --}}
-
-            label="products-catalog::product.prices.currency_id.0"
-            placeholder="products-catalog::product.prices.currency_id._"
-            {{-- helper="products-catalog::product.prices.currency_id.?" --}}
-            />
 {{--
         <select name="prices[currency_id][]" @if (isset($selected)) id="f{{ $id = Str::random(16) }}" @endif
             value="{{ isset($selected) ? $selected->currency_id : '' }}"
@@ -28,6 +13,19 @@
             @endforeach
         </select>
  --}}
+        <x-form-foreign name="prices[currency_id][]" id="f{{ $id = Str::random(16) }}"
+            :values="$currencies"
+            default="{{ $old['currency_id'] ?? $selected?->id }}"
+
+            show="code name" title="code"
+            append="decimals"
+
+            {{-- foreign="" --}}
+            {{-- foreign-add-label="products-catalog::currencies.add" --}}
+
+            label="products-catalog::product.prices.currency_id.0"
+            placeholder="products-catalog::product.prices.currency_id._"
+            {{-- helper="products-catalog::product.prices.currency_id.?" --}} />
     </div>
 
     <div class="col-10 d-flex">
