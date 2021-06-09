@@ -1,5 +1,4 @@
-<div class="form-row locator-container mb-3"
-    @if ($selected === null && $old === null) id="new" @else data-used="true" @endif>
+{{-- <div class="form-row locator-container mb-3" @if ($selected === null && $old === null) id="new" @else data-used="true" @endif> --}}
     <div class="col-12 d-flex">
 {{--
         <select name="warehouses[]" @if (isset($selected)) id="f{{ $id = Str::random(16) }}" @endif
@@ -12,18 +11,16 @@
             @endforeach
         </select>
  --}}
-        <x-form-foreign name="warehouses[]" id="{{ isset($selected) ? 'f'.($id = Str::random(16)) : null }}"
+        <x-form-foreign name="locators[warehouse_id][]" id="f{{ $id = Str::random(16) }}"
             :values="$warehouses"
+            default="{{ $old['warehouse_id'] ?? $selected?->warehouse_id }}"
 
-            {{-- show="code name" title="code" --}}
-            {{-- append="decimals" --}}
-            default="{{ $old['warehouse_id'] ?? $selected?->warehouse_id ?? null }}"
-
-            {{-- foreign="currencies" foreign-add-label="products-catalog::currencies.add" --}}
+            foreign="warehouses"
+            foreign-add-label="products-catalog::warehouses.add"
 
             label="products-catalog::warehouse.name.0"
             placeholder="products-catalog::warehouse.name._"
-            />
+            {{-- helper="products-catalog::warehouse.name.?" --}} />
 
         <div class="ml-2"></div>
 {{--
@@ -38,20 +35,20 @@
             @endforeach
         </select>
  --}}
-        <x-form-foreign name="locators[]"
+        <x-form-foreign name="locators[locator_id][]"
             :values="$warehouses->pluck('locators')->flatten()"
+            default="{{ $old['locator_id'] ?? $selected?->id }}"
 
-            {{-- show="warehouse.name [name]" title="name" --}}
+            foreign="locators"
+            foreign-add-label="products-catalog::locators.add"
+
+            filtered-by="{!! $selected !== null ? '#f'.$id : '[name=\'locator[warehouse_id][]\']' !!}"
+            data-filtered-using="warehouse"
             append="warehouse:warehouse_id"
-            default="{{ $old['locator_id'] ?? $selected?->id ?? null }}"
-
-            :data-filtered-by="isset($selected) ? '#f'.$id : '[name=\'warehouses[]\']'" data-filtered-using="warehouse"
-
-            {{-- foreign="warehouses" foreign-add-label="products-catalog::warehouses.add" --}}
 
             label="products-catalog::locator.name.0"
             placeholder="products-catalog::locator.name._"
-            />
+            {{-- helper="products-catalog::locator.name.?" --}} />
 
         <button type="button" class="btn btn-danger ml-2"
             data-action="delete"
@@ -61,4 +58,4 @@
             data-accept="Si, eliminar"
             @endif>X</button>
     </div>
-</div>
+{{-- </div> --}}

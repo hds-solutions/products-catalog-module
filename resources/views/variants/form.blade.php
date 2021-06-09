@@ -11,12 +11,12 @@
 <x-backend-form-text :resource="$resource ?? null" name="sku" required
     label="{{ __('products-catalog::variant.sku.0') }}"
     placeholder="{{ __('products-catalog::variant.sku._') }}" />
-
+{{--
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::variant.prices.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".price-container" data-template="#new">
         @php $old_lines = array_group(old('prices') ?? []); @endphp
-        {{-- add product current prices --}}
+        <!-- add product current prices -->
         @if (isset($resource)) @foreach($resource->prices as $idx => $selected)
             @include('products-catalog::variants.price', [
                 'currencies'    => $currencies,
@@ -26,9 +26,9 @@
             @php unset($old_lines[$idx]); @endphp
         @endforeach @endif
 
-        {{-- add new added --}}
+        <!-- add new added -->
         @foreach($old_lines as $old)
-            {{-- ignore empty --}}
+            <!-- ignore empty -->
             @if ( ($old['currency_id'] ?? null) === null &&
                 ($old['cost'] ?? null) === null &&
                 ($old['price'] ?? null) === null &&
@@ -42,7 +42,7 @@
             ])
         @endforeach
 
-        {{-- add empty for adding new prices --}}
+        <!-- add empty for adding new prices -->
         @include('products-catalog::variants.price', [
             'currencies'    => $currencies,
             'selected'      => null,
@@ -50,6 +50,14 @@
         ])
     </div>
 </div>
+ --}}
+<x-backend-form-multiple name="prices" values-as="currencies"
+    :values="$currencies" :selecteds="isset($resource) ? $resource->prices : []"
+    grouped old-filter-fields="currency_id,cost,price,limit"
+    contents-view="products-catalog::variants.form.price" contents-size="lg"
+    row-class="mb-0" container-class="mb-3"
+
+    label="products-catalog::product.prices.0" />
 
 {{-- <x-backend-form-amount :resource="$resource ?? null"
     name="price" field="priceRaw" prepend="{{ config('settings.currency-symbol', 'USD') }}"
@@ -148,14 +156,14 @@
     name="priority"
     label="{{ __('products-catalog::variant.priority.0') }}"
     placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.priority._') }}" />
-
+{{--
 <div class="form-row form-group mb-0">
     <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::variant.locators.0')</label>
     <div class="col-11 col-md-8 col-lg-6" data-multiple=".locator-container" data-template="#new">
         <?php $old_lines = array_group([ 'warehouse_id' => old('warehouses') ?? [],  'locator_id' => old('locators') ?? []]); ?>
-        {{-- add variant current locators --}}
+        <!-- add variant current locators -->
         @if (isset($resource)) @foreach($resource->locators as $idx => $selected)
-            @include('products-catalog::variants.locator', [
+            @include('products-catalog::variants.form.locator', [
                 'warehouses'    => $warehouses,
                 'selected'      => $selected,
                 'old'           => $old_lines[$idx] ?? null,
@@ -163,28 +171,36 @@
             @php unset($old_lines[$idx]); @endphp
         @endforeach @endif
 
-        {{-- add new added --}}
+        <!-- add new added -->
         @foreach($old_lines as $old)
-            {{-- ignore empty --}}
+            <!-- ignore empty -->
             @if ( ($old['warehouse_id'] ?? null) === null &&
                 ($old['locator_id'] ?? null) === null)
                 @continue
             @endif
-            @include('products-catalog::variants.locator', [
+            @include('products-catalog::variants.form.locator', [
                 'warehouses'    => $warehouses,
                 'selected'      => null,
                 'old'           => $old,
             ])
         @endforeach
 
-        {{-- add empty for adding new locators --}}
-        @include('products-catalog::variants.locator', [
+        <!-- add empty for adding new locators -->
+        @include('products-catalog::variants.form.locator', [
             'warehouses'    => $warehouses,
             'selected'      => null,
             'old'           => null,
         ])
     </div>
 </div>
+ --}}
+<x-backend-form-multiple name="locators" values-as="warehouses"
+    :values="$warehouses" :selecteds="isset($resource) ? $resource->locators : []"
+    grouped old-filter-fields="warehouse_id,locator_id"
+    contents-view="products-catalog::variants.form.locator" contents-size="lg"
+    row-class="mb-0" container-class="mb-3"
+
+    label="products-catalog::variant.locators.0" />
 
 <x-backend-form-controls
     submit="products-catalog::variants.save"
