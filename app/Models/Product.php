@@ -89,6 +89,10 @@ class Product extends X_Product {
         return $this->prices()->firstWhere('currency_id', $currency instanceof currency ? $currency->id : $currency);
     }
 
+    public function getPriceAttribute():?Currency {
+        return $this->price();
+    }
+
     public function getStockAttribute():int {
         // acumulator
         $qtyAvailable = 0;

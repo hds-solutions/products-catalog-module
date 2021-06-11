@@ -66,6 +66,10 @@ class Variant extends X_Variant {
         return $this->prices()->firstWhere('currency_id', $currency instanceof Currency ? $currency->id : $currency);
     }
 
+    public function getPriceAttribute():?Currency {
+        return $this->price();
+    }
+
     public function getStockAttribute():int {
         // acumulator
         $qtyAvailable = 0;
