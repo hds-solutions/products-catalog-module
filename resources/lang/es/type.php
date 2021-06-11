@@ -12,6 +12,12 @@
         '?' => 'Este tipo de producto se puede vender',
     ],
 
+    'has_stock'     => [
+        'Almacenable?',
+        '_' => 'Si, este tipo de producto tiene stock',
+        '?' => 'Este tipo de producto tiene stock físico',
+    ],
+
     'options'       => [
         'Opciones',
         '_' => 'Opciones',

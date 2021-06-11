@@ -9,6 +9,11 @@
     label="{{ __('products-catalog::type.is_sold.0') }}"
     placeholder="{{ __('products-catalog::type.is_sold._') }}" />
 
+<x-backend-form-boolean :resource="$resource ?? null"
+    name="has_stock"
+    label="{{ __('products-catalog::type.has_stock.0') }}"
+    placeholder="{{ __('products-catalog::type.has_stock._') }}" />
+
 <div class="form-row form-group d-flex">
     <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::type.options.0')</label>
     <div class="col-9">
