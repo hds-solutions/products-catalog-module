@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Line as Resource;
+use HDSSolutions\Laravel\Models\Line as Resource;
 use Yajra\DataTables\Html\Column;
 
 class LineDataTable extends Base\DataTable {

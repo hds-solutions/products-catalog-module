@@ -1,12 +1,12 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\SubFamilyDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Family;
-use HDSSolutions\Finpar\Models\SubFamily as Resource;
+use HDSSolutions\Laravel\DataTables\SubFamilyDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Family;
+use HDSSolutions\Laravel\Models\SubFamily as Resource;
 
 class SubFamilyController extends Controller {
 

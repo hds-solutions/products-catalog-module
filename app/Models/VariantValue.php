@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models;
+namespace HDSSolutions\Laravel\Models;
 
 class VariantValue extends X_VariantValue {
 

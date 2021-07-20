@@ -1,12 +1,12 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\TypeDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Option;
-use HDSSolutions\Finpar\Models\Type as Resource;
+use HDSSolutions\Laravel\DataTables\TypeDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Option;
+use HDSSolutions\Laravel\Models\Type as Resource;
 
 class TypeController extends Controller {
 

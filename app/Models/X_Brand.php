@@ -1,9 +1,9 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models;
+namespace HDSSolutions\Laravel\Models;
 
-use HDSSolutions\Finpar\Models\File;
-use HDSSolutions\Finpar\Traits\BelongsToCompany;
+use HDSSolutions\Laravel\Models\File;
+use HDSSolutions\Laravel\Traits\BelongsToCompany;
 
 abstract class X_Brand extends Base\Model {
     use BelongsToCompany;

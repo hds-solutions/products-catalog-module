@@ -1,12 +1,12 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\GamaDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Line;
-use HDSSolutions\Finpar\Models\Gama as Resource;
+use HDSSolutions\Laravel\DataTables\GamaDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Line;
+use HDSSolutions\Laravel\Models\Gama as Resource;
 
 class GamaController extends Controller {
 

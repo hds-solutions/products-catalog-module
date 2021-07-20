@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Tag as Resource;
+use HDSSolutions\Laravel\Models\Tag as Resource;
 use Yajra\DataTables\Html\Column;
 
 class TagDataTable extends Base\DataTable {

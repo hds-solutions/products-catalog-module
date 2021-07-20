@@ -1,6 +1,6 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models;
+namespace HDSSolutions\Laravel\Models;
 
 class Family extends X_Family {
 

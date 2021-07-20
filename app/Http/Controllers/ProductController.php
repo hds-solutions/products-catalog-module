@@ -1,20 +1,20 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\ProductDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Brand;
-use HDSSolutions\Finpar\Models\Category;
-use HDSSolutions\Finpar\Models\Currency;
-use HDSSolutions\Finpar\Models\Family;
-use HDSSolutions\Finpar\Models\File;
-use HDSSolutions\Finpar\Models\Line;
-use HDSSolutions\Finpar\Models\Product as Resource;
-use HDSSolutions\Finpar\Models\Tag;
-use HDSSolutions\Finpar\Models\Type;
-use HDSSolutions\Finpar\Models\Warehouse;
+use HDSSolutions\Laravel\DataTables\ProductDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Brand;
+use HDSSolutions\Laravel\Models\Category;
+use HDSSolutions\Laravel\Models\Currency;
+use HDSSolutions\Laravel\Models\Family;
+use HDSSolutions\Laravel\Models\File;
+use HDSSolutions\Laravel\Models\Line;
+use HDSSolutions\Laravel\Models\Product as Resource;
+use HDSSolutions\Laravel\Models\Tag;
+use HDSSolutions\Laravel\Models\Type;
+use HDSSolutions\Laravel\Models\Warehouse;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller {

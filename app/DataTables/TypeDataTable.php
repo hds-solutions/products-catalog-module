@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Type as Resource;
+use HDSSolutions\Laravel\Models\Type as Resource;
 use Yajra\DataTables\Html\Column;
 
 class TypeDataTable extends Base\DataTable {

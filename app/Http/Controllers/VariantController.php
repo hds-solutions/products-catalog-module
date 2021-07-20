@@ -1,16 +1,16 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\VariantDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Currency;
-use HDSSolutions\Finpar\Models\File;
-use HDSSolutions\Finpar\Models\Product;
-use HDSSolutions\Finpar\Models\Variant as Resource;
-use HDSSolutions\Finpar\Models\VariantValue;
-use HDSSolutions\Finpar\Models\Warehouse;
+use HDSSolutions\Laravel\DataTables\VariantDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Currency;
+use HDSSolutions\Laravel\Models\File;
+use HDSSolutions\Laravel\Models\Product;
+use HDSSolutions\Laravel\Models\Variant as Resource;
+use HDSSolutions\Laravel\Models\VariantValue;
+use HDSSolutions\Laravel\Models\Warehouse;
 use Illuminate\Support\Facades\DB;
 
 class VariantController extends Controller {

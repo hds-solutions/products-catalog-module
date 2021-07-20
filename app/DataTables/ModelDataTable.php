@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Model as Resource;
+use HDSSolutions\Laravel\Models\Model as Resource;
 use Yajra\DataTables\Html\Column;
 
 class ModelDataTable extends Base\DataTable {

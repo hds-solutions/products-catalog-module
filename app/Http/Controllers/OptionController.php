@@ -1,12 +1,12 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\OptionDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Option as Resource;
-use HDSSolutions\Finpar\Models\OptionValue as ResourceValue;
+use HDSSolutions\Laravel\DataTables\OptionDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Option as Resource;
+use HDSSolutions\Laravel\Models\OptionValue as ResourceValue;
 use Illuminate\Support\Facades\DB;
 
 class OptionController extends Controller {

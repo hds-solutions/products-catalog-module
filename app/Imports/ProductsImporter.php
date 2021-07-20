@@ -1,21 +1,21 @@
 <?php
 
-namespace HDSSolutions\Finpar\Imports;
+namespace HDSSolutions\Laravel\Imports;
 
 use Closure;
-use HDSSolutions\Finpar\Models\Brand;
-use HDSSolutions\Finpar\Models\Currency;
-use HDSSolutions\Finpar\Models\Family;
-use HDSSolutions\Finpar\Models\Gama;
-use HDSSolutions\Finpar\Models\Line;
-use HDSSolutions\Finpar\Models\Option;
-use HDSSolutions\Finpar\Models\PriceChange;
-use HDSSolutions\Finpar\Models\PriceChangeLine;
-use HDSSolutions\Finpar\Models\Product;
-use HDSSolutions\Finpar\Models\SubFamily;
-use HDSSolutions\Finpar\Models\Type;
-use HDSSolutions\Finpar\Models\Variant;
-use HDSSolutions\Finpar\Models\VariantValue;
+use HDSSolutions\Laravel\Models\Brand;
+use HDSSolutions\Laravel\Models\Currency;
+use HDSSolutions\Laravel\Models\Family;
+use HDSSolutions\Laravel\Models\Gama;
+use HDSSolutions\Laravel\Models\Line;
+use HDSSolutions\Laravel\Models\Option;
+use HDSSolutions\Laravel\Models\PriceChange;
+use HDSSolutions\Laravel\Models\PriceChangeLine;
+use HDSSolutions\Laravel\Models\Product;
+use HDSSolutions\Laravel\Models\SubFamily;
+use HDSSolutions\Laravel\Models\Type;
+use HDSSolutions\Laravel\Models\Variant;
+use HDSSolutions\Laravel\Models\VariantValue;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\RemembersChunkOffset;
 use Maatwebsite\Excel\Concerns\ToCollection;

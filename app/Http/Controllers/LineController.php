@@ -1,12 +1,12 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\DataTables\LineDataTable as DataTable;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Models\Line as Resource;
-use HDSSolutions\Finpar\Models\Option;
+use HDSSolutions\Laravel\DataTables\LineDataTable as DataTable;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Models\Line as Resource;
+use HDSSolutions\Laravel\Models\Option;
 
 class LineController extends Controller {
 

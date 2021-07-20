@@ -1,6 +1,6 @@
 <?php
 
-use HDSSolutions\Finpar\Http\Controllers\{
+use HDSSolutions\Laravel\Http\Controllers\{
     BrandController,
     CategoryController,
     FamilyController,

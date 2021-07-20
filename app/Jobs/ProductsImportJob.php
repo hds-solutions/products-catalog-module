@@ -1,9 +1,9 @@
 <?php
 
-namespace HDSSolutions\Finpar\Jobs;
+namespace HDSSolutions\Laravel\Jobs;
 
-use HDSSolutions\Finpar\Imports\ProductsImporter as Importer;
-use HDSSolutions\Finpar\Models\File;
+use HDSSolutions\Laravel\Imports\ProductsImporter as Importer;
+use HDSSolutions\Laravel\Models\File;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;

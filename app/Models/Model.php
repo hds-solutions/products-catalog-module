@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\Models;
+namespace HDSSolutions\Laravel\Models;
 
-use HDSSolutions\Finpar\Models\Brand;
+use HDSSolutions\Laravel\Models\Brand;
 
 class Model extends X_Model {
 

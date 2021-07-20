@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Product as Resource;
+use HDSSolutions\Laravel\Models\Product as Resource;
 use Yajra\DataTables\Html\Column;
 
 class ProductDataTable extends Base\DataTable {

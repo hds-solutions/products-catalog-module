@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Option as Resource;
+use HDSSolutions\Laravel\Models\Option as Resource;
 use Yajra\DataTables\Html\Column;
 
 class OptionDataTable extends Base\DataTable {

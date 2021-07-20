@@ -1,17 +1,17 @@
 <?php
 
-namespace HDSSolutions\Finpar;
+namespace HDSSolutions\Laravel;
 
 use HDSSolutions\Laravel\Modules\ModuleServiceProvider;
 
 class ProductsCatalogModuleServiceProvider extends ModuleServiceProvider {
 
     protected array $middlewares = [
-        \HDSSolutions\Finpar\Http\Middleware\ProductsCatalogMenu::class,
+        \HDSSolutions\Laravel\Http\Middleware\ProductsCatalogMenu::class,
     ];
 
     private array $commands = [
-        // \HDSSolutions\Finpar\Commands\Mix::class,
+        // \HDSSolutions\Laravel\Commands\Mix::class,
     ];
 
     public function bootEnv():void {

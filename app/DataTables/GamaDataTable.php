@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Gama as Resource;
+use HDSSolutions\Laravel\Models\Gama as Resource;
 use Yajra\DataTables\Html\Column;
 
 class GamaDataTable extends Base\DataTable {

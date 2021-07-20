@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Variant as Resource;
+use HDSSolutions\Laravel\Models\Variant as Resource;
 use Yajra\DataTables\Html\Column;
 
 class VariantDataTable extends Base\DataTable {

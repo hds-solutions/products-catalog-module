@@ -1,12 +1,12 @@
 <?php
 
-namespace HDSSolutions\Finpar\Http\Controllers;
+namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use HDSSolutions\Finpar\Helpers\SheetReader;
-use HDSSolutions\Finpar\Http\Request;
-use HDSSolutions\Finpar\Jobs\ProductsImportJob;
-use HDSSolutions\Finpar\Models\File;
+use HDSSolutions\Laravel\Helpers\SheetReader;
+use HDSSolutions\Laravel\Http\Request;
+use HDSSolutions\Laravel\Jobs\ProductsImportJob;
+use HDSSolutions\Laravel\Models\File;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;

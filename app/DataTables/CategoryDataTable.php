@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Category as Resource;
+use HDSSolutions\Laravel\Models\Category as Resource;
 use Yajra\DataTables\Html\Column;
 
 class CategoryDataTable extends Base\DataTable {

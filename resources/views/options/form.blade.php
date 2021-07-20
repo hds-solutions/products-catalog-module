@@ -9,7 +9,7 @@
     placeholder="{{ __('products-catalog::option.label._') }}" />
 
 <x-backend-form-select :resource="$resource ?? null" name="value_type" required
-    :values="\HDSSolutions\Finpar\Models\Option::VALUE_TYPES"
+    :values="\HDSSolutions\Laravel\Models\Option::VALUE_TYPES"
     default="text"
     label="{{ __('products-catalog::option.value_type.0') }}"
     placeholder="{{ __('products-catalog::option.value_type._') }}"

@@ -177,7 +177,7 @@
 </x-backend-form-amount> --}}
 
 <x-backend-form-select :resource="$resource ?? null" name="tax" required
-    :values="\HDSSolutions\Finpar\Models\Product::TAXES"
+    :values="\HDSSolutions\Laravel\Models\Product::TAXES"
     field="taxRaw"
     default="10i"
     label="{{ __('products-catalog::product.tax.0') }}"

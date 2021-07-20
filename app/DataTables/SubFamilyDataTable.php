@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\SubFamily as Resource;
+use HDSSolutions\Laravel\Models\SubFamily as Resource;
 use Yajra\DataTables\Html\Column;
 
 class SubFamilyDataTable extends Base\DataTable {

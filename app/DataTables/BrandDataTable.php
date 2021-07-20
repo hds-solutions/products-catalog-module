@@ -1,8 +1,8 @@
 <?php
 
-namespace HDSSolutions\Finpar\DataTables;
+namespace HDSSolutions\Laravel\DataTables;
 
-use HDSSolutions\Finpar\Models\Brand as Resource;
+use HDSSolutions\Laravel\Models\Brand as Resource;
 use Yajra\DataTables\Html\Column;
 
 class BrandDataTable extends Base\DataTable {
