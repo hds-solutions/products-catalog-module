@@ -23,7 +23,7 @@ class LineDataTable extends Base\DataTable {
             Column::make('name')
                 ->title( __('products-catalog::line.name.0') ),
 
-            Column::make('actions'),
+            Column::computed('actions'),
         ];
     }
 

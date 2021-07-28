@@ -23,7 +23,7 @@ class TypeDataTable extends Base\DataTable {
             Column::make('name')
                 ->title( __('products-catalog::type.name.0') ),
 
-            Column::make('actions'),
+            Column::computed('actions'),
         ];
     }
 

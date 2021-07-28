@@ -30,7 +30,7 @@ class GamaDataTable extends Base\DataTable {
             Column::make('name')
                 ->title( __('products-catalog::gama.name.0') ),
 
-            Column::make('actions'),
+            Column::computed('actions'),
         ];
     }
 

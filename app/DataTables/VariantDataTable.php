@@ -42,7 +42,7 @@ class VariantDataTable extends Base\DataTable {
                 ->renderRaw('view:variant')
                 ->data( view('products-catalog::variants.datatable.variant')->render() ),
 
-            Column::make('actions'),
+            Column::computed('actions'),
         ];
     }
 

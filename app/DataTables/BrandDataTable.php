@@ -23,7 +23,7 @@ class BrandDataTable extends Base\DataTable {
             Column::make('name')
                 ->title( __('products-catalog::brand.name.0') ),
 
-            Column::make('actions'),
+            Column::computed('actions'),
         ];
     }
 

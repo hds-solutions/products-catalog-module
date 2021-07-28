@@ -11,7 +11,7 @@ class ProductsCatalogMenu extends Base\Menu {
         // create a submenu
         $sub = backend()->menu()
             ->add(__('products-catalog::catalog.nav'), [
-                'icon'  => 'cogs',
+                'icon'  => 'dolly',
             ])->data('priority', 900);
 
         // get extras menu group
@@ -42,7 +42,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.options') && $this->can('options'))
             $menu->add(__('products-catalog::options.nav'), [
                 'route'     => 'backend.options',
-                'icon'      => 'options'
+                'icon'      => 'drafting-compass'
             ]);
 
         return $this;
@@ -52,7 +52,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.types') && $this->can('types'))
             $menu->add(__('products-catalog::types.nav'), [
                 'route'     => 'backend.types',
-                'icon'      => 'types'
+                'icon'      => 'gifts'
             ]);
 
         return $this;
@@ -62,7 +62,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.brands') && $this->can('brands'))
             $menu->add(__('products-catalog::brands.nav'), [
                 'route'     => 'backend.brands',
-                'icon'      => 'brands'
+                'icon'      => 'copyright'
             ]);
 
         return $this;
@@ -72,7 +72,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.models') && $this->can('models'))
             $menu->add(__('products-catalog::models.nav'), [
                 'route'     => 'backend.models',
-                'icon'      => 'models'
+                'icon'      => 'magic'
             ]);
 
         return $this;
@@ -82,7 +82,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.lines') && $this->can('lines'))
             $menu->add(__('products-catalog::lines.nav'), [
                 'route'     => 'backend.lines',
-                'icon'      => 'lines'
+                'icon'      => 'chess'
             ]);
 
         return $this;
@@ -92,7 +92,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.gamas') && $this->can('gamas'))
             $menu->add(__('products-catalog::gamas.nav'), [
                 'route'     => 'backend.gamas',
-                'icon'      => 'gamas'
+                'icon'      => 'chess-bishop'
             ]);
 
         return $this;
@@ -102,7 +102,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.families') && $this->can('families'))
             $menu->add(__('products-catalog::families.nav'), [
                 'route'     => 'backend.families',
-                'icon'      => 'families'
+                'icon'      => 'circle'
             ]);
 
         return $this;
@@ -112,7 +112,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.sub_families') && $this->can('sub_families'))
             $menu->add(__('products-catalog::sub_families.nav'), [
                 'route'     => 'backend.sub_families',
-                'icon'      => 'sub_families'
+                'icon'      => 'chart-pie'
             ]);
 
         return $this;
@@ -122,7 +122,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.categories') && $this->can('categories'))
             $menu->add(__('products-catalog::categories.nav'), [
                 'route'     => 'backend.categories',
-                'icon'      => 'categories'
+                'icon'      => 'grip-horizontal'
             ]);
 
         return $this;
@@ -142,7 +142,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.products') && $this->can('products'))
             $menu->add(__('products-catalog::products.nav'), [
                 'route'     => 'backend.products',
-                'icon'      => 'products'
+                'icon'      => 'box'
             ]);
 
         return $this;
@@ -152,7 +152,7 @@ class ProductsCatalogMenu extends Base\Menu {
         if (Route::has('backend.variants') && $this->can('variants'))
             $menu->add(__('products-catalog::variants.nav'), [
                 'route'     => 'backend.variants',
-                'icon'      => 'variants'
+                'icon'      => 'barcode'
             ]);
 
         return $this;

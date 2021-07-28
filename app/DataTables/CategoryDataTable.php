@@ -23,7 +23,7 @@ class CategoryDataTable extends Base\DataTable {
             Column::make('name')
                 ->title( __('products-catalog::category.name.0') ),
 
-            Column::make('actions'),
+            Column::computed('actions'),
         ];
     }
 

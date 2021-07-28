@@ -55,7 +55,7 @@ class ProductDataTable extends Base\DataTable {
                 ->addClass('w-300px')
                 ->sortable(false),
 
-            Column::make('actions'),
+            Column::computed('actions'),
         ];
     }
 
