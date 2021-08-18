@@ -3,6 +3,7 @@
 namespace HDSSolutions\Laravel\DataTables;
 
 use HDSSolutions\Laravel\Models\Product as Resource;
+use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\Html\Column;
 
 class ProductDataTable extends Base\DataTable {
@@ -21,6 +22,10 @@ class ProductDataTable extends Base\DataTable {
         'variants.values.optionValue',
         // TODO: 'storages',
         // TODO: 'variants.storages',
+    ];
+
+    protected array $orderBy = [
+        'name'      => 'asc',
     ];
 
     public function __construct() {
@@ -57,6 +62,59 @@ class ProductDataTable extends Base\DataTable {
 
             Column::computed('actions'),
         ];
+    }
+
+    protected function joins(Builder $query):Builder {
+        // add custom JOINs
+        return $query
+            // join to Type
+            ->join('types', 'types.id', 'products.type_id')
+            // join to Brand
+            ->leftJoin('brands', 'brands.id', 'products.brand_id')
+                // join to Models
+                ->leftJoin('models', 'models.id', 'products.model_id')
+            // join to Line
+            ->leftJoin('lines', 'lines.id', 'products.line_id');
+    }
+
+    protected function orderLineName(Builder $query, string $order):Builder {
+        // order by Line.name
+        return $query->orderBy('lines.name', $order);
+    }
+
+    protected function filterType(Builder $query, $type_id):Builder {
+        // filter only from Type
+        return $query->where('products.type_id', $type_id);
+    }
+
+    protected function filterBrand(Builder $query, $brand_id):Builder {
+        // filter only from Brand
+        return $query->where('products.brand_id', $brand_id);
+    }
+
+    protected function filterModel(Builder $query, $model_id):Builder {
+        // filter only from Model
+        return $query->where('products.model_id', $model_id);
+    }
+
+    protected function filterFamily(Builder $query, $family_id):Builder {
+        // filter only from Family
+        return $query->where('products.family_id', $family_id);
+    }
+
+    protected function filterSubFamily(Builder $query, $sub_family_id):Builder {
+        // filter only from SubFamily
+        return $query->where('products.sub_family_id', $sub_family_id);
+    }
+
+    protected function filterLine(Builder $query, $line_id):Builder {
+        // filter only from Line
+        return $query->where('products.line_id', $line_id);
+    }
+
+    protected function filterGama(Builder $query, $gama_id):Builder {
+        // filter only from Gama
+        return $query->where('products.gama_id', $gama_id);
     }
 
 }

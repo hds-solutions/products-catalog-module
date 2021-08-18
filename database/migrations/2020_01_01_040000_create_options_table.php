@@ -23,7 +23,7 @@ class CreateOptionsTable extends Migration {
             $table->foreignTo('Company');
             $table->string('name', 255);
             $table->string('label')->nullable();
-            $table->enum('value_type', [ 'text', 'color', 'image' ])->default('text');
+            $table->enum('value_type', [ 'text', 'boolean', 'choice', 'color', 'image' ])->default('text');
             $table->boolean('show')->default(false);
         });
     }

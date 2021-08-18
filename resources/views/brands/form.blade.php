@@ -1,14 +1,15 @@
 @include('backend::components.errors')
 
 <x-backend-form-text :resource="$resource ?? null" name="name" required
-    label="{{ __('products-catalog::brand.name.0') }}"
-    placeholder="{{ __('products-catalog::brand.name._') }}"
-    {{-- helper="{{ __('products-catalog::brand.name.?') }}" --}} />
+    label="products-catalog::brand.name.0"
+    placeholder="products-catalog::brand.name._"
+    {{-- helper="products-catalog::brand.name.?" --}} />
 
-<x-backend-form-image :resource="$resource ?? null" :images="$images"
-    name="logo_id"
-    label="{{ __('products-catalog::brand.logo_id.0') }}"
-    placeholder="({{ __('optional') }}) {{ __('products-catalog::brand.logo_id._') }}" />
+<x-backend-form-image :resource="$resource ?? null" name="logo_id"
+    :images="$images"
+
+    label="products-catalog::brand.logo_id.0"
+    placeholder="products-catalog::brand.logo_id.optional" />
 
 {{-- <div class="form-row form-group">
     <label class="col-3 control-label">Mostrar en Home ?</label>
@@ -22,10 +23,9 @@
     </div>
 </div> --}}
 
-<x-backend-form-number :resource="$resource ?? null"
-    name="priority"
-    label="{{ __('products-catalog::brand.priority.0') }}"
-    placeholder="({{ __('optional') }}) {{ __('products-catalog::brand.priority._') }}" />
+<x-backend-form-number :resource="$resource ?? null" name="priority"
+    label="products-catalog::brand.priority.0"
+    placeholder="products-catalog::brand.priority.optional" />
 
 <x-backend-form-controls
     submit="products-catalog::brands.save"

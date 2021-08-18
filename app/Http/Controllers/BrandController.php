@@ -15,11 +15,6 @@ class BrandController extends Controller {
         $this->authorizeResource(Resource::class, 'resource');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, DataTable $dataTable) {
         // check only-form flag
         if ($request->has('only-form'))
@@ -30,27 +25,22 @@ class BrandController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
 
         // return view with dataTable
-        return $dataTable->render('products-catalog::brands.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('products-catalog::brands.index', [
+            'count'                 => Resource::count(),
+            'show_company_selector' => !backend()->companyScoped(),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
+    public function create(Request $request) {
+        // force company selection
+        if (!backend()->companyScoped()) return view('backend::layouts.master', [ 'force_company_selector' => true ]);
+
         // load images
         $images = File::images()->get();
         // show create form
         return view('products-catalog::brands.create', compact('images'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         // cast show_home to boolean
         $request->merge([ 'show_home' => $request->show_home == 'on' ]);
@@ -65,9 +55,9 @@ class BrandController extends Controller {
             // save resource
             if (!$image->save())
                 // redirect with errors
-                return back()
-                    ->withErrors($image->errors())
-                    ->withInput();
+                return back()->withInput()
+                    ->withErrors( $image->errors() );
+
             // set uploaded image into resource
             $resource->logo_id = $image->id;
         }
@@ -75,9 +65,8 @@ class BrandController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // check return type
         return $request->has('only-form') ?
@@ -87,43 +76,21 @@ class BrandController extends Controller {
             redirect()->route('backend.brands');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Resource $resource) {
+    public function show(Request $request, Resource $resource) {
         // redirect to list
         return redirect()->route('backend.brands');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $resource) {
+    public function edit(Request $request, Resource $resource) {
         // load images
         $images = File::images()->get();
         // show edit form
         return view('products-catalog::brands.edit', compact('resource', 'images'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id) {
+    public function update(Request $request, Resource $resource) {
         // cast show_home to boolean
         $request->merge([ 'show_home' => $request->show_home == 'on' ]);
-
-        // find resource
-        $resource = Resource::findOrFail($id);
 
         // check new uploaded image
         if ($request->hasFile('image')) {
@@ -132,9 +99,9 @@ class BrandController extends Controller {
             // save resource
             if (!$image->save())
                 // redirect with errors
-                return back()
-                    ->withErrors($image->errors())
-                    ->withInput();
+                return back()->withInput()
+                    ->withErrors( $image->errors() );
+
             // set uploaded image into request
             $request->merge([ 'logo_id' => $image->id ]);
         }
@@ -142,27 +109,20 @@ class BrandController extends Controller {
         // save resource
         if (!$resource->update( $request->input() ))
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // redirect to list
         return redirect()->route('backend.brands');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function destroy(Request $request, Resource $resource) {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return back();
+            return back()
+                ->withErrors( $resource->errors() );
+
         // redirect to list
         return redirect()->route('backend.brands');
     }

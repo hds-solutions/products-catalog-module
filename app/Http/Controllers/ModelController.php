@@ -15,11 +15,6 @@ class ModelController extends Controller {
         $this->authorizeResource(Resource::class, 'resource');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, DataTable $dataTable) {
         // check only-form flag
         if ($request->has('only-form'))
@@ -29,28 +24,26 @@ class ModelController extends Controller {
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
 
+        // get available brands
+        $brands = Brand::ordered()->get();
+
         // return view with dataTable
-        return $dataTable->render('products-catalog::models.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('products-catalog::models.index', compact('brands') + [
+            'count'                 => Resource::count(),
+            'show_company_selector' => !backend()->companyScoped(),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
+    public function create(Request $request) {
+        // force company selection
+        if (!backend()->companyScoped()) return view('backend::layouts.master', [ 'force_company_selector' => true ]);
+
         // load brands
         $brands = Brand::ordered()->get();
         // show create form
         return view('products-catalog::models.create', compact('brands'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         // create resource
         $resource = new Resource( $request->input() );
@@ -58,9 +51,8 @@ class ModelController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // check return type
         return $request->has('only-form') ?
@@ -70,65 +62,36 @@ class ModelController extends Controller {
             redirect()->route('backend.models');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Resource $resource) {
+    public function show(Request $request, Resource $resource) {
         // redirect to list
         return redirect()->route('backend.models');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $resource) {
+    public function edit(Request $request, Resource $resource) {
         // load brands
         $brands = Brand::ordered()->get();
         // show edit form
         return view('products-catalog::models.edit', compact('resource', 'brands'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
-
+    public function update(Request $request, Resource $resource) {
         // save resource
         if (!$resource->update( $request->input() ))
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // redirect to list
         return redirect()->route('backend.models');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function destroy(Request $request, Resource $resource) {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return back();
+            return back()
+                ->withErrors( $resource->errors() );
+
         // redirect to list
         return redirect()->route('backend.models');
     }

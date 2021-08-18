@@ -8,4 +8,8 @@ class Gama extends X_Gama {
         return $this->belongsTo(Line::class);
     }
 
+    public function products() {
+        return $this->hasMany(Product::class);
+    }
+
 }

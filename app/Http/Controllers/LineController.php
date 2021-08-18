@@ -90,11 +90,11 @@ class LineController extends Controller {
      * @param  \App\Models\Resource  $line
      * @return \Illuminate\Http\Response
      */
-    public function edit(Resource $line) {
+    public function edit(Resource $resource) {
         // get options
         $options = Option::ordered()->get();
         // show edit form
-        return view('products-catalog::lines.edit', compact('options', 'line'));
+        return view('products-catalog::lines.edit', compact('options', 'resource'));
     }
 
     /**

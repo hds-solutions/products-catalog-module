@@ -138,6 +138,11 @@ class Product extends X_Product {
 
     /* scopes & filters */
 
+    public static function code(string $code):?Product {
+        // find resource by code
+        return self::where('code', $code)->first();
+    }
+
     public function scopeBuyable(Builder $query, bool $buyable = true) {
         return $query->whereHas('type', fn($type) => $type->isSold($buyable));
     }

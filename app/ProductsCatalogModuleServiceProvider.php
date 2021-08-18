@@ -2,6 +2,8 @@
 
 namespace HDSSolutions\Laravel;
 
+use HDSSolutions\Laravel\Models\Option;
+use HDSSolutions\Laravel\Models\Product;
 use HDSSolutions\Laravel\Modules\ModuleServiceProvider;
 
 class ProductsCatalogModuleServiceProvider extends ModuleServiceProvider {
@@ -43,6 +45,9 @@ class ProductsCatalogModuleServiceProvider extends ModuleServiceProvider {
         $this->commands( $this->commands );
         // merge configuration
         $this->mergeConfigFrom( module_path('config/products-catalog.php'), 'products-catalog' );
+        //
+        $this->alias('Option', Option::class);
+        $this->alias('Product', Product::class);
     }
 
 }

@@ -23,6 +23,12 @@ class OptionDataTable extends Base\DataTable {
             Column::make('name')
                 ->title( __('products-catalog::option.name.0') ),
 
+            Column::make('label')
+                ->title( __('products-catalog::option.label.0') ),
+
+            Column::make('value_type')
+                ->title( __('products-catalog::option.value_type.0') ),
+
             Column::computed('actions'),
         ];
     }

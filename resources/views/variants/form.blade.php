@@ -1,12 +1,14 @@
 @include('backend::components.errors')
 
 <x-backend-form-foreign :resource="$resource ?? null" name="product_id" required
-    foreign="products" :values="$products" foreign-add-label="{{ __('products-catalog::products.add') }}"
-    append="type:type_id,family:family_id,line:line_id" request="product"
+    :values="$products" request="product" :readonly="request()->has('product')"
+
+    foreign="products" foreign-add-label="{{ __('products-catalog::products.add') }}"
+    append="type:type_id,family:family_id,line:line_id"
 
     label="{{ __('products-catalog::variant.product_id.0') }}"
     placeholder="{{ __('products-catalog::variant.product_id._') }}"
-    {{-- helper="{{ __('products-catalog::variant.product_id.?') }}" --}} />
+    helper="{{ __('products-catalog::variant.product_id.?') }}" />
 
 <x-backend-form-text :resource="$resource ?? null" name="sku" required
     label="{{ __('products-catalog::variant.sku.0') }}"

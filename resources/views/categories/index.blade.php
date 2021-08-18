@@ -8,13 +8,13 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="row">
-            <div class="col-6">
-                <i class="fas fa-table"></i>
+            <div class="col-6 d-flex align-items-center">
+                <i class="fas fa-table mr-2"></i>
                 @lang('products-catalog::categories.index')
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ route('backend.categories.create') }}"
-                    class="btn btn-sm btn-primary">@lang('products-catalog::categories.create')</a>
+                    class="btn btn-sm btn-outline-primary">@lang('products-catalog::categories.create')</a>
             </div>
         </div>
     </div>

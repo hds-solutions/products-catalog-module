@@ -2,6 +2,7 @@
 
 <x-backend-form-foreign :resource="$resource ?? null" name="family_id" required
     foreign="families" :values="$families" foreign-add-label="{{ __('products-catalog::families.add') }}"
+    request="family" :readonly="request()->has('family')"
 
     label="{{ __('products-catalog::sub_family.family_id.0') }}"
     placeholder="{{ __('products-catalog::sub_family.family_id._') }}"

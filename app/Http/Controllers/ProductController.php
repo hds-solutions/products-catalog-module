@@ -7,7 +7,6 @@ use HDSSolutions\Laravel\DataTables\ProductDataTable as DataTable;
 use HDSSolutions\Laravel\Http\Request;
 use HDSSolutions\Laravel\Models\Brand;
 use HDSSolutions\Laravel\Models\Category;
-use HDSSolutions\Laravel\Models\Currency;
 use HDSSolutions\Laravel\Models\Family;
 use HDSSolutions\Laravel\Models\File;
 use HDSSolutions\Laravel\Models\Line;
@@ -24,11 +23,6 @@ class ProductController extends Controller {
         $this->authorizeResource(Resource::class, 'resource');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, DataTable $dataTable) {
         // check only-form flag
         if ($request->has('only-form'))
@@ -38,23 +32,41 @@ class ProductController extends Controller {
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
 
+        // load filters
+        $types = Type::ordered()->get();
+        $brands = Brand::with([
+            'models' => fn($model) => $model->ordered(),
+        ])->ordered()->get();
+        $families = Family::with([
+            'subFamilies' => fn($subFamily) => $subFamily->ordered(),
+        ])->ordered()->get();
+        $lines = Line::with([
+            'gamas' => fn($gama) => $gama->ordered(),
+        ])->ordered()->get();
+
         // return view with dataTable
-        return $dataTable->render('products-catalog::products.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('products-catalog::products.index', compact(
+            'types', 'brands', 'families', 'lines',
+        ) + [
+            'count'                 => Resource::count(),
+            'show_company_selector' => !backend()->companyScoped(),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
+    public function create(Request $request) {
+        // force company selection
+        if (!backend()->companyScoped()) return view('backend::layouts.master', [ 'force_company_selector' => true ]);
+
         // load product catalog
-        $brands = Brand::with([ 'models' => fn($query) => $query->ordered() ])
-            ->ordered()->get();
-        $families = Family::with([ 'subFamilies' => fn($query) => $query->ordered() ])
-            ->ordered()->get();
-        $lines = Line::with([ 'gamas' => fn($query) => $query->ordered() ])
-            ->ordered()->get();
+        $brands = Brand::with([
+            'models' => fn($model) => $model->ordered(),
+        ])->ordered()->get();
+        $families = Family::with([
+            'subFamilies' => fn($subFamily) => $subFamily->ordered(),
+        ])->ordered()->get();
+        $lines = Line::with([
+            'gamas' => fn($gama) => $gama->ordered(),
+        ])->ordered()->get();
         // product types
         $types = Type::ordered()->get();
         // categories
@@ -64,24 +76,20 @@ class ProductController extends Controller {
         // load images
         $images = File::images()->get();
         // load warehouses
-        $warehouses = Warehouse::with([ 'locators' ])
-            ->ordered()->get();
+        $warehouses = Warehouse::with([
+            'locators' => fn($locator) => $locator->ordered(),
+        ])->ordered()->get();
         // load currencies
-        $currencies = Currency::ordered()->get();
+        $currencies = backend()->currencies();
+
         // show create form
         return view('products-catalog::products.create', compact(
             'brands', 'families', 'lines',
             'types', 'categories',
-            'tags', 'images', 'warehouses', 'currencies'
+            'tags', 'images', 'warehouses', 'currencies',
         ));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         // start a transaction
         DB::beginTransaction();
@@ -96,12 +104,11 @@ class ProductController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // save product images
-        if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
+        if (($redirect = $this->saveResourceImages($request, $resource)) !== true) return $redirect;
 
         // sync product categories
         if ($request->has('categories')) $resource->categories()->sync(
@@ -150,31 +157,22 @@ class ProductController extends Controller {
             redirect()->route('backend.products');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Resource $resource) {
+    public function show(Request $request, Resource $resource) {
         // redirect to list
         return redirect()->route('backend.products');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $resource) {
+    public function edit(Request $request, Resource $resource) {
         // load product catalog
-        $brands = Brand::with([ 'models' => function($query) { return $query->ordered(); } ])
-            ->ordered()->get();
-        $families = Family::with([ 'subFamilies' => function($query) { return $query->ordered(); } ])
-            ->ordered()->get();
-        $lines = Line::with([ 'gamas' => function($query) { return $query->ordered(); } ])
-            ->ordered()->get();
+        $brands = Brand::with([
+            'models' => fn($model) => $model->ordered(),
+        ])->ordered()->get();
+        $families = Family::with([
+            'subFamilies' => fn($subFamily) => $subFamily->ordered(),
+        ])->ordered()->get();
+        $lines = Line::with([
+            'gamas' => fn($gama) => $gama->ordered(),
+        ])->ordered()->get();
         // product types
         $types = Type::ordered()->get();
         // categories
@@ -184,10 +182,12 @@ class ProductController extends Controller {
         // load images
         $images = File::images()->get();
         // load warehouses
-        $warehouses = Warehouse::with([ 'locators' ])
-            ->ordered()->get();
+        $warehouses = Warehouse::with([
+            'locators' => fn($locator) => $locator->ordered(),
+        ])->ordered()->get();
         // load currencies
-        $currencies = Currency::ordered()->get();
+        $currencies = backend()->currencies();
+
         // load product images and offers
         $resource->load([
             'categories',
@@ -196,22 +196,16 @@ class ProductController extends Controller {
             'locators',
             'prices',
         ]);
+
         // show edit form
         return view('products-catalog::products.edit', compact(
             'resource',
             'brands', 'families', 'lines',
             'types', 'categories',
-            'tags', 'images', 'warehouses', 'currencies'
+            'tags', 'images', 'warehouses', 'currencies',
         ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Resource $resource) {
         // start a transaction
         DB::beginTransaction();
@@ -227,12 +221,11 @@ class ProductController extends Controller {
                 // return errors as json
                 response()->json( $resource->errors() ) :
                 // redirect with errors
-                back()
-                    ->withErrors( $resource->errors() )
-                    ->withInput();
+                back()->withInput()
+                    ->withErrors( $resource->errors() );
 
         // save product images
-        if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
+        if (($redirect = $this->saveResourceImages($request, $resource)) !== true) return $redirect;
 
         // sync product categories
         if ($request->has('categories')) $resource->categories()->sync(
@@ -281,24 +274,18 @@ class ProductController extends Controller {
             redirect()->route('backend.products');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function destroy(Request $request, Resource $resource) {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return back();
+            return back()
+                ->withErrors( $resource->errors() );
+
         // redirect to list
         return redirect()->route('backend.products');
     }
 
-    private function saveResourceImages(Resource $resource, Request $request) {
+    private function saveResourceImages(Request $request, Resource $resource) {
         // check new uploaded image
         if ($request->hasFile('images')) {
             // foreach uploaded files
@@ -309,9 +296,9 @@ class ProductController extends Controller {
                 // save resource
                 if (!$image->save())
                     // redirect with errors
-                    return back()
-                        ->withErrors($image->errors())
-                        ->withInput();
+                    return back()->withInput()
+                        ->withErrors( $image->errors() );
+
                 // append to images
                 $images[] = $image->id;
             }

@@ -43,7 +43,7 @@
             foreign-add-label="products-catalog::locators.add"
 
             filtered-by="{!! $selected !== null ? '#f'.$id : '[name=\'locator[warehouse_id][]\']' !!}"
-            data-filtered-using="warehouse"
+            data-filtered-using="warehouse" data-filtered-init="false"
             append="warehouse:warehouse_id"
 
             label="products-catalog::locator.name.0"

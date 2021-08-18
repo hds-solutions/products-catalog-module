@@ -83,4 +83,9 @@ class Variant extends X_Variant {
         return $qtyAvailable;
     }
 
+    public static function sku(string $sku):?Variant {
+        // find resource by sku
+        return self::where('sku', $sku)->first();
+    }
+
 }

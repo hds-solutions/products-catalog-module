@@ -18,4 +18,14 @@
         '?' => 'Priority',
     ],
 
+    'sub_families'  => [
+        'SubFamilies',
+        'count' => 'subfamilies',
+    ],
+
+    'products'      => [
+        'Products',
+        'count' => 'products',
+    ],
+
 ];

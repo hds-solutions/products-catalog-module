@@ -95,9 +95,8 @@ class VariantController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // save Variant option values
         if (($res = $this->saveOptionValues($request, $resource)) !== true) return $res;
@@ -111,6 +110,8 @@ class VariantController extends Controller {
             $locators = collect(array_group($request->get('locators')))
                 // filter locator without currency set
                 ->filter(fn($locator) => array_key_exists('locator_id', $locator) && $locator['locator_id'] !== null)
+                // append product_id
+                ->map(fn($locator) => $locator + [ 'product_id' => $resource->product_id ])
                 // use locator_id as collection key
                 ->keyBy('locator_id')
             );
@@ -220,6 +221,8 @@ class VariantController extends Controller {
             $locators = collect(array_group($request->get('locators')))
                 // filter locator without currency set
                 ->filter(fn($locator) => array_key_exists('locator_id', $locator) && $locator['locator_id'] !== null)
+                // append product_id
+                ->map(fn($locator) => $locator + [ 'product_id' => $resource->product_id ])
                 // use locator_id as collection key
                 ->keyBy('locator_id')
             );

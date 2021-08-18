@@ -16,11 +16,6 @@ class OptionController extends Controller {
         $this->authorizeResource(Resource::class, 'resource');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, DataTable $dataTable) {
         // check only-form flag
         if ($request->has('only-form'))
@@ -31,25 +26,20 @@ class OptionController extends Controller {
         if ($request->ajax()) return $dataTable->ajax();
 
         // return view with dataTable
-        return $dataTable->render('products-catalog::options.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('products-catalog::options.index', [
+            'count'                 => Resource::count(),
+            'show_company_selector' => !backend()->companyScoped(),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
+    public function create(Request $request) {
+        // force company selection
+        if (!backend()->companyScoped()) return view('backend::layouts.master', [ 'force_company_selector' => true ]);
+
         // show create form
         return view('products-catalog::options.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         // cast show to boolean
         if ($request->has('show'))  $request->merge([ 'show' => $request->show == 'true' ]);
@@ -63,9 +53,8 @@ class OptionController extends Controller {
         // save resource
         if (!$resource->save())
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // save option values
         $this->saveResourceValues($request, $resource);
@@ -81,35 +70,16 @@ class OptionController extends Controller {
             redirect()->route('backend.options');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Resource $resource) {
+    public function show(Request $request, Resource $resource) {
         // redirect to list
         return redirect()->route('backend.options');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $resource) {
+    public function edit(Request $request, Resource $resource) {
         // show edit form
         return view('products-catalog::options.edit', compact('resource'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id) {
         // cast show to boolean
         if ($request->has('show'))  $request->merge([ 'show' => $request->show == 'true' ]);
@@ -123,9 +93,8 @@ class OptionController extends Controller {
         // save resource
         if (!$resource->update( $request->input() ))
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // save option values
         $this->saveResourceValues($request, $resource);
@@ -137,25 +106,18 @@ class OptionController extends Controller {
         return redirect()->route('backend.options');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function destroy(Request $request, Resource $resource) {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return back();
+            return back()
+                ->withErrors( $resource->errors() );
+
         // redirect to list
         return redirect()->route('backend.options');
     }
 
     private function saveResourceValues(Request $request, Resource $resource) {
-
         // build option values
         $resource_values = [];
         foreach ($request->get('values')['id'] as $idx => $id) {

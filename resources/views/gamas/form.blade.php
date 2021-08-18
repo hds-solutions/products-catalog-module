@@ -2,6 +2,7 @@
 
 <x-backend-form-foreign :resource="$resource ?? null" name="line_id" required
     foreign="lines" :values="$lines" foreign-add-label="{{ __('products-catalog::lines.add') }}"
+    request="line" :readonly="request()->has('line')"
 
     label="{{ __('products-catalog::gama.line_id.0') }}"
     placeholder="{{ __('products-catalog::gama.line_id._') }}"

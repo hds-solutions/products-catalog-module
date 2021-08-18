@@ -7,6 +7,10 @@ use Yajra\DataTables\Html\Column;
 
 class LineDataTable extends Base\DataTable {
 
+    protected array $withCount = [
+        'gamas',
+    ];
+
     public function __construct() {
         parent::__construct(
             Resource::class,
@@ -22,6 +26,11 @@ class LineDataTable extends Base\DataTable {
 
             Column::make('name')
                 ->title( __('products-catalog::line.name.0') ),
+
+            Column::make('gamas')
+                ->title( __('products-catalog::line.gamas.0') )
+                ->renderRaw('view:line')
+                ->data( view('products-catalog::lines.datatable.gamas')->render() ),
 
             Column::computed('actions'),
         ];
