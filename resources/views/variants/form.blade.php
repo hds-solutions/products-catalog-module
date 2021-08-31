@@ -3,56 +3,17 @@
 <x-backend-form-foreign :resource="$resource ?? null" name="product_id" required
     :values="$products" request="product" :readonly="request()->has('product')"
 
-    foreign="products" foreign-add-label="{{ __('products-catalog::products.add') }}"
+    foreign="products" foreign-add-label="products-catalog::products.add"
     append="type:type_id,family:family_id,line:line_id"
 
-    label="{{ __('products-catalog::variant.product_id.0') }}"
-    placeholder="{{ __('products-catalog::variant.product_id._') }}"
-    helper="{{ __('products-catalog::variant.product_id.?') }}" />
+    label="products-catalog::variant.product_id.0"
+    placeholder="products-catalog::variant.product_id._"
+    helper="products-catalog::variant.product_id.?" />
 
 <x-backend-form-text :resource="$resource ?? null" name="sku" required
-    label="{{ __('products-catalog::variant.sku.0') }}"
-    placeholder="{{ __('products-catalog::variant.sku._') }}" />
-{{--
-<div class="form-row form-group mb-0">
-    <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::variant.prices.0')</label>
-    <div class="col-11 col-md-8 col-lg-6" data-multiple=".price-container" data-template="#new">
-        @php $old_lines = array_group(old('prices') ?? []); @endphp
-        <!-- add product current prices -->
-        @if (isset($resource)) @foreach($resource->prices as $idx => $selected)
-            @include('products-catalog::variants.price', [
-                'currencies'    => $currencies,
-                'selected'      => $selected,
-                'old'           => $old_lines[$idx] ?? null,
-            ])
-            @php unset($old_lines[$idx]); @endphp
-        @endforeach @endif
+    label="products-catalog::variant.sku.0"
+    placeholder="products-catalog::variant.sku._" />
 
-        <!-- add new added -->
-        @foreach($old_lines as $old)
-            <!-- ignore empty -->
-            @if ( ($old['currency_id'] ?? null) === null &&
-                ($old['cost'] ?? null) === null &&
-                ($old['price'] ?? null) === null &&
-                ($old['limit'] ?? null) === null)
-                @continue
-            @endif
-            @include('products-catalog::variants.price', [
-                'currencies'    => $currencies,
-                'selected'      => null,
-                'old'           => $old,
-            ])
-        @endforeach
-
-        <!-- add empty for adding new prices -->
-        @include('products-catalog::variants.price', [
-            'currencies'    => $currencies,
-            'selected'      => null,
-            'old'           => null,
-        ])
-    </div>
-</div>
- --}}
 <x-backend-form-multiple name="prices" values-as="currencies"
     :values="$currencies" :selecteds="isset($resource) ? $resource->prices : []"
     grouped old-filter-fields="currency_id,cost,price,limit"
@@ -62,16 +23,16 @@
     label="products-catalog::product.prices.0" />
 
 {{-- <x-backend-form-amount :resource="$resource ?? null"
-    name="price" field="priceRaw" prepend="{{ config('settings.currency-symbol', 'USD') }}"
-    label="{{ __('products-catalog::variant.price.0') }} / {{ __('products-catalog::variant.price_reseller.0') }}"
-    placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.price._') }}"
-    helper="{{ __('products-catalog::variant.price.?') }}">
+    name="price" field="priceRaw" prepend="{{ config('settings.currency-symbol', 'USD"
+    label="products-catalog::variant.price.0') }} / {{ __('products-catalog::variant.price_reseller.0"
+    placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.price._"
+    helper="products-catalog::variant.price.?">
 
     <x-backend-form-amount :resource="$resource ?? null" secondary
-        name="price_reseller" prepend="{{ config('settings.currency-symbol', 'USD') }}"
-        label="{{ __('products-catalog::variant.price_reseller.0') }}"
-        placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.price_reseller._') }}"
-        helper="{{ __('products-catalog::variant.price_reseller.?') }}">
+        name="price_reseller" prepend="{{ config('settings.currency-symbol', 'USD"
+        label="products-catalog::variant.price_reseller.0"
+        placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.price_reseller._"
+        helper="products-catalog::variant.price_reseller.?">
     </x-backend-form-amount>
 
 </x-backend-form-amount> --}}
@@ -80,70 +41,61 @@
     name="images" multiple
     filtered-by="[name=product_id]" filtered-using="product"
 
-    label="{{ __('products-catalog::variant.images.0') }}"
-    placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.images._') }}" />
+    label="products-catalog::variant.images.0"
+    placeholder="products-catalog::variant.images.optional" />
 
-{{-- <div class="form-row form-group align-items-center">
-    <label class="col-12 col-md-3 control-label mb-0">@lang('products-catalog::variant.images.0')</label>
-    <div class="col-11 col-md-8 col-lg-6 col-xl-4">
-        <div class="input-group">
-
-            <select name="images[]" multiple data-live-search="true"
-                data-filtered-by="[name=product_id]" data-filtered-using="product"
-                data-preview="#image_preview" class="form-control selectpicker {{ $errors->has('image_id') ? 'is-danger' : '' }}"
-                placeholder="@lang('products-catalog::variant.images._')">
-                @foreach($images as $image)
-                <option value="{{ $image->id }}" url="{{ $image->url }}" data-product="{{ $image->pivot->product_id }}"
-                    @if (isset($resource) && $resource->images->contains($image->id)) selected @endif>{{ $image->name }}</option>
-                @endforeach
-            </select>
-
-            <div class="input-group-append">
-                <label class="btn btn-outline-primary mb-0" for="upload">
-                    <span class="fas fa-fw fa-cloud-upload-alt"></span>
-                    <input type="file" name="images[]" accept="image/*" id="upload" multiple
-                        class="d-none" data-preview="#image_preview" data-prepend-preview="select[name='images[]']">
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="col-9 col-xl-6 offset-3 d-flex flex-wrap justify-content-center">
-        <img src="#" id="image_preview" class="m-1 mh-150px rounded" style="display: none;">
-    </div>
-</div> --}}
-
-<!-- available options -->
+{{-- available options --}}
 @foreach ($options as $option)
 
 <div class="form-row form-group align-items-center"
-    data-types="{{ implode(',', optional(optional($option->types)->pluck('id'))->all() ?? [] ) }}"
-    data-families="{{ implode(',', optional(optional($option->families)->pluck('id'))->all() ?? [] ) }}"
-    data-lines="{{ implode(',', optional(optional($option->lines)->pluck('id'))->all() ?? [] ) }}"
+    data-types="{{ implode(',', $option->types?->pluck('id')->all() ?? [] ) }}"
+    data-families="{{ implode(',', $option->families?->pluck('id')->all() ?? [] ) }}"
+    data-lines="{{ implode(',', $option->lines?->pluck('id')->all() ?? [] ) }}"
     data-linked-with="[name=product_id]" data-linked-using="type:types|family:families|line:lines">
 
     <label class="col-12 col-md-3 col-lg-2 control-label m-0">{{ $option->label ?? $option->name }}</label>
 
     <div class="col-12 col-md-9 col-xl-4">
         {{-- get selected value on variant, if exists --}}
-        @php
-            $key = isset($resource) ? $resource->values->pluck('option_id')->search($option->id) : null;
-        @endphp
+        <?php $key = isset($resource) ? $resource->values->pluck('option_id')->search($option->id) : null; ?>
 
-        {{-- option available values --}}
-        <select name="option_value_id[{{ $option->id }}]"
-            class="form-control selectpicker"
-            placeholder="{{ $option->name }}">
+        @switch ($option->value_type)
+            @case ('text')
+                <x-form-input type="text" name="option_value_id[{{ $option->id }}]"
+                    :value="isset($resource) && $resource->values->count() && $resource->values->pluck('option_id')[$key] == $option->id ? $resource->values->pluck('value')[$key] : null"
+                    placeholder="{{ $option->name }}" />
+                @break
 
-            <option value="" selected disabled hidden>-- {{ $option->name }} --</option>
-            @foreach ($option->values as $value)
-            <option value="{{ $value->id }}"
-                @if (isset($resource) && $resource->values->count() && (
-                    $resource->values->pluck('option_id')[$key] == $option->id &&
-                    $resource->values->pluck('option_value_id')[$key] == $value->id
-                )) selected @endif>{{ $value->value }}</option>
-            @endforeach
+            @case ('boolean')
+                TODO: boolean
+                @break
 
-        </select>
+            @case ('color')
+            @case ('choice')
+                {{-- option available values --}}
+                <select name="option_value_id[{{ $option->id }}]"
+                    class="form-control selectpicker"
+                    placeholder="{{ $option->name }}">
+
+                    <option value="" selected disabled hidden>-- {{ $option->name }} --</option>
+                    @foreach ($option->values as $value)
+                    <option value="{{ $value->id }}"
+                        @if (isset($resource) && $resource->values->count() && (
+                            $resource->values->pluck('option_id')[$key] == $option->id &&
+                            $resource->values->pluck('option_value_id')[$key] == $value->id
+                        )) selected @endif>{{ $value->value }}</option>
+                    @endforeach
+
+                </select>
+                @break
+
+            @case ('image')
+                TODO: image
+                @break
+
+            @default
+                <h4 class="text-danger">Invalid option value type</h4>
+        @endswitch
     </div>
 
     @if ($option->label !== null)
@@ -156,46 +108,9 @@
 
 <x-backend-form-number :resource="$resource ?? null"
     name="priority"
-    label="{{ __('products-catalog::variant.priority.0') }}"
-    placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.priority._') }}" />
-{{--
-<div class="form-row form-group mb-0">
-    <label class="col-12 col-md-3 col-lg-2 control-label mt-2 mb-3">@lang('products-catalog::variant.locators.0')</label>
-    <div class="col-11 col-md-8 col-lg-6" data-multiple=".locator-container" data-template="#new">
-        <?php $old_lines = array_group([ 'warehouse_id' => old('warehouses') ?? [],  'locator_id' => old('locators') ?? []]); ?>
-        <!-- add variant current locators -->
-        @if (isset($resource)) @foreach($resource->locators as $idx => $selected)
-            @include('products-catalog::variants.form.locator', [
-                'warehouses'    => $warehouses,
-                'selected'      => $selected,
-                'old'           => $old_lines[$idx] ?? null,
-            ])
-            @php unset($old_lines[$idx]); @endphp
-        @endforeach @endif
+    label="products-catalog::variant.priority.0"
+    placeholder="products-catalog::variant.priority.optional" />
 
-        <!-- add new added -->
-        @foreach($old_lines as $old)
-            <!-- ignore empty -->
-            @if ( ($old['warehouse_id'] ?? null) === null &&
-                ($old['locator_id'] ?? null) === null)
-                @continue
-            @endif
-            @include('products-catalog::variants.form.locator', [
-                'warehouses'    => $warehouses,
-                'selected'      => null,
-                'old'           => $old,
-            ])
-        @endforeach
-
-        <!-- add empty for adding new locators -->
-        @include('products-catalog::variants.form.locator', [
-            'warehouses'    => $warehouses,
-            'selected'      => null,
-            'old'           => null,
-        ])
-    </div>
-</div>
- --}}
 <x-backend-form-multiple name="locators" values-as="warehouses"
     :values="$warehouses" :selecteds="isset($resource) ? $resource->locators : []"
     grouped old-filter-fields="warehouse_id,locator_id"

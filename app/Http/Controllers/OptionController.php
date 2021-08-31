@@ -42,7 +42,7 @@ class OptionController extends Controller {
 
     public function store(Request $request) {
         // cast show to boolean
-        if ($request->has('show'))  $request->merge([ 'show' => $request->show == 'true' ]);
+        if ($request->has('show'))  $request->merge([ 'show' => filter_var($request->show, FILTER_VALIDATE_BOOLEAN) ]);
 
         // start a transaction
         DB::beginTransaction();
@@ -80,15 +80,12 @@ class OptionController extends Controller {
         return view('products-catalog::options.edit', compact('resource'));
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, Resource $resource) {
         // cast show to boolean
-        if ($request->has('show'))  $request->merge([ 'show' => $request->show == 'true' ]);
+        if ($request->has('show'))  $request->merge([ 'show' => filter_var($request->show, FILTER_VALIDATE_BOOLEAN) ]);
 
         // start a transaction
         DB::beginTransaction();
-
-        // find resource
-        $resource = Resource::findOrFail($id);
 
         // save resource
         if (!$resource->update( $request->input() ))

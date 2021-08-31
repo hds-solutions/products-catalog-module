@@ -8,4 +8,8 @@ class SubFamily extends X_SubFamily {
         return $this->belongsTo(Family::class);
     }
 
+    public function products() {
+        return $this->hasMany(Product::class);
+    }
+
 }

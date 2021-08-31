@@ -16,6 +16,11 @@ class GamaDataTable extends Base\DataTable {
         'products',
     ];
 
+    protected array $orderBy = [
+        'line.name' => 'asc',
+        'name'      => 'asc',
+    ];
+
     public function __construct() {
         parent::__construct(
             Resource::class,
@@ -35,10 +40,11 @@ class GamaDataTable extends Base\DataTable {
             Column::make('name')
                 ->title( __('products-catalog::gama.name.0') ),
 
-            Column::make('products')
+            Column::computed('products')
                 ->title( __('products-catalog::gama.products.0') )
                 ->renderRaw('view:gama')
-                ->data( view('products-catalog::gamas.datatable.products')->render() ),
+                ->data( view('products-catalog::gamas.datatable.products')->render() )
+                ->class('w-150px'),
 
             Column::computed('actions'),
         ];

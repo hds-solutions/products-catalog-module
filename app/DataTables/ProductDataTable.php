@@ -57,8 +57,7 @@ class ProductDataTable extends Base\DataTable {
                 ->title( __('products-catalog::product.prices.0') )
                 ->renderRaw('view:product')
                 ->data( view('products-catalog::products.datatable.prices')->render() )
-                ->addClass('w-300px')
-                ->sortable(false),
+                ->addClass('w-300px'),
 
             Column::computed('actions'),
         ];

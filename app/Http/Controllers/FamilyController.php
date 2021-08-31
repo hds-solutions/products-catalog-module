@@ -37,6 +37,7 @@ class FamilyController extends Controller {
 
         // get options
         $options = Option::ordered()->get();
+
         // show create form
         return view('products-catalog::families.create', compact('options'));
     }
@@ -75,6 +76,7 @@ class FamilyController extends Controller {
     public function edit(Request $request, Resource $resource) {
         // get options
         $options = Option::ordered()->get();
+
         // show edit form
         return view('products-catalog::families.edit', compact('options', 'resource'));
     }
@@ -87,7 +89,12 @@ class FamilyController extends Controller {
                 ->withErrors( $resource->errors() );
 
         // sync options
-        $resource->options()->sync($request->options);
+        if ($request->has('options')) $resource->options()->sync(
+            // get options as collection
+            $options = collect($request->get('options'))
+                // filter empty options
+                ->filter(fn($option) => $option !== null)
+            );
 
         // redirect to list
         return redirect()->route('backend.families');

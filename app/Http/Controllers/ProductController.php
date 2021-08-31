@@ -94,9 +94,9 @@ class ProductController extends Controller {
         // start a transaction
         DB::beginTransaction();
 
-        // cast giftcard to boolean
-        if ($request->has('giftcard'))  $request->merge([ 'giftcard' => $request->giftcard == 'true' ]);
-        if ($request->has('visible'))   $request->merge([ 'visible' => $request->visible == 'true' ]);
+        // cast to boolean
+        if ($request->has('giftcard'))  $request->merge([ 'giftcard' => filter_var($request->giftcard, FILTER_VALIDATE_BOOLEAN) ]);
+        if ($request->has('visible'))  $request->merge([ 'visible' => filter_var($request->visible, FILTER_VALIDATE_BOOLEAN) ]);
 
         // create resource
         $resource = new Resource( $request->input() );
@@ -211,8 +211,8 @@ class ProductController extends Controller {
         DB::beginTransaction();
 
         // cast to boolean
-        if ($request->has('giftcard'))  $request->merge([ 'giftcard' => $request->giftcard == 'true' ]);
-        if ($request->has('visible'))   $request->merge([ 'visible' => $request->visible == 'true' ]);
+        if ($request->has('giftcard'))  $request->merge([ 'giftcard' => filter_var($request->giftcard, FILTER_VALIDATE_BOOLEAN) ]);
+        if ($request->has('visible'))  $request->merge([ 'visible' => filter_var($request->visible, FILTER_VALIDATE_BOOLEAN) ]);
 
         // save resource
         if (!$resource->update( $request->input() ))

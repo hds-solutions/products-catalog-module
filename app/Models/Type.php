@@ -12,6 +12,10 @@ class Type extends X_Type {
             ->withTimestamps();
     }
 
+    public function products() {
+        return $this->hasMany(Product::class);
+    }
+
     public function scopeIsSold(Builder $query, bool $sold = true) {
         return $query->where('is_sold', $sold);
     }

@@ -12,6 +12,10 @@ class FamilyDataTable extends Base\DataTable {
         'products',
     ];
 
+    protected array $orderBy = [
+        'name'  => 'asc',
+    ];
+
     public function __construct() {
         parent::__construct(
             Resource::class,
@@ -28,15 +32,17 @@ class FamilyDataTable extends Base\DataTable {
             Column::make('name')
                 ->title( __('products-catalog::family.name.0') ),
 
-            Column::make('sub_families')
+            Column::computed('sub_families')
                 ->title( __('products-catalog::family.sub_families.0') )
                 ->renderRaw('view:family')
-                ->data( view('products-catalog::families.datatable.sub_families')->render() ),
+                ->data( view('products-catalog::families.datatable.sub_families')->render() )
+                ->class('w-150px'),
 
-            Column::make('products')
+            Column::computed('products')
                 ->title( __('products-catalog::family.products.0') )
                 ->renderRaw('view:family')
-                ->data( view('products-catalog::families.datatable.products')->render() ),
+                ->data( view('products-catalog::families.datatable.products')->render() )
+                ->class('w-150px'),
 
             Column::computed('actions'),
         ];

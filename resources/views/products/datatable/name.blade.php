@@ -6,7 +6,7 @@
                 class="col-4 text-primary text-decoration-none">{variant.sku}</a>
             <div class="col">
                 {variant.values}
-                    {value.option.label}: <b>{value.option_value.value}</b>
+                    {value.option.label}??{value.option.name}: <b>{value.value}??{value.option_value.value}</b>
                 {/variant.values}
             </div>
         </div>

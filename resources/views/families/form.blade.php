@@ -9,7 +9,7 @@
     :selecteds="isset($resource) ? $resource->options : []"
     contents-view="products-catalog::families.form.option"
 
-    label="products-catalog::product.options.0" />
+    label="products-catalog::family.options.0" />
 
 <x-backend-form-number :resource="$resource ?? null" name="priority"
     label="products-catalog::family.priority.0"

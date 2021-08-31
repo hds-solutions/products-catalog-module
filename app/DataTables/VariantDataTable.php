@@ -3,6 +3,7 @@
 namespace HDSSolutions\Laravel\DataTables;
 
 use HDSSolutions\Laravel\Models\Variant as Resource;
+use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\Html\Column;
 
 class VariantDataTable extends Base\DataTable {
@@ -12,6 +13,11 @@ class VariantDataTable extends Base\DataTable {
         'images',
         'values.option',
         'values.optionValue',
+    ];
+
+    protected array $orderBy = [
+        'product.name'  => 'asc',
+        'sku'           => 'asc',
     ];
 
     public function __construct() {
@@ -44,6 +50,23 @@ class VariantDataTable extends Base\DataTable {
 
             Column::computed('actions'),
         ];
+    }
+
+    protected function joins(Builder $query):Builder {
+        // add custom JOIN to Product
+        return $query
+            // JOIN to Product
+            ->join('products', 'products.id', 'variants.product_id');
+    }
+
+    protected function orderProductName(Builder $query, string $order):Builder {
+        // order by Product.name
+        return $query->orderBy('products.name', $order);
+    }
+
+    protected function filterProduct(Builder $query, $product_id):Builder {
+        // filter only from Product
+        return $query->where('product_id', $product_id);
     }
 
 }

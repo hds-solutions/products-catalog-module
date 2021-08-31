@@ -12,6 +12,15 @@ class ModelDataTable extends Base\DataTable {
         'brand'
     ];
 
+    protected array $withCount = [
+        'products',
+    ];
+
+    protected array $orderBy = [
+        'brand.name'    => 'asc',
+        'name'          => 'asc',
+    ];
+
     public function __construct() {
         parent::__construct(
             Resource::class,
@@ -30,6 +39,12 @@ class ModelDataTable extends Base\DataTable {
 
             Column::make('name')
                 ->title( __('products-catalog::model.name.0') ),
+
+            Column::computed('products')
+                ->title( __('products-catalog::model.products.0') )
+                ->renderRaw('view:model')
+                ->data( view('products-catalog::models.datatable.products')->render() )
+                ->class('w-150px'),
 
             Column::computed('actions'),
         ];

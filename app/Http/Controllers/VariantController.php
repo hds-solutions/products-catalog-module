@@ -8,6 +8,7 @@ use HDSSolutions\Laravel\Http\Request;
 use HDSSolutions\Laravel\Models\Currency;
 use HDSSolutions\Laravel\Models\File;
 use HDSSolutions\Laravel\Models\Product;
+use HDSSolutions\Laravel\Models\Option;
 use HDSSolutions\Laravel\Models\Variant as Resource;
 use HDSSolutions\Laravel\Models\VariantValue;
 use HDSSolutions\Laravel\Models\Warehouse;
@@ -20,11 +21,6 @@ class VariantController extends Controller {
         $this->authorizeResource(Resource::class, 'resource');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, DataTable $dataTable) {
         // check only-form flag
         if ($request->has('only-form'))
@@ -34,16 +30,20 @@ class VariantController extends Controller {
         // load resources
         if ($request->ajax()) return $dataTable->ajax();
 
+        // get available products
+        $products = Product::ordered()->get();
+
         // return view with dataTable
-        return $dataTable->render('products-catalog::variants.index', [ 'count' => Resource::count() ]);
+        return $dataTable->render('products-catalog::variants.index', compact('products') + [
+            'count'                 => Resource::count(),
+            'show_company_selector' => !backend()->companyScoped(),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
+    public function create(Request $request) {
+        // force company selection
+        if (!backend()->companyScoped()) return view('backend::layouts.master', [ 'force_company_selector' => true ]);
+
         // get products
         $products = Product::with([
             'type.options.values',
@@ -71,12 +71,6 @@ class VariantController extends Controller {
         ));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         // start a transaction
         DB::beginTransaction();
@@ -98,10 +92,10 @@ class VariantController extends Controller {
             return back()->withInput()
                 ->withErrors( $resource->errors() );
 
-        // save Variant option values
-        if (($res = $this->saveOptionValues($request, $resource)) !== true) return $res;
+        // save resource option values
+        if (($redirect = $this->saveOptionValues($request, $resource)) !== true) return $redirect;
 
-        // save variant images
+        // save resource images
         if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
 
         //  sync variant locators
@@ -139,24 +133,12 @@ class VariantController extends Controller {
             redirect()->route('backend.variants');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Resource $resource) {
+    public function show(Request $request, Resource $resource) {
         // redirect to list
         return redirect()->route('backend.variants');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resource $resource) {
+    public function edit(Request $request, Resource $resource) {
         // load variant images
         $resource->load([ 'product', 'images', 'values', 'prices' ]);
 
@@ -188,29 +170,18 @@ class VariantController extends Controller {
         ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id) {
+    public function update(Request $request, Resource $resource) {
         // start a transaction
         DB::beginTransaction();
-
-        // find resource
-        $resource = Resource::findOrFail($id);
 
         // save resource
         if (!$resource->update( $request->input() ))
             // redirect with errors
-            return back()
-                ->withErrors( $resource->errors() )
-                ->withInput();
+            return back()->withInput()
+                ->withErrors( $resource->errors() );
 
         // save Variant option values
-        if (($res = $this->saveOptionValues($request, $resource)) !== true) return $res;
+        if (($redirect = $this->saveOptionValues($request, $resource)) !== true) return $redirect;
 
         // save product images
         if (($redirect = $this->saveResourceImages($resource, $request)) !== true) return $redirect;
@@ -250,19 +221,13 @@ class VariantController extends Controller {
             redirect()->route('backend.variants');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        // find resource
-        $resource = Resource::findOrFail($id);
+    public function destroy(Request $request, Resource $resource) {
         // delete resource
         if (!$resource->delete())
             // redirect with errors
-            return redirect()->back();
+            return back()
+                ->withErrors( $resource->errors() );
+
         // redirect to list
         return redirect()->route('backend.variants');
     }
@@ -323,16 +288,18 @@ class VariantController extends Controller {
                 }
 
                 // check if option has already saved
-                if (!$options->has( $option->id ))
+                if (!$options->has( $option->d ))
                     // save value for option
-                    $options->put($option->id, $value);
+                    $options->put($option->id, (object)[
+                        'option'    => $option,
+                        'value'     => $value,
+                    ]);
 
             }
         }
 
         // return back with errors
-        if ($errors->count()) return back()
-            ->withInput()
+        if ($errors->count()) return back()->withInput()
             ->withErrors( $errors );
 
         // update existing values
@@ -344,29 +311,66 @@ class VariantController extends Controller {
                 continue;
             }
 
+            // load selected Option and value
+            $data = $options[$value->option_id];
+
             // check if value was updated
-            if ($value->option_value_id !== $options[$value->option_id]) {
-                // update value
-                $value->update([ 'option_value_id' => $options[$value->option_id] ]);
-                // remove from collection
-                $options->forget( $value->option_id );
+            switch ($data->option->value_type) {
+                case Option::VALUE_TYPE_Text:
+                    if ($value->value !== $data->value)
+                        // update value
+                        $value->fill([ 'value' => $data->value, 'option_value_id' => null ]);
+                    break;
+                case Option::VALUE_TYPE_Boolean:
+                    // TODO:
+                    break;
+                case Option::VALUE_TYPE_Choice:
+                case Option::VALUE_TYPE_Color:
+                    if ($value->option_value_id !== $data->value)
+                        // update value
+                        $value->fill([ 'option_value_id' => $data->value, 'value' => null ]);
+                    break;
+                case Option::VALUE_TYPE_Image:
+                    // TODO:
+                    break;
             }
+
+            // save changes
+            if (!$value->save())
+                // return errors
+                return back()->withInput()
+                    ->withErrors( $value );
+
+            // remove already updated value from collection
+            $options->forget( $value->option_id );
         }
 
         // create new variant values
-        foreach ($options as $option_id => $value) {
+        foreach ($options as $data) {
+            // load Option and value
+            $option = $data->option;
+            $value = $data->value;
+
             // create Variant Value
             $value = VariantValue::create([
                 'variant_id'        => $resource->id,
-                'option_id'         => $option_id,
-                'option_value_id'   => $value,
+                'option_id'         => $option->id,
+                // set OptionValue only for Choice & Color
+                'option_value_id'   => in_array($option->value_type, [
+                    Option::VALUE_TYPE_Choice,
+                    Option::VALUE_TYPE_Color
+                ]) ? $value : null,
+                // set raw value for everithing else
+                'value'             => !in_array($option->value_type, [
+                    Option::VALUE_TYPE_Choice,
+                    Option::VALUE_TYPE_Color
+                ]) ? $value : null,
             ]);
             // check for errors
             if (count($value->errors()) > 0)
                 // return errors
-                return back()
-                    ->withErrors( $value->errors() )
-                    ->withInput();
+                return back()->withInput()
+                    ->withErrors( $value->errors() );
         }
 
         // return true
@@ -384,9 +388,9 @@ class VariantController extends Controller {
                 // save resource
                 if (!$image->save())
                     // redirect with errors
-                    return back()
-                        ->withErrors($image->errors())
-                        ->withInput();
+                    return back()->withInput()
+                        ->withErrors($image->errors());
+
                 // append to images
                 $images[] = $image->id;
             }

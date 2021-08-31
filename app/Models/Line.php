@@ -14,4 +14,8 @@ class Line extends X_Line {
             ->withTimestamps();
     }
 
+    public function products() {
+        return $this->hasMany(Product::class);
+    }
+
 }

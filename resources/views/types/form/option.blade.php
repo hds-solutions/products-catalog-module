@@ -5,9 +5,9 @@
 
         foreign="options" foreign-add-label="products-catalog::options.add"
 
-        label="products-catalog::family.options.name.0"
-        placeholder="products-catalog::family.options.name._"
-        {{-- helper="products-catalog::family.options.name.?" --}} />
+        label="products-catalog::type.options.name.0"
+        placeholder="products-catalog::type.options.name._"
+        {{-- helper="products-catalog::type.options.name.?" --}} />
 
     <button type="button" class="btn btn-danger ml-2"
         data-action="delete"

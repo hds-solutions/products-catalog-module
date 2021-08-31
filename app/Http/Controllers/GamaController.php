@@ -40,6 +40,7 @@ class GamaController extends Controller {
 
         // load lines
         $lines = Line::ordered()->get();
+
         // show create form
         return view('products-catalog::gamas.create', compact('lines'));
     }

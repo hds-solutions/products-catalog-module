@@ -43,7 +43,7 @@ class BrandController extends Controller {
 
     public function store(Request $request) {
         // cast show_home to boolean
-        $request->merge([ 'show_home' => $request->show_home == 'on' ]);
+        if ($request->has('show_home')) $request->merge([ 'show_home' => filter_var($request->show_home, FILTER_VALIDATE_BOOLEAN) ]);
 
         // create resource
         $resource = new Resource( $request->input() );
@@ -90,7 +90,7 @@ class BrandController extends Controller {
 
     public function update(Request $request, Resource $resource) {
         // cast show_home to boolean
-        $request->merge([ 'show_home' => $request->show_home == 'on' ]);
+        if ($request->has('show_home')) $request->merge([ 'show_home' => filter_var($request->show_home, FILTER_VALIDATE_BOOLEAN) ]);
 
         // check new uploaded image
         if ($request->hasFile('image')) {

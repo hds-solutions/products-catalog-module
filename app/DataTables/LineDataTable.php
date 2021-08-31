@@ -9,6 +9,11 @@ class LineDataTable extends Base\DataTable {
 
     protected array $withCount = [
         'gamas',
+        'products',
+    ];
+
+    protected array $orderBy = [
+        'name'  => 'asc',
     ];
 
     public function __construct() {
@@ -27,10 +32,17 @@ class LineDataTable extends Base\DataTable {
             Column::make('name')
                 ->title( __('products-catalog::line.name.0') ),
 
-            Column::make('gamas')
+            Column::computed('gamas')
                 ->title( __('products-catalog::line.gamas.0') )
                 ->renderRaw('view:line')
-                ->data( view('products-catalog::lines.datatable.gamas')->render() ),
+                ->data( view('products-catalog::lines.datatable.gamas')->render() )
+                ->class('w-150px'),
+
+            Column::computed('products')
+                ->title( __('products-catalog::line.products.0') )
+                ->renderRaw('view:line')
+                ->data( view('products-catalog::lines.datatable.products')->render() )
+                ->class('w-150px'),
 
             Column::computed('actions'),
         ];
