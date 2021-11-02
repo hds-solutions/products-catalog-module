@@ -4,6 +4,7 @@ namespace HDSSolutions\Laravel;
 
 use HDSSolutions\Laravel\Models\Option;
 use HDSSolutions\Laravel\Models\Product;
+use HDSSolutions\Laravel\Models\Variant;
 use HDSSolutions\Laravel\Modules\ModuleServiceProvider;
 
 class ProductsCatalogModuleServiceProvider extends ModuleServiceProvider {
@@ -48,6 +49,7 @@ class ProductsCatalogModuleServiceProvider extends ModuleServiceProvider {
         //
         $this->alias('Option', Option::class);
         $this->alias('Product', Product::class);
+        $this->alias('Variant', Variant::class);
     }
 
 }
