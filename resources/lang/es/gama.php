@@ -12,4 +12,9 @@
         '?' => 'Línea',
     ],
 
+    'products'      => [
+        'Productos',
+        'count' => 'productos',
+    ],
+
 ];

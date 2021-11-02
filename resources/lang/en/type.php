@@ -24,4 +24,9 @@
         '?' => 'Options',
     ],
 
+    'products'      => [
+        'Products',
+        'count' => 'products',
+    ],
+
 ];

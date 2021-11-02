@@ -18,4 +18,9 @@
         '?' => 'Prioridad',
     ],
 
+    'products'      => [
+        'Productos',
+        'count' => 'productos',
+    ],
+
 ];

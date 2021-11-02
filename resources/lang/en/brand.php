@@ -6,7 +6,7 @@
         '?' => 'Brand name',
     ],
 
-    'logo_id'      => [
+    'logo_id'       => [
         'Logo',
         '_' => 'Logo',
         '?' => 'Logo',
@@ -16,6 +16,16 @@
         'Priority',
         '_' => 'Priority',
         '?' => 'Priority',
+    ],
+
+    'models'        => [
+        'Models',
+        'count' => 'Models',
+    ],
+
+    'products'      => [
+        'Products',
+        'count' => 'products',
     ],
 
 ];

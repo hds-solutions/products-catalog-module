@@ -106,30 +106,35 @@
         'Peso',
         '_' => 'Peso',
         '?' => 'Peso',
+        'optional' => '(opcional) Peso',
     ],
 
     'sizes'         => [
         'Tamaños',
         '_' => 'Tamaños',
         '?' => 'Tamaños',
+        'optional' => '(opcional) Tamaños',
     ],
 
-    'lenght'        => [
+    'length'        => [
         'Largo',
         '_' => 'Largo',
         '?' => 'Largo',
+        'optional' => '(opcional) Largo',
     ],
 
     'width'         => [
         'Ancho',
         '_' => 'Ancho',
         '?' => 'Ancho',
+        'optional' => '(opcional) Ancho',
     ],
 
     'height'        => [
         'Alto',
         '_' => 'Alto',
         '?' => 'Alto',
+        'optional' => '(opcional) Alto',
     ],
 
     'giftcard'      => [
@@ -148,12 +153,14 @@
         'Imágenes',
         '_' => 'Imágenes',
         '?' => 'Imágenes',
+        'optional' => '(opcional) Imágenes',
     ],
 
     'url'           => [
         'URL',
         '_' => 'URL personalizada',
         '?' => 'URL',
+        'optional' => '(optional) URL',
     ],
 
     'tags'          => [
@@ -178,6 +185,7 @@
         'Prioridad',
         '_' => 'Prioridad',
         '?' => 'Prioridad',
+        'optional' => '(opcional) Prioridad',
     ],
 
 ];

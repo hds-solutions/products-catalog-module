@@ -125,30 +125,35 @@
         'Weight',
         '_' => 'Weight',
         '?' => 'Weight',
+        'optional' => '(optional) Weight',
     ],
 
     'sizes'         => [
         'Sizes',
         '_' => 'Sizes',
         '?' => 'Sizes',
+        'optional' => '(optional) Sizes',
     ],
 
-    'lenght'        => [
-        'Lenght',
-        '_' => 'Lenght',
-        '?' => 'Lenght',
+    'length'        => [
+        'Length',
+        '_' => 'Length',
+        '?' => 'Length',
+        'optional' => '(optional) Length',
     ],
 
     'width'         => [
         'Width',
         '_' => 'Width',
         '?' => 'Width',
+        'optional' => '(optional) Width',
     ],
 
     'height'        => [
         'Height',
         '_' => 'Height',
         '?' => 'Height',
+        'optional' => '(optional) Height',
     ],
 
     'giftcard'      => [
@@ -167,19 +172,21 @@
         'Images',
         '_' => 'Images',
         '?' => 'Images',
+        'optional' => '(optional) Images',
     ],
 
     'url'           => [
         'URL',
         '_' => 'Custom product URL',
         '?' => 'URL',
+        'optional' => '(optional) URL',
     ],
 
     'tags'          => [
         'Tags',
         '_' => 'Tags',
         '?' => 'Tags',
-    ],
+    ] + include('tag.php'),
 
     'locators'      => [
         'Locators',
@@ -197,6 +204,7 @@
         'Priority',
         '_' => 'Priority',
         '?' => 'Priority',
+        'optional' => '(optional) Priority',
     ],
 
 ];

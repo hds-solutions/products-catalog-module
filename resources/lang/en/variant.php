@@ -54,4 +54,48 @@
         '?' => 'Priority',
     ],
 
+    'prices'        => [
+        'Prices',
+        '_' => 'Prices',
+        '?' => 'Prices',
+
+        'currency_id'   => [
+            'Currency',
+            '_' => 'Currency',
+            '?' => 'Currency',
+        ],
+
+        'cost'          => [
+            'Cost',
+            '_' => 'Cost',
+            '?' => 'Cost',
+        ],
+
+        'price'         => [
+            'Price',
+            '_' => 'Price',
+            '?' => 'Price',
+        ],
+
+        'limit'         => [
+            'Limit',
+            '_' => 'Limit',
+            '?' => 'Limit',
+        ],
+    ],
+
+    'images'        => [
+        'Images',
+        '_' => 'Images',
+        '?' => 'Images',
+        'optional' => '(optional) Images',
+    ],
+
+    'priority'      => [
+        'Priority',
+        '_' => 'Priority',
+        '?' => 'Priority',
+        'optional' => '(optional) Priority',
+    ],
+
 ];

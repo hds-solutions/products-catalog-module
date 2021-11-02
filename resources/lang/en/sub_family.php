@@ -12,4 +12,9 @@
         '?' => 'Family',
     ],
 
+    'products'      => [
+        'Products',
+        'count' => 'products',
+    ],
+
 ];

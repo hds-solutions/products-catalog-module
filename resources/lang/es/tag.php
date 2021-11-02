@@ -4,6 +4,7 @@
         'Nombre etiqueta',
         '_' => 'Nombre etiqueta',
         '?' => 'Nombre etiqueta',
+        'optional' => '(opcional) Nombre etiqueta',
     ],
 
 ];

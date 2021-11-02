@@ -12,4 +12,9 @@
         '?' => 'Line',
     ],
 
+    'products'      => [
+        'Products',
+        'count' => 'products',
+    ],
+
 ];

@@ -18,4 +18,14 @@
         '?' => 'Prioridad',
     ],
 
+    'gamas'      => [
+        'Gamas',
+        'count' => 'gamas',
+    ],
+
+    'products'      => [
+        'Productos',
+        'count' => 'productos',
+    ],
+
 ];
