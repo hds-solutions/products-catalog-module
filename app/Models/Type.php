@@ -16,8 +16,12 @@ class Type extends X_Type {
         return $this->hasMany(Product::class);
     }
 
-    public function scopeIsSold(Builder $query, bool $sold = true) {
+    public function scopeSold(Builder $query, bool $sold = true) {
         return $query->where('is_sold', $sold);
+    }
+
+    public function scopeIsSold(Builder $query, bool $sold = true) {
+        return $this->scopeSold($query, $sold);
     }
 
     public function scopeHasStock(Builder $query, bool $stock = true) {
