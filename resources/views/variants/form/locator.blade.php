@@ -16,11 +16,11 @@
             default="{{ $old['warehouse_id'] ?? $selected?->warehouse_id }}"
 
             foreign="warehouses"
-            foreign-add-label="products-catalog::warehouses.add"
+            foreign-add-label="inventory::warehouses.add"
 
-            label="products-catalog::warehouse.name.0"
-            placeholder="products-catalog::warehouse.name._"
-            {{-- helper="products-catalog::warehouse.name.?" --}} />
+            label="inventory::warehouse.name.0"
+            placeholder="inventory::warehouse.name._"
+            {{-- helper="inventory::warehouse.name.?" --}} />
 
         <div class="ml-2"></div>
 {{--
@@ -40,15 +40,15 @@
             default="{{ $old['locator_id'] ?? $selected?->id }}"
 
             foreign="locators"
-            foreign-add-label="products-catalog::locators.add"
+            foreign-add-label="inventory::locators.add"
 
             filtered-by="{!! $selected !== null ? '#f'.$id : '[name=\'locator[warehouse_id][]\']' !!}"
             data-filtered-using="warehouse" data-filtered-init="false"
             append="warehouse:warehouse_id"
 
-            label="products-catalog::locator.name.0"
-            placeholder="products-catalog::locator.name._"
-            {{-- helper="products-catalog::locator.name.?" --}} />
+            label="inventory::locator.x.0"
+            placeholder="inventory::locator.x.0"
+            {{-- helper="inventory::locator.x.?" --}} />
 
         <button type="button" class="btn btn-danger ml-2"
             data-action="delete"
