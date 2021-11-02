@@ -61,7 +61,8 @@
 
         @switch ($option->value_type)
             @case ('text')
-                <x-form-input type="text" name="option_value_id[{{ $option->id }}]"
+            @case ('number')
+                <x-form-input type="{{ $option->value_type }}" name="option_value_id[{{ $option->id }}]"
                     :value="isset($resource) && $resource->values->count() && $resource->values->pluck('option_id')[$key] == $option->id ? $resource->values->pluck('value')[$key] : null"
                     placeholder="{{ $option->name }}" />
                 @break

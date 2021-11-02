@@ -5,11 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
 class CreateOptionsTable extends Migration {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up() {
         // get schema builder
         $schema = DB::getSchemaBuilder();
@@ -23,16 +19,11 @@ class CreateOptionsTable extends Migration {
             $table->foreignTo('Company');
             $table->string('name', 255);
             $table->string('label')->nullable();
-            $table->enum('value_type', [ 'text', 'boolean', 'choice', 'color', 'image' ])->default('text');
+            $table->enum('value_type', [ 'text', 'number', 'boolean', 'choice', 'color', 'image' ])->default('text');
             $table->boolean('show')->default(false);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down() {
         Schema::dropIfExists('options');
     }
