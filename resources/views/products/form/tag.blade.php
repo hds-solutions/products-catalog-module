@@ -5,9 +5,9 @@
 
         foreign="tags" foreign-add-label="products-catalog::tags.add"
 
-        label="products-catalog::product.tags.tag_id.0"
-        placeholder="products-catalog::product.tags.tag_id._"
-        {{-- helper="products-catalog::product.tags.tag_id.?" --}} />
+        label="products-catalog::product.tags.name.0"
+        placeholder="products-catalog::product.tags.name.optional"
+        {{-- helper="products-catalog::product.tags.name.?" --}} />
 
     <button type="button" class="btn btn-danger ml-2"
         data-action="delete"
