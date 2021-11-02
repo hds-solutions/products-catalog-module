@@ -4,6 +4,7 @@ namespace HDSSolutions\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use HDSSolutions\Laravel\DataTables\ProductDataTable as DataTable;
+use HDSSolutions\Laravel\DataTables\Modals\ProductsDataTable as SearchDataTable;
 use HDSSolutions\Laravel\Http\Request;
 use HDSSolutions\Laravel\Models\Brand;
 use HDSSolutions\Laravel\Models\Category;
@@ -51,6 +52,11 @@ class ProductController extends Controller {
             'count'                 => Resource::count(),
             'show_company_selector' => !backend()->companyScoped(),
         ]);
+    }
+
+    public function search(Request $request, SearchDataTable $dataTable) {
+        // load resources
+        return $dataTable->ajax();
     }
 
     public function create(Request $request) {

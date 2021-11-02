@@ -17,6 +17,12 @@ class ProductsCatalogModuleServiceProvider extends ModuleServiceProvider {
         // \HDSSolutions\Laravel\Commands\Mix::class,
     ];
 
+    private array $components = [
+        'products-catalog'  => [
+            \HDSSolutions\Laravel\View\Components\ProductsModal::class,
+        ],
+    ];
+
     public function bootEnv():void {
         // enable config override
         $this->publishes([
@@ -27,6 +33,9 @@ class ProductsCatalogModuleServiceProvider extends ModuleServiceProvider {
         $this->loadRoutesFrom( module_path('routes/products-catalog.php') );
         // load views
         $this->loadViewsFrom( module_path('resources/views'), 'products-catalog' );
+        // load view components
+        foreach ($this->components as $group => $components)
+            $this->loadViewComponentsAs($group, $components);
         // load translations
         $this->loadTranslationsFrom( module_path('resources/lang'), 'products-catalog' );
         // load migrations
