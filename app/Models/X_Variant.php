@@ -25,7 +25,7 @@ abstract class X_Variant extends Base\Model {
     ];
 
     protected static $rules = [
-        'sku'           => [ 'required', 'min:2', 'unique:variants,sku,{id},id,deleted_at,NULL' ],
+        'sku'           => [ 'required', 'min:1', 'unique:variants,sku,{id},id,deleted_at,NULL' ],
         'stock_alert'   => [ 'sometimes', 'nullable', 'numeric', 'min:0' ],
         'priority'      => [ 'sometimes', 'nullable', 'min:0' ],
     ];

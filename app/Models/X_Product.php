@@ -71,8 +71,8 @@ abstract class X_Product extends Base\Model {
     ];
 
     protected static $rules = [
-        'name'      => [ 'required', 'min:2' ],
-        'code'      => [ 'sometimes', 'nullable', 'min:2' ],
+        'name'      => [ 'required', 'min:1' ],
+        'code'      => [ 'sometimes', 'nullable', 'min:1' ],
         'url'       => [ 'sometimes', 'nullable', 'unique:products,url,{id},id,deleted_at,NULL' ],
         'type_id'   => [ 'required' ],
         'brief'     => [ 'sometimes', 'nullable', 'min:5' ],

@@ -65,6 +65,8 @@ Route::group([
         ->parameters([ 'tags' => 'resource' ])
         ->name('index', 'backend.tags');
 
+    Route::get('products/import',           [ ProductsImporterController::class, 'index' ])
+        ->name('backend.products.import');
     Route::post('products/import',          [ ProductsImporterController::class, 'store' ]);
         // ->name('backend.products.import');
     Route::get('products/import/{import}',  [ ProductsImporterController::class, 'headers' ])

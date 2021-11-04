@@ -8,26 +8,22 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ProductsImportJob extends BaseJob {
+class ProductsImportJob extends BaseJob  {
 
     public function __construct(
         private File $import,
+        private int $sheet,
         private Collection $matches,
         private Collection $customs,
-        private int $sheet,
     ) {
         parent::__construct();
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     protected function execute() {
         logger('Import of Excel '.$this->import->name.' to products started');
+
         // instanciate importer
-        $importer = new Importer($this->matches, $this->customs, $this->sheet);
+        $importer = new Importer($this->sheet, $this->matches, $this->customs);
 
         // start a transaction
         DB::beginTransaction();

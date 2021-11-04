@@ -53,8 +53,7 @@ class ProductsImporterController extends Controller {
         // check if selected headers are different from each other
         if (count( array_unique($headers) ) !== count($headers))
             // return back with errors
-            return back()
-                ->withInput()
+            return back()->withInput()
                 ->withErrors([ 'headers' => 'Selected headers must be different from each other' ]);
 
         // get all headers from document grouped by sheet
@@ -82,7 +81,7 @@ class ProductsImporterController extends Controller {
             });
 
         // dispatch ProductsImport Job
-        ProductsImportJob::dispatch($import, $matches, $customs, $request->sheet);
+        ProductsImportJob::dispatch($import, $request->sheet, $matches, $customs);
 
         // redirect to products list
         return redirect()->route('backend.products');

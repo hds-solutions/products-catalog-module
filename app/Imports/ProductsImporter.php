@@ -17,34 +17,35 @@ use HDSSolutions\Laravel\Models\Type;
 use HDSSolutions\Laravel\Models\Variant;
 use HDSSolutions\Laravel\Models\VariantValue;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Row;
 use Maatwebsite\Excel\Concerns\RemembersChunkOffset;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class ProductsImporter implements ToModel, WithChunkReading, WithHeadingRow, WithMultipleSheets {
+class ProductsImporter implements OnEachRow, WithChunkReading, WithHeadingRow, WithMultipleSheets {
     use RemembersChunkOffset;
 
     public function __construct(
+        private int $sheet,
         private Collection $matches,
         private Collection $customs,
-        private int $sheet,
         private array|null $current_row = null,
     ) {
         // log matches
-        logger('Matches: '.json_encode($this->matches));
-        logger('Customs: '.json_encode($this->customs));
+        info('Matches: '.json_encode($this->matches));
+        info('Customs: '.json_encode($this->customs));
     }
 
     public function sheets():array {
         return [ $this->sheet => $this ];
     }
 
-    public function model(array $row) {
+    public function onRow(Row $row) {
         // register row on current
-        $this->current_row = $row;
+        $this->current_row = $row->toArray();
 
         // find product by name or create a new one
         if (!($product = Product::firstOrNew([ 'name' => $this->match('name') ]))->exists) {
@@ -124,9 +125,12 @@ class ProductsImporter implements ToModel, WithChunkReading, WithHeadingRow, Wit
         }
 
         // save product data
-        $product->save();
+        if (!$product->save()) {
+            logger($product->errors());
+            return false;
+        }
         // log resource creation
-        if ($product->wasRecentlyCreated) logger(__('Imported Product #:id ":name"', $product->attributesToArray()));
+        if ($product->wasRecentlyCreated) info(__('Imported Product #:id ":name"', $product->attributesToArray()));
 
         // find variant by SKU or create a new one
         if (!($variant = $product->variants()->firstOrNew([ 'sku' => $this->match('sku') ]))->exists) {
@@ -139,9 +143,12 @@ class ProductsImporter implements ToModel, WithChunkReading, WithHeadingRow, Wit
         }
 
         // save variant data
-        $variant->save();
+        if (!$variant->save())
+            // show variant errors on log
+            return error( $variant->errors() );
+
         // log resource creation
-        if ($variant->wasRecentlyCreated) logger(__('Imported Variant #:id ":sku"', $variant->attributesToArray()));
+        if ($variant->wasRecentlyCreated) info(__('Imported Variant #:id ":sku"', $variant->attributesToArray()));
 
         // process custom fields
         foreach ($this->customs as $relation => $fields) {
@@ -162,8 +169,9 @@ class ProductsImporter implements ToModel, WithChunkReading, WithHeadingRow, Wit
                 if (($option = Option::where([ 'name' => $custom_field ])->orWhere([ 'label' => $custom_field ])
                     // create a new one if not exists
                     ->firstOrCreate([
-                        'name'  => __('Custom :custom_field field for Product.:relation ":name"', compact('custom_field', 'relation') + [ 'name' => $product->$relation->name ]),
-                        'label' => $custom_field,
+                        'value_type'    => Option::VALUE_TYPE_Choice,
+                        'name'          => __('Custom :custom_field field for Product.:relation ":name"', compact('custom_field', 'relation') + [ 'name' => $product->$relation->name ]),
+                        'label'         => $custom_field,
                     ]))
                     // check if option is new
                     ->wasRecentlyCreated) {
@@ -201,8 +209,6 @@ class ProductsImporter implements ToModel, WithChunkReading, WithHeadingRow, Wit
 
             }
         }
-
-        return null;
     }
 
     public function chunkSize():int { return 1000; }

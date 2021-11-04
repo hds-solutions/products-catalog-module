@@ -86,7 +86,7 @@
 
                                 <div class="col-6">
                                     <select name="customs[header][]"
-                                        data-filtered-by="[name=sheet]" data-filtered-using="sheet" data-filtered-keep-id="true"
+                                        {{-- data-filtered-by="[name=sheet]" data-filtered-using="sheet" data-filtered-keep-id="true" --}}
                                         data-none-selected-text="@lang('products-catalog::products.import.custom._')"
                                         class="form-control selectpicker" placeholder="@lang('products-catalog::products.import.custom._')">
 
