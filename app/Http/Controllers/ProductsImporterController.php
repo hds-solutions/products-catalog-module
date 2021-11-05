@@ -28,10 +28,9 @@ class ProductsImporterController extends Controller {
                 ->withErrors([ __('products-catalog::products.import.file-error') ]);
 
         // save file to disk
-        if (!($file = File::upload( $request, $spreadsheet, $this ))->save())
+        if (!($file = File::upload( $request, $spreadsheet, $this, false ))->save())
             // redirect back with errors
-            return back()
-                ->withInput()
+            return back()->withInput()
                 ->withErrors( $file->errors() );
 
         // redirect to import headers configuration
