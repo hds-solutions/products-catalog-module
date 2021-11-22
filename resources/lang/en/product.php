@@ -186,7 +186,7 @@
         'Tags',
         '_' => 'Tags',
         '?' => 'Tags',
-    ] + include('tag.php'),
+    ] + __('products-catalog::tag'),
 
     'locators'      => [
         'Locators',

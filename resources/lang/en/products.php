@@ -3,7 +3,7 @@
     'nav'           => 'Products',
 
     'title'         => 'Products',
-    'description'   => 'Products description',
+    'description'   => '',
 
     'index'         => 'Products list',
     'create'        => 'Create new Product',
