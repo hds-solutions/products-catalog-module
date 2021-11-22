@@ -17,53 +17,64 @@ class Product extends X_Product {
     /* relations */
 
     public function type() {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(Type::class)
+            ->withTrashed();
     }
 
     public function brand() {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class)
+            ->withTrashed();
     }
 
     public function model() {
-        return $this->belongsTo(Model::class);
+        return $this->belongsTo(Model::class)
+            ->withTrashed();
     }
 
     public function family() {
-        return $this->belongsTo(Family::class);
+        return $this->belongsTo(Family::class)
+            ->withTrashed();
     }
 
     public function subFamily() {
-        return $this->belongsTo(SubFamily::class);
+        return $this->belongsTo(SubFamily::class)
+            ->withTrashed();
     }
 
     public function line() {
-        return $this->belongsTo(Line::class);
+        return $this->belongsTo(Line::class)
+            ->withTrashed();
     }
 
     public function gama() {
-        return $this->belongsTo(Gama::class);
+        return $this->belongsTo(Gama::class)
+            ->withTrashed();
     }
 
     public function categories() {
         return $this->belongsToMany(Category::class)
             ->using(ProductCategory::class)
-            ->withTimestamps();
+            ->withTimestamps()
+            ->withTrashed();
     }
 
     public function tags() {
         return $this->belongsToMany(Tag::class)
             ->using(ProductTag::class)
-            ->withTimestamps();
+            ->withTimestamps()
+            ->withTrashed();
     }
 
     public function images() {
         return $this->belongsToMany(File::class)
             ->using(ProductFile::class)
-            ->withTimestamps();
+            ->withTimestamps()
+            ->withTrashed();
     }
 
     public function storages() {
-        return $this->hasMany(Storage::class)->ordered();
+        return $this->hasMany(Storage::class)->ordered()
+            ->withTrashed();
     }
 
     public function locators() {

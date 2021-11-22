@@ -82,8 +82,7 @@ class VariantController extends Controller {
         // if ($resource->price == null &&
         //     $resource->product->price == null)
         //     // return with errors
-        //     return back()
-        //         ->withInput()
+        //     return back()->withInput()
         //         ->withErrors([ 'Variant price not specified' ]);
 
         // save resource

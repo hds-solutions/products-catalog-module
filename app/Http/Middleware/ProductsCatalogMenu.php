@@ -39,7 +39,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function options(&$menu) {
-        if (Route::has('backend.options') && $this->can('options'))
+        if (Route::has('backend.options') && $this->can('options.crud.index'))
             $menu->add(__('products-catalog::options.nav'), [
                 'route'     => 'backend.options',
                 'icon'      => 'drafting-compass'
@@ -49,7 +49,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function types(&$menu) {
-        if (Route::has('backend.types') && $this->can('types'))
+        if (Route::has('backend.types') && $this->can('types.crud.index'))
             $menu->add(__('products-catalog::types.nav'), [
                 'route'     => 'backend.types',
                 'icon'      => 'gifts'
@@ -59,7 +59,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function brands(&$menu) {
-        if (Route::has('backend.brands') && $this->can('brands'))
+        if (Route::has('backend.brands') && $this->can('brands.crud.index'))
             $menu->add(__('products-catalog::brands.nav'), [
                 'route'     => 'backend.brands',
                 'icon'      => 'copyright'
@@ -69,7 +69,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function models(&$menu) {
-        if (Route::has('backend.models') && $this->can('models'))
+        if (Route::has('backend.models') && $this->can('models.crud.index'))
             $menu->add(__('products-catalog::models.nav'), [
                 'route'     => 'backend.models',
                 'icon'      => 'magic'
@@ -79,7 +79,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function lines(&$menu) {
-        if (Route::has('backend.lines') && $this->can('lines'))
+        if (Route::has('backend.lines') && $this->can('lines.crud.index'))
             $menu->add(__('products-catalog::lines.nav'), [
                 'route'     => 'backend.lines',
                 'icon'      => 'chess'
@@ -89,7 +89,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function gamas(&$menu) {
-        if (Route::has('backend.gamas') && $this->can('gamas'))
+        if (Route::has('backend.gamas') && $this->can('gamas.crud.index'))
             $menu->add(__('products-catalog::gamas.nav'), [
                 'route'     => 'backend.gamas',
                 'icon'      => 'chess-bishop'
@@ -99,7 +99,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function families(&$menu) {
-        if (Route::has('backend.families') && $this->can('families'))
+        if (Route::has('backend.families') && $this->can('families.crud.index'))
             $menu->add(__('products-catalog::families.nav'), [
                 'route'     => 'backend.families',
                 'icon'      => 'circle'
@@ -109,7 +109,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function sub_families(&$menu) {
-        if (Route::has('backend.sub_families') && $this->can('sub_families'))
+        if (Route::has('backend.sub_families') && $this->can('sub_families.crud.index'))
             $menu->add(__('products-catalog::sub_families.nav'), [
                 'route'     => 'backend.sub_families',
                 'icon'      => 'chart-pie'
@@ -119,7 +119,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function categories(&$menu) {
-        if (Route::has('backend.categories') && $this->can('categories'))
+        if (Route::has('backend.categories') && $this->can('categories.crud.index'))
             $menu->add(__('products-catalog::categories.nav'), [
                 'route'     => 'backend.categories',
                 'icon'      => 'grip-horizontal'
@@ -129,7 +129,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function tags(&$menu) {
-        if (Route::has('backend.tags') && $this->can('tags'))
+        if (Route::has('backend.tags') && $this->can('tags.crud.index'))
             $menu->add(__('products-catalog::tags.nav'), [
                 'route'     => 'backend.tags',
                 'icon'      => 'tags'
@@ -139,7 +139,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function products(&$menu) {
-        if (Route::has('backend.products') && $this->can('products'))
+        if (Route::has('backend.products') && $this->can('products.crud.index'))
             $menu->add(__('products-catalog::products.nav'), [
                 'route'     => 'backend.products',
                 'icon'      => 'box'
@@ -149,7 +149,7 @@ class ProductsCatalogMenu extends Base\Menu {
     }
 
     private function variants(&$menu) {
-        if (Route::has('backend.variants') && $this->can('variants'))
+        if (Route::has('backend.variants') && $this->can('variants.crud.index'))
             $menu->add(__('products-catalog::variants.nav'), [
                 'route'     => 'backend.variants',
                 'icon'      => 'barcode'

@@ -17,7 +17,7 @@ abstract class X_Model extends Base\Model {
     ];
 
     protected static $rules = [
-        'name'      => [ 'required', 'min:2' ],
+        'name'      => [ 'required', 'min:1' ],
         'brand_id'  => [ 'required' ],
     ];
 }

@@ -14,6 +14,9 @@ use Maatwebsite\Excel\HeadingRowImport;
 class ProductsImporterController extends Controller {
 
     public function index(Request $request) {
+        // force company selection
+        if (!backend()->companyScoped()) return view('backend::layouts.master', [ 'force_company_selector' => true ]);
+
         // show view to match headers
         return view('products-catalog::products.import.index');
     }

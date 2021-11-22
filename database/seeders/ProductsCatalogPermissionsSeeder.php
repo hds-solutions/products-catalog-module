@@ -21,8 +21,8 @@ class ProductsCatalogPermissionsSeeder extends Base\PermissionsSeeder {
             $this->resource('categories'),
             $this->resource('tags'),
             $this->resource('products'),
-            'products.process.*',
-            'products.process.import' => 'Products import',
+            'products.process.*'        => 'products-catalog::products.process.*',
+            'products.process.import'   => 'products-catalog::products.process.import',
             $this->resource('variants'),
         ];
     }

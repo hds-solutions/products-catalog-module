@@ -19,7 +19,7 @@ abstract class X_Line extends Base\Model {
     ];
 
     protected static $rules = [
-        'name'      => [ 'required', 'min:4' ],
+        'name'      => [ 'required', 'min:1' ],
         'priority'  => [ 'sometimes', 'nullable', 'numeric', 'min:1' ],
     ];
 

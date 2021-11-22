@@ -25,7 +25,7 @@ abstract class X_Brand extends Base\Model {
     ];
 
     protected static $rules = [
-        'name'      => [ 'required', 'min:2' ],
+        'name'      => [ 'required', 'min:1' ],
         'logo_id'   => [ 'sometimes', 'nullable' ],
         'show_home' => [ 'required', 'boolean' ],
         'priority'  => [ 'sometimes', 'nullable', 'numeric', 'min:1' ],

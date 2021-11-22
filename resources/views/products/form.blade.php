@@ -78,6 +78,7 @@
     label="products-catalog::product.description.0"
     placeholder="products-catalog::product.description.optional" />
 
+<div class="d-none">
 <x-backend-form-multiple name="prices" values-as="currencies"
     :values="$currencies" :selecteds="isset($resource) ? $resource->prices : []"
     grouped old-filter-fields="currency_id,cost,price,limit"
@@ -85,6 +86,7 @@
     {{-- row-class="mb-0" container-class="mb-1" --}}
 
     label="products-catalog::product.prices.0" />
+</div>
 
 <x-backend-form-select :resource="$resource ?? null" name="tax" required
     :values="Product::TAXES"
