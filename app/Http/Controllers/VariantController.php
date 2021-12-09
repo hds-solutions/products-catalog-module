@@ -53,8 +53,6 @@ class VariantController extends Controller {
         ])->ordered()->get();
         // get images from products
         $images = $products->pluck('images')->flatten();
-        // load currencies
-        $currencies = Currency::ordered()->get();
 
         // get available options
         $options = $this->getAvailableOptions( $products );
@@ -67,7 +65,7 @@ class VariantController extends Controller {
         return view('products-catalog::variants.create', compact(
             'products', 'images',
             'options',
-            'warehouses', 'currencies'
+            'warehouses'
         ));
     }
 
@@ -77,13 +75,6 @@ class VariantController extends Controller {
 
         // create resource
         $resource = new Resource( $request->input() );
-
-        // // TODO: check if variant doesn't have price
-        // if ($resource->price == null &&
-        //     $resource->product->price == null)
-        //     // return with errors
-        //     return back()->withInput()
-        //         ->withErrors([ 'Variant price not specified' ]);
 
         // save resource
         if (!$resource->save())
@@ -109,17 +100,17 @@ class VariantController extends Controller {
                 ->keyBy('locator_id')
             );
 
-        // sync variant prices
-        if ($request->has('prices')) $resource->prices()->sync(
-            // get prices as collection
-            $prices = collect(array_group($request->get('prices')))
-                // filter price without currency set
-                ->filter(fn($price) => array_key_exists('currency_id', $price) && $price['currency_id'] !== null)
-                // append product_id
-                ->map(fn($price) => $price + [ 'product_id' => $resource->product_id ])
-                // use currency_id as collection key
-                ->keyBy('currency_id')
-            );
+        // // sync variant prices
+        // if ($request->has('prices')) $resource->prices()->sync(
+        //     // get prices as collection
+        //     $prices = collect(array_group($request->get('prices')))
+        //         // filter price without currency set
+        //         ->filter(fn($price) => array_key_exists('currency_id', $price) && $price['currency_id'] !== null)
+        //         // append product_id
+        //         ->map(fn($price) => $price + [ 'product_id' => $resource->product_id ])
+        //         // use currency_id as collection key
+        //         ->keyBy('currency_id')
+        //     );
 
         // confirm transaction
         DB::commit();
@@ -139,7 +130,7 @@ class VariantController extends Controller {
 
     public function edit(Request $request, Resource $resource) {
         // load variant images
-        $resource->load([ 'product', 'images', 'values', 'prices' ]);
+        $resource->load([ 'product', 'images', 'values' ]);
 
         // get products
         $products = Product::with([

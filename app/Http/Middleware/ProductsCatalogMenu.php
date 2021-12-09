@@ -9,9 +9,17 @@ class ProductsCatalogMenu extends Base\Menu {
 
     public function handle($request, Closure $next) {
         // create a submenu
-        $sub = backend()->menu()
-            ->add(__('products-catalog::catalog.nav'), [
-                'icon'  => 'dolly',
+        $catalog = backend()->menu()
+            ->add(__('products-catalog::menu.catalog'), [
+                'nickname'  => 'catalog',
+                'icon'      => 'laptop-house',
+            ])->data('priority', 910);
+
+        // create a submenu
+        $stock = backend()->menu()
+            ->add(__('products-catalog::menu.stock'), [
+                'nickname'  => 'stock',
+                'icon'      => 'boxes',
             ])->data('priority', 900);
 
         // get extras menu group
@@ -19,18 +27,21 @@ class ProductsCatalogMenu extends Base\Menu {
 
         $this
             // append items to submenu
-            ->options($sub)
-            ->types($sub)
-            ->brands($sub)
-            ->models($sub)
-            ->lines($sub)
-            ->gamas($sub)
-            ->families($sub)
-            ->sub_families($sub)
-            ->categories($sub)
-            ->tags($sub)
-            ->products($sub)
-            ->variants($sub)
+            ->options($catalog)
+            ->types($catalog)
+            ->brands($catalog)
+            ->models($catalog)
+            ->lines($catalog)
+            ->gamas($catalog)
+            ->families($catalog)
+            ->sub_families($catalog)
+            ->categories($catalog)
+            ->tags($catalog)
+
+            ->products($stock)
+            ->variants($stock)
+            ->price_lists($stock)
+            ->price_list_versions($stock)
 
             ->products_importer($extras);
 
@@ -153,6 +164,26 @@ class ProductsCatalogMenu extends Base\Menu {
             $menu->add(__('products-catalog::variants.nav'), [
                 'route'     => 'backend.variants',
                 'icon'      => 'barcode'
+            ]);
+
+        return $this;
+    }
+
+    private function price_lists(&$menu) {
+        if (Route::has('backend.price_lists') && $this->can('price_lists.crud.index'))
+            $menu->add(__('products-catalog::price_lists.nav'), [
+                'route'     => 'backend.price_lists',
+                'icon'      => 'clipboard'
+            ]);
+
+        return $this;
+    }
+
+    private function price_list_versions(&$menu) {
+        if (Route::has('backend.price_list_versions') && $this->can('price_list_versions.crud.index'))
+            $menu->add(__('products-catalog::price_list_versions.nav'), [
+                'route'     => 'backend.price_list_versions',
+                'icon'      => 'code-branch'
             ]);
 
         return $this;

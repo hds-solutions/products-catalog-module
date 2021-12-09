@@ -102,7 +102,7 @@ class ProductController extends Controller {
 
         // cast to boolean
         if ($request->has('giftcard'))  $request->merge([ 'giftcard' => filter_var($request->giftcard, FILTER_VALIDATE_BOOLEAN) ]);
-        if ($request->has('visible'))  $request->merge([ 'visible' => filter_var($request->visible, FILTER_VALIDATE_BOOLEAN) ]);
+        if ($request->has('visible'))   $request->merge([ 'visible' => filter_var($request->visible, FILTER_VALIDATE_BOOLEAN) ]);
 
         // create resource
         $resource = new Resource( $request->input() );
@@ -142,15 +142,15 @@ class ProductController extends Controller {
                 ->keyBy('locator_id')
             );
 
-        // sync product prices
-        if ($request->has('prices')) $resource->prices()->sync(
-            // get prices as collection
-            $prices = collect(array_group($request->get('prices')))
-                // filter price without currency set
-                ->filter(fn($price) => array_key_exists('currency_id', $price) && $price['currency_id'] !== null)
-                // use currency_id as collection key
-                ->keyBy('currency_id')
-            );
+        // // sync product prices
+        // if ($request->has('prices')) $resource->prices()->sync(
+        //     // get prices as collection
+        //     $prices = collect(array_group($request->get('prices')))
+        //         // filter price without currency set
+        //         ->filter(fn($price) => array_key_exists('currency_id', $price) && $price['currency_id'] !== null)
+        //         // use currency_id as collection key
+        //         ->keyBy('currency_id')
+        //     );
 
         // confirm transaction
         DB::commit();
@@ -191,8 +191,6 @@ class ProductController extends Controller {
         $warehouses = Warehouse::with([
             'locators' => fn($locator) => $locator->ordered(),
         ])->ordered()->get();
-        // load currencies
-        $currencies = backend()->currencies();
 
         // load product images and offers
         $resource->load([
@@ -200,7 +198,7 @@ class ProductController extends Controller {
             'tags',
             'images',
             'locators',
-            'prices',
+            // 'prices',
         ]);
 
         // show edit form
@@ -208,7 +206,7 @@ class ProductController extends Controller {
             'resource',
             'brands', 'families', 'lines',
             'types', 'categories',
-            'tags', 'images', 'warehouses', 'currencies',
+            'tags', 'images', 'warehouses',
         ));
     }
 

@@ -10,11 +10,9 @@ use Yajra\DataTables\Html\Column;
 class ProductsDataTable extends DataTable {
 
     protected array $with = [
-        'prices',
         'images',
-        'product.prices',
-        'values.option',
-        'values.optionValue',
+        // 'values.option',
+        // 'values.optionValue',
     ];
 
     protected array $orderBy = [
@@ -27,6 +25,21 @@ class ProductsDataTable extends DataTable {
             Resource::class,
             route('backend.products.search'),
         );
+        // add prices to eager loading (only prices from PriceList set on POS setting)
+        $this->with += [
+            'prices' => fn($priceListVersion) => $priceListVersion
+                // order prices and get only valid ones
+                ->ordered()->valid()
+                // load only sale PriceList
+                ->where('price_list_id', pos_settings()->priceList()->id)
+                ->with([ 'priceList.currency' ]),
+            'product.prices' => fn($priceListVersion) => $priceListVersion
+                // order prices and get only valid ones
+                ->ordered()->valid()
+                // load only sale PriceList
+                ->where('price_list_id', pos_settings()->priceList()->id)
+                ->with([ 'priceList.currency' ]),
+        ];
     }
 
     protected function newQuery():Builder {
@@ -53,6 +66,21 @@ class ProductsDataTable extends DataTable {
                 ->leftJoin('models', 'models.id', 'products.model_id')
             // join to Line
             ->leftJoin('lines', 'lines.id', 'products.line_id');
+    }
+
+    protected function results($results) {
+        return $results->transform(fn($variant) => $variant
+            // modify prices relation, link to parent resources manually to avoid more queries
+            ->setRelation('prices', $variant->prices->take(1)->transform(fn($priceListVersion) => $priceListVersion
+                ->setRelation('price', $priceListVersion->price
+                    // reset PriceListVersion relation without relations
+                    ->setRelation('priceListVersion', $priceListVersion->withoutRelations()
+                        // set PriceList relation
+                        ->setRelation('priceList', $priceListVersion->priceList)
+                    )
+                )
+            ))
+        );
     }
 
     protected function getTableId():string {
@@ -88,16 +116,16 @@ class ProductsDataTable extends DataTable {
             // Column::make('line.name')
             //     ->title( __('products-catalog::product.line_id.0') ),
 
-            Column::computed('variant')
-                ->title( '' )
-                ->renderRaw('view:variant')
-                ->data( view('products-catalog::components.products.modal.variant')->render() ),
+            // Column::computed('variant')
+            //     ->title( '' )
+            //     ->renderRaw('view:variant')
+            //     ->data( view('products-catalog::components.products.modal.variant')->render() ),
 
             Column::computed('prices')
                 ->title( __('products-catalog::product.prices.0') )
                 ->renderRaw('view:variant')
                 ->data( view('products-catalog::components.products.modal.prices')->render() )
-                ->addClass('w-100px'),
+                ->addClass('w-150px text-right'),
         ];
     }
 

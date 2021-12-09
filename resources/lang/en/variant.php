@@ -12,18 +12,6 @@
         '?' => 'SKU',
     ],
 
-    'price'         => [
-        'Price',
-        '_' => 'Price',
-        '?' => 'If Reseller price is not set, default price will we used for Resellers',
-    ],
-
-    'price_reseller'=> [
-        'Price Reseller',
-        '_' => 'Price Reseller',
-        '?' => 'Price Reseller',
-    ],
-
     'image_id'          => [
         'Image',
         '_' => 'Image',
@@ -34,6 +22,7 @@
         'Images',
         '_' => 'Images',
         '?' => 'Images',
+        'optional' => '(optional) Images',
     ],
 
     'variant'           => [
@@ -52,6 +41,7 @@
         'Priority',
         '_' => 'Priority',
         '?' => 'Priority',
+        'optional' => '(optional) Priority',
     ],
 
     'prices'        => [
@@ -82,20 +72,6 @@
             '_' => 'Limit',
             '?' => 'Limit',
         ],
-    ],
-
-    'images'        => [
-        'Images',
-        '_' => 'Images',
-        '?' => 'Images',
-        'optional' => '(optional) Images',
-    ],
-
-    'priority'      => [
-        'Priority',
-        '_' => 'Priority',
-        '?' => 'Priority',
-        'optional' => '(optional) Priority',
     ],
 
 ];

@@ -12,18 +12,6 @@
         '?' => 'SKU',
     ],
 
-    'price'         => [
-        'Precio',
-        '_' => 'Precio',
-        '?' => 'Si no se establece el precio de distribuidor, el precio normal se utilizará para los distribuidores',
-    ],
-
-    'price_reseller'=> [
-        'Precio Distribuidor',
-        '_' => 'Precio Distribuidor',
-        '?' => 'Precio Distribuidor',
-    ],
-
     'image_id'          => [
         'Imágen',
         '_' => 'Imágen',
@@ -34,6 +22,7 @@
         'Imágenes',
         '_' => 'Imágenes',
         '?' => 'Imágenes',
+        'optional' => '(opcional) Imágenes',
     ],
 
     'variant'           => [
@@ -52,6 +41,7 @@
         'Prioridad',
         '_' => 'Prioridad',
         '?' => 'Prioridad',
+        'optional'  => '(opcional) Prioridad'
     ],
 
 ];

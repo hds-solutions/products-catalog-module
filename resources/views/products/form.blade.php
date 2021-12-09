@@ -78,16 +78,6 @@
     label="products-catalog::product.description.0"
     placeholder="products-catalog::product.description.optional" />
 
-<div class="d-none">
-<x-backend-form-multiple name="prices" values-as="currencies"
-    :values="$currencies" :selecteds="isset($resource) ? $resource->prices : []"
-    grouped old-filter-fields="currency_id,cost,price,limit"
-    contents-view="products-catalog::products.form.price" {{-- contents-size="lg" --}}
-    {{-- row-class="mb-0" container-class="mb-1" --}}
-
-    label="products-catalog::product.prices.0" />
-</div>
-
 <x-backend-form-select :resource="$resource ?? null" name="tax" required
     :values="Product::TAXES"
     field="taxRaw"
@@ -137,11 +127,11 @@
     label="products-catalog::product.images.0"
     placeholder="products-catalog::product.images.optional" />
 
-<x-backend-form-text :resource="$resource ?? null"
+{{-- <x-backend-form-text :resource="$resource ?? null"
     name="url"
     label="products-catalog::product.url.0"
     prepend="{{ url('/') }}/"
-    placeholder="products-catalog::product.url.optional" />
+    placeholder="products-catalog::product.url.optional" /> --}}
 
 <x-backend-form-multiple name="tags"
     :values="$tags" :selecteds="isset($resource) ? $resource->tags : []"
@@ -157,10 +147,10 @@
 
     label="products-catalog::product.locators.0" />
 
-<x-backend-form-boolean :resource="$resource ?? null"
+{{-- <x-backend-form-boolean :resource="$resource ?? null"
     name="visible"
     label="products-catalog::product.visible.0"
-    placeholder="products-catalog::product.visible._" />
+    placeholder="products-catalog::product.visible._" /> --}}
 
 <x-backend-form-number :resource="$resource ?? null"
     name="priority"

@@ -55,15 +55,22 @@ class Variant extends X_Variant {
     }
 
     public function prices() {
-        return $this->belongsToMany(Currency::class, 'price_product')
+        return $this->belongsToMany(PriceListVersion::class, 'price_product')
             ->using(ProductPrice::class)
             ->withTimestamps()
-            ->withPivot([ 'cost', 'price', 'limit', 'reseller' ]);
+            ->withPivot([ 'list', 'price', 'limit' ])
+            ->as('price');
     }
 
-    public function price(Currency|int $currency = null):?Currency {
-        // return price for specified currency
-        return $this->prices()->firstWhere('currency_id', $currency instanceof Currency ? $currency->id : $currency);
+    public function price(PriceList|int $priceList = null):?PriceListVersion {
+        // return current price for specified priceList
+        return $this->prices()
+            // filter by specified PriceList
+            ->of($priceList)
+            // get valid prices only
+            ->ordered()->valid()
+            // get first
+            ->first();
     }
 
     public function getPriceAttribute():?Currency {

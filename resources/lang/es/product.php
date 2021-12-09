@@ -70,31 +70,7 @@
         'Precios',
         '_' => 'Precios',
         '?' => 'Precios',
-
-        'currency_id'   => [
-            'Moneda',
-            '_' => 'Moneda',
-            '?' => 'Moneda',
-        ],
-
-        'cost'          => [
-            'Costo',
-            '_' => 'Costo',
-            '?' => 'Costo',
-        ],
-
-        'price'         => [
-            'Precio',
-            '_' => 'Precio',
-            '?' => 'Precio',
-        ],
-
-        'limit'         => [
-            'Límite',
-            '_' => 'Límite',
-            '?' => 'Límite',
-        ],
-    ],
+    ] + __('products-catalog::product_price'),
 
     'tax'           => [
         'Impuesto',

@@ -5,11 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
 class CreatePriceProductTable extends Migration {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up() {
         // get schema builder
         $schema = DB::getSchemaBuilder();
@@ -21,22 +17,16 @@ class CreatePriceProductTable extends Migration {
         $schema->create('price_product', function(Blueprint $table) {
             $table->asPivot();
             $table->foreignTo('Company');
-            $table->foreignTo('Currency');
+            $table->foreignTo('PriceListVersion');
             $table->foreignTo('Product');
             $table->foreignTo('Variant')->nullable();
-            $table->unique([ 'currency_id', 'product_id', 'variant_id' ]);
-            $table->amount('cost');
+            $table->unique([ 'price_list_version_id', 'product_id', 'variant_id' ]);
+            $table->amount('list')->nullable();
             $table->amount('price');
             $table->amount('limit')->nullable();
-            $table->boolean('reseller')->default(false);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down() {
         Schema::dropIfExists('price_product');
     }

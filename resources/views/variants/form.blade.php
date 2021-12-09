@@ -1,10 +1,11 @@
 @include('backend::components.errors')
 
 <x-backend-form-foreign :resource="$resource ?? null" name="product_id" required
-    :values="$products" request="product" :readonly="request()->has('product')"
+    :values="$products" request="product" :readonly="request()->has('product') || isset($resource)"
 
     foreign="products" foreign-add-label="products-catalog::products.add"
     append="type:type_id,family:family_id,line:line_id"
+    data-live-search="true"
 
     label="products-catalog::variant.product_id.0"
     placeholder="products-catalog::variant.product_id._"
@@ -14,28 +15,13 @@
     label="products-catalog::variant.sku.0"
     placeholder="products-catalog::variant.sku._" />
 
-<x-backend-form-multiple name="prices" values-as="currencies"
+{{-- <x-backend-form-multiple name="prices" values-as="currencies"
     :values="$currencies" :selecteds="isset($resource) ? $resource->prices : []"
     grouped old-filter-fields="currency_id,cost,price,limit"
     contents-view="products-catalog::variants.form.price" contents-size="lg"
     row-class="mb-0" container-class="mb-3"
 
-    label="products-catalog::product.prices.0" />
-
-{{-- <x-backend-form-amount :resource="$resource ?? null"
-    name="price" field="priceRaw" prepend="{{ config('settings.currency-symbol', 'USD"
-    label="products-catalog::variant.price.0') }} / {{ __('products-catalog::variant.price_reseller.0"
-    placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.price._"
-    helper="products-catalog::variant.price.?">
-
-    <x-backend-form-amount :resource="$resource ?? null" secondary
-        name="price_reseller" prepend="{{ config('settings.currency-symbol', 'USD"
-        label="products-catalog::variant.price_reseller.0"
-        placeholder="({{ __('optional') }}) {{ __('products-catalog::variant.price_reseller._"
-        helper="products-catalog::variant.price_reseller.?">
-    </x-backend-form-amount>
-
-</x-backend-form-amount> --}}
+    label="products-catalog::product.prices.0" /> --}}
 
 <x-backend-form-image :resource="$resource ?? null" :images="$images"
     name="images" multiple

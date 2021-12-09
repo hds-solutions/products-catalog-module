@@ -8,11 +8,14 @@ use HDSSolutions\Laravel\Http\Controllers\{
     LineController,
     ModelController,
     OptionController,
-    ProductController,
     SubFamilyController,
     TagController,
     TypeController,
+
+    ProductController,
     VariantController,
+    PriceListController,
+    PriceListVersionController,
 
     ProductsImporterController,
 };
@@ -83,5 +86,13 @@ Route::group([
     Route::resource('variants',         VariantController::class,   $name_prefix)
         ->parameters([ 'variants' => 'resource' ])
         ->name('index', 'backend.variants');
+
+    Route::resource('price_lists',          PriceListController::class, $name_prefix)
+        ->parameters([ 'price_lists' => 'resource' ])
+        ->name('index', 'backend.price_lists');
+
+    Route::resource('price_list_versions',  PriceListVersionController::class, $name_prefix)
+        ->parameters([ 'price_list_versions' => 'resource' ])
+        ->name('index', 'backend.price_list_versions');
 
 });

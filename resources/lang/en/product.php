@@ -89,31 +89,7 @@
         'Prices',
         '_' => 'Prices',
         '?' => 'Prices',
-
-        'currency_id'   => [
-            'Currency',
-            '_' => 'Currency',
-            '?' => 'Currency',
-        ],
-
-        'cost'          => [
-            'Cost',
-            '_' => 'Cost',
-            '?' => 'Cost',
-        ],
-
-        'price'         => [
-            'Price',
-            '_' => 'Price',
-            '?' => 'Price',
-        ],
-
-        'limit'         => [
-            'Limit',
-            '_' => 'Limit',
-            '?' => 'Limit',
-        ],
-    ],
+    ] + __('products-catalog::product_price'),
 
     'tax'           => [
         'Tax',

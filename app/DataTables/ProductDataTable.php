@@ -10,14 +10,14 @@ class ProductDataTable extends Base\DataTable {
 
     protected array $with = [
         // 'brand', 'model',
-        // 'family', 'sub_family',
+        'family', // 'sub_family',
         'line', //'gama',
         // TODO: 'offers',
         // 'categories',
         // 'tags',
         'images',
-        'prices',
-        'variants.prices',
+        // 'prices',
+        // 'variants.prices',
         'variants.values.option',
         'variants.values.optionValue',
         // TODO: 'storages',
@@ -53,11 +53,14 @@ class ProductDataTable extends Base\DataTable {
             Column::make('line.name')
                 ->title( __('products-catalog::product.line_id.0') ),
 
-            Column::computed('prices')
-                ->title( __('products-catalog::product.prices.0') )
-                ->renderRaw('view:product')
-                ->data( view('products-catalog::products.datatable.prices')->render() )
-                ->addClass('w-300px'),
+            Column::make('family.name')
+                ->title( __('products-catalog::product.family_id.0') ),
+
+            // Column::computed('prices')
+            //     ->title( __('products-catalog::product.prices.0') )
+            //     ->renderRaw('view:product')
+            //     ->data( view('products-catalog::products.datatable.prices')->render() )
+            //     ->addClass('w-300px'),
 
             Column::computed('actions'),
         ];
@@ -73,12 +76,19 @@ class ProductDataTable extends Base\DataTable {
                 // join to Models
                 ->leftJoin('models', 'models.id', 'products.model_id')
             // join to Line
-            ->leftJoin('lines', 'lines.id', 'products.line_id');
+            ->leftJoin('lines', 'lines.id', 'products.line_id')
+            // join to Family
+            ->leftJoin('families', 'families.id', 'products.line_id');
     }
 
     protected function orderLineName(Builder $query, string $order):Builder {
         // order by Line.name
         return $query->orderBy('lines.name', $order);
+    }
+
+    protected function orderFamilyName(Builder $query, string $order):Builder {
+        // order by Family.name
+        return $query->orderBy('families.name', $order);
     }
 
     protected function filterType(Builder $query, $type_id):Builder {

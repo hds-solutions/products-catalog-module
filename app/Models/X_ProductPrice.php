@@ -10,41 +10,62 @@ abstract class X_ProductPrice extends Base\Pivot {
     protected $table = 'price_product';
 
     protected $fillable = [
-        'currency_id',
+        'price_list_version_id',
         'product_id',
         'variant_id',
-        'cost',
+        'currency_id',
+        'list',
         'price',
         'limit',
-        'reseller',
     ];
 
-    protected $casts = [
-        'reseller'  => 'boolean',
-    ];
-
-    public function getCostAttribute():int|float {
-        return $this->attributes['cost'] / pow(10, $this->currency->decimals);
+    protected function setKeysForSaveQuery($query) {
+        // set composite key
+        $query->where('price_list_version_id',  $this->attributes['price_list_version_id']);
+        $query->where('product_id', $this->attributes['product_id']);
+        if ($this->variant_id === null)
+            $query->whereNull('variant_id');
+        else
+            $query->where('variant_id', $this->attributes['variant_id']);
+        //
+        return $query;
     }
 
-    public function setCostAttribute(int|float $cost) {
-        $this->attributes['cost'] = $cost * pow(10, $this->currency->decimals);
+    protected function getDeleteQuery() {
+        //
+        $query = $this->newQueryWithoutRelationships()->where([
+            'price_list_version_id' => $this->attributes['price_list_version_id'],
+            'product_id'            => $this->attributes['product_id'],
+        ]);
+        //
+        if ($this->variant_id === null) $query->whereNull('variant_id');
+        else $query->where('variant_id', $this->attributes['variant_id']);
+        //
+        return $query;
+    }
+
+    public function getListAttribute():int|float|null {
+        return $this->attributes['list'] !== null ? $this->attributes['list'] / pow(10, $this->priceListVersion->priceList->currency->decimals) : null;
+    }
+
+    public function setListAttribute(int|float|null $list) {
+        $this->attributes['list'] = $list !== null ? $list * pow(10, $this->priceListVersion->priceList->currency->decimals) : null;
     }
 
     public function getPriceAttribute():int|float {
-        return $this->attributes['price'] / pow(10, $this->currency->decimals);
+        return $this->attributes['price'] / pow(10, $this->priceListVersion->priceList->currency->decimals);
     }
 
     public function setPriceAttribute(int|float $price) {
-        $this->attributes['price'] = $price * pow(10, $this->currency->decimals);
+        $this->attributes['price'] = $price * pow(10, $this->priceListVersion->priceList->currency->decimals);
     }
 
-    public function getLimitAttribute():int|float {
-        return $this->attributes['limit'] / pow(10, $this->currency->decimals);
+    public function getLimitAttribute():int|float|null {
+        return $this->attributes['limit'] !== null ? $this->attributes['limit'] / pow(10, $this->priceListVersion->priceList->currency->decimals) : null;
     }
 
-    public function setLimitAttribute(int|float $limit) {
-        $this->attributes['limit'] = $limit * pow(10, $this->currency->decimals);
+    public function setLimitAttribute(int|float|null $limit) {
+        $this->attributes['limit'] = $limit !== null ? $limit * pow(10, $this->priceListVersion->priceList->currency->decimals) : null;
     }
 
 }

@@ -37,14 +37,14 @@ class VariantDataTable extends Base\DataTable {
                 ->title( __('products-catalog::variant.image_id.0') )
                 ->renderRaw('image:images[0].url'),
 
-            Column::make('product.name')
-                ->title( __('products-catalog::variant.product_id.0') ),
-
             Column::make('sku')
                 ->title( __('products-catalog::variant.sku.0') ),
 
+            Column::make('product.name')
+                ->title( __('products-catalog::variant.product_id.0') ),
+
             Column::computed('variant')
-                ->title( __('products-catalog::variant.variant.0') )
+                ->title('') // ->title( __('products-catalog::variant.variant.0') )
                 ->renderRaw('view:variant')
                 ->data( view('products-catalog::variants.datatable.variant')->render() ),
 
