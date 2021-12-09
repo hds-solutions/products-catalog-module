@@ -73,6 +73,10 @@ class Variant extends X_Variant {
             ->first();
     }
 
+    public function inventories() {
+        return $this->hasManyThrough(Inventory::class, InventoryLine::class, 'variant_id', 'id', 'id', 'inventory_id');
+    }
+
     public function getPriceAttribute():?Currency {
         return $this->price();
     }
